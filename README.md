@@ -52,7 +52,7 @@ To fix a bug or add a feature, follow these steps:
 
 ## Bugs
 
-We love squishing bugs! If you find one, let us know by opening an issue [here](https://github.com/Justin-Stockton/NextSpot/issues). Be sure to be clear in the description of the bug (i.e. what was input into the field that caused the bug, or where you were/ what you were doing at the time you spotted the bug). Screenshots or recordings greatly help to narrow down what the problem could be!
+I love squishing bugs! If you find one, let us know by opening an issue [here](https://github.com/Justin-Stockton/NextSpot/issues). Be sure to be clear in the description of the bug (i.e. what was input into the field that caused the bug, or where you were/ what you were doing at the time you spotted the bug). Screenshots or recordings greatly help to narrow down what the problem could be!
 
 ### Created By
 
