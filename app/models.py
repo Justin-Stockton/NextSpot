@@ -45,7 +45,7 @@ class Spots(db.Model):
     __tablename__ = "spots"
 
     id = db.Column(db.Integer, primary_key=True)
-    userId = db.Column(db.Integer, db.ForeignKey("user.id", ondelete='CASCADE'), nullable=False)
+    userId = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'), nullable=False)
     name = db.Column(db.String(50),nullable=False)
     price = db.Column(db.Integer,nullable=False)
     streetAdress = db.Column(db.String(400), nullable=False)
