@@ -15,14 +15,29 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 
-@bookings_route.route('/spot')
-def get_spot_bookings():
-    pass
+@bookings_route.route('/all/<spotId>')
+def get_spot_bookings(spotId):
+    spotBookings = Bookings.query.filter_by(spotId=spotId).all()
+    data = [i.toDict() for i in spotBookings]
+
+    for i in range(len(spotBookings)):
+        bookingsDict = {i.id: i.toDict() for i in spotBookings[i].boards}
+        data[i]['boards'] = bookingsDict
+
+        return {'bookings': data}
 
 
-@bookings_route.route('/user')
-def get_user_bookings():
-    pass
+@bookings_route.route('/all/<userId>')
+def get_user_bookings(userId):
+
+    userBookings = Bookings.query.filter_by(userId=userId).all()
+    data = [i.toDict() for i in userBookings]
+
+    for i in range(len(userBookings)):
+        bookingsDict = {i.id: i.toDict() for i in userBookings[i].boards}
+        data[i]['boards'] = bookingsDict
+
+        return {'bookings': data}
 
 
 @bookings_route.route('/create', methods=['POST'])
