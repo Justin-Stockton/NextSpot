@@ -42,12 +42,13 @@ def get_user_bookings(userId):
 
 @bookings_route.route('/create', methods=['POST'])
 def create_bookings():
+    data=request.json
     form = BookingsForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         new_booking = Bookings(
-            userId=form.data['userId'],
-            spotId=form.data['spotId'],
+            userId=data['userId'],
+            spotId=data['spotId'],
             startDate=form.data['startDate'],
             endDate=form.data['endDate'],
         )
@@ -73,4 +74,4 @@ def delete_booking():
     data = request.json
     Bookings.query.filter_by(id=data).delete()
     db.session.commit()
-    return 'Workspace successfully deleted!'
+    return 'Booking successfully deleted!'
