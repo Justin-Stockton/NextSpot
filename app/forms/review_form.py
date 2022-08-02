@@ -11,4 +11,4 @@ def valid_rating(form,field):
 
 class ReviewsForm(FlaskForm):
     review = TextAreaField('review', validators=[DataRequired()])
-    rating = IntegerField('rating',validators=[DataRequired,valid_rating])
+    rating = IntegerField('rating',validators=[DataRequired(),valid_rating])

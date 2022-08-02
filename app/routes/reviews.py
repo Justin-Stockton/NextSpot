@@ -36,8 +36,8 @@ def create_reviews():
         new_review = Reviews(
             userId=data['userId'],
             spotId=data['spotId'],
-            startDate=form.data['startDate'],
-            endDate=form.data['endDate'],
+            review=form.data['review'],
+            rating=form.data['rating'],
         )
         db.session.add(new_review)
         db.session.commit()
@@ -50,8 +50,8 @@ def update_review():
 
     data = request.json
     review = Reviews.query.get(data['id'])
-    review.startDate=data['startDate']
-    review.endDate=data['endDate']
+    review.review=data['review']
+    review.rating=data['rating']
     db.session.commit()
     return review.toDict()
 
