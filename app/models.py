@@ -53,6 +53,11 @@ class Spots(db.Model):
     state = db.Column(db.String(50), nullable=False)
     zip = db.Column(db.Integer,nullable=False)
     location = db.Column(db.String(50), nullable=True)
+    img1 = db.Column(db.String(1000), nullable=True)
+    img2 = db.Column(db.String(1000), nullable=True)
+    img3 = db.Column(db.String(1000), nullable=True)
+    img4 = db.Column(db.String(1000), nullable=True)
+    img5 = db.Column(db.String(1000), nullable=True)
     createdAt = db.Column(db.DateTime(timezone=True), nullable=False, server_default=func.now())
     updatedAt = db.Column(db.DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
 
@@ -71,6 +76,11 @@ class Spots(db.Model):
             city=self.city,
             state=self.state,
             zip=self.zip,
+            img1=self.img1,
+            img2=self.img2,
+            img3=self.img3,
+            img4=self.img4,
+            img5=self.img5,
             location=self.location,
             createdAt=self.createdAt,
             updatedAt=self.updatedAt,
