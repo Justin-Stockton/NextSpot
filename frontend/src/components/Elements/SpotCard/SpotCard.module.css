@@ -9,10 +9,3 @@
   min-height: 300px;
   max-width: 385px;
 }
-
-.mainContainer {
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  margin: 0 10%;
-}
