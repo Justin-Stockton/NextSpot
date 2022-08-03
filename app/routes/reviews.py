@@ -2,7 +2,8 @@ from flask import Blueprint, jsonify, session, request
 from ..models import Reviews, db
 from ..forms import ReviewsForm
 
-reviews_route = Blueprint('auth', __name__, url_prefix='/api/reviews')
+
+reviews = Blueprint('reviews', __name__, url_prefix='/api/reviews')
 
 def validation_errors_to_error_messages(validation_errors):
     """
@@ -15,7 +16,7 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 
-@reviews_route.route('/<spotId>')
+@reviews.route('/<spotId>')
 def get_spot_reviews(spotId):
     spotreviews = Reviews.query.filter_by(spotId=spotId).all()
     data = [i.toDict() for i in spotreviews]
@@ -27,7 +28,7 @@ def get_spot_reviews(spotId):
         return {'reviews': data}
 
 
-@reviews_route.route('/create', methods=['POST'])
+@reviews.route('/create', methods=['POST'])
 def create_reviews():
     form = ReviewsForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -45,7 +46,7 @@ def create_reviews():
     return 400
 
 
-@reviews_route.route('/update', methods=['PUT'])
+@reviews.route('/update', methods=['PUT'])
 def update_review():
 
     data = request.json
@@ -56,7 +57,7 @@ def update_review():
     return review.toDict()
 
 
-@reviews_route.route('/delete', methods=['DELETE'])
+@reviews.route('/delete', methods=['DELETE'])
 def delete_review():
     data = request.json
     Reviews.query.filter_by(id=data).delete()

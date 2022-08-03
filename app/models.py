@@ -64,7 +64,7 @@ class Spots(db.Model):
     def toDict(self):
         return dict(
             id=self.id,
-            ownerId=self.ownerId,
+            userId=self.userId,
             name=self.name,
             price=self.price,
             streetAdress=self.streetAdress,

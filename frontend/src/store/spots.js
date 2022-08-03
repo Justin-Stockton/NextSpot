@@ -36,9 +36,9 @@ const spots = (state = {}, action) => {
   switch (action.type) {
     case GET_SPOTS: {
       const { spots } = action.spots;
-
       spots.forEach((spot) => {
-        newState.spots[spot.id] = spot;
+        console.log(spot);
+        newState[spot.id] = spot;
       });
 
       return newState;

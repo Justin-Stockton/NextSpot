@@ -5,9 +5,9 @@ import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
 import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
-import UsersList from "./components/UsersList";
 import User from "./components/User";
 import { authenticate } from "./store/session";
+import { thunkGetSpots } from "./store/spots";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -16,6 +16,7 @@ function App() {
   useEffect(() => {
     (async () => {
       await dispatch(authenticate());
+      await dispatch(thunkGetSpots());
       setLoaded(true);
     })();
   }, [dispatch]);
