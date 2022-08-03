@@ -2,7 +2,7 @@ from app.models import db, Spots
 
 def seed_spots():
     first = Spots(
-        userId = 1, name='CoolSpot', price='300', city='Blacksburg', state='Virginia', zip='11111'
+        userId = 1, name='CoolSpot', price='300',streetAdress='222 twenty two drive', city='Blacksburg', state='Virginia', zip='11111'
     )
 
     db.session.add(first)

@@ -1,21 +1,50 @@
+export const CREATE_REVIEW = "reviews/CREATE_REVIEW";
 export const GET_SPOT_REVIEWS = "reviews/GET_SPOT_REVIEWS";
-export const UPDATE_SPOT_REVIEW = "reviews/UPDATE_SPOT_REVIEW";
+export const UPDATE_REVIEW = "reviews/UPDATE_SPOT_REVIEW";
 export const DELETE_REVIEW = "reviews/DELETE_REVIEW";
 
-const actionGetSpotReviews = (reviews) => ({
-  type: GET_SPOT_REVIEWS,
-  reviews,
-});
+const actionCreateReview = (review) => {
+  return {
+    type: CREATE_REVIEW,
+    review,
+  };
+};
 
-const actionUpdateReview = (review) => ({
-  type: UPDATE_SPOT_REVIEW,
-  review,
-});
+const actionGetSpotReviews = (reviews) => {
+  return {
+    type: GET_SPOT_REVIEWS,
+    reviews,
+  };
+};
 
-const actionDeleteReview = (reviewId) => ({
-  type: DELETE_REVIEW,
-  reviewId,
-});
+const actionUpdateReview = (review) => {
+  return {
+    type: UPDATE_REVIEW,
+    review,
+  };
+};
+
+const actionDeleteReview = (reviewData) => {
+  return {
+    type: DELETE_REVIEW,
+    reviewData,
+  };
+};
+
+export const thunkCreateReview = (review) => async (dispatch) => {
+  const response = await fetch("/api/reviews/create", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(review),
+  });
+
+  if (response.ok) {
+    const review = await response.json();
+    dispatch(actionCreateReview(review));
+  }
+};
 
 export const thunkGetSpotReviews = (spotId) => async (dispatch) => {
   const response = await fetch(`/api/reviews/${spotId}`, {
@@ -26,7 +55,7 @@ export const thunkGetSpotReviews = (spotId) => async (dispatch) => {
   });
 
   if (response.ok) {
-    reviews = await response.json();
+    const reviews = await response.json();
     dispatch(actionGetSpotReviews(reviews));
   }
 };
@@ -41,20 +70,20 @@ export const thunkUpdateSpotReview = (updatedReview) => async (dispatch) => {
   });
 
   if (response.ok) {
-    review = await response.json();
+    const review = await response.json();
     dispatch(actionUpdateReview(review));
   }
 };
 
-export const thunkDeleteReview = (reviewId) => async (dispatch) => {
+export const thunkDeleteReview = (reviewData) => async (dispatch) => {
   const response = await fetch("/api/reviews/delete", {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ reviewId }),
+    body: JSON.stringify(reviewData),
   });
   if (response.ok) {
-    dispatch(actionDeleteReview(reviewId));
+    dispatch(actionDeleteReview(reviewData));
   }
 };
