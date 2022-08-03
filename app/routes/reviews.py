@@ -15,7 +15,7 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 
-@reviews_route.route('/all/<spotId>')
+@reviews_route.route('/<spotId>')
 def get_spot_reviews(spotId):
     spotreviews = Reviews.query.filter_by(spotId=spotId).all()
     data = [i.toDict() for i in spotreviews]
