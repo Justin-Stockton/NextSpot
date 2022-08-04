@@ -42,11 +42,27 @@
   min-height: 900px;
 }
 
-.reviewsContainer {
+.reviewsMainContainer {
   margin-top: 24px;
   height: fit-content;
   min-height: 400px;
   border-bottom: 1px solid black;
   display: flex;
   flex-direction: column;
+}
+.reviews {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.addAReview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  border: 1px solid black;
+  cursor: pointer;
+  height: 40px;
+  width: 100px;
 }
