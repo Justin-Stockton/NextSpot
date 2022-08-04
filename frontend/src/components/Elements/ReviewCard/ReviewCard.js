@@ -14,7 +14,10 @@ function ReviewCard({ review, reviews }) {
         <div className={classes.body}>{review.review}</div>
         <div
           className={classes.more}
-          onClick={() => (display ? setDisplay(false) : setDisplay(true))}
+          onClick={() => {
+            display ? setDisplay(false) : setDisplay(true);
+            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          }}
         >
           Show more {">"}
         </div>
