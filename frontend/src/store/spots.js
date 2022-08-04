@@ -75,8 +75,8 @@ const spots = (state = {}, action) => {
     }
 
     case DELETE_REVIEW: {
-      const { reviewId, spotId } = action;
-      delete newState.spots[spotId].reviews[reviewId];
+      const { reviewId, spotId } = action.reviewData;
+      delete newState[spotId].spot.reviews[reviewId];
       return newState;
     }
 
