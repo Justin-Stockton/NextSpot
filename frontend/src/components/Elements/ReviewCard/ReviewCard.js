@@ -7,7 +7,7 @@ function ReviewCard({ review }) {
       <div className={classes.review}>
         <div className={classes.title}>{review.username}</div>
         <div className={classes.body}>{review.review}</div>
-        <div className={classes.more}>Show more...</div>
+        <div className={classes.more}>Show more ></div>
       </div>
     </>
   );
