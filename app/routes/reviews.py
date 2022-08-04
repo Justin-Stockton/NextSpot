@@ -61,6 +61,6 @@ def update_review():
 @reviews.route('/delete', methods=['DELETE'])
 def delete_review():
     data = request.json
-    Reviews.query.filter_by(id=data).delete()
+    Reviews.query.filter_by(id=data['reviewId']).delete()
     db.session.commit()
     return 'Review successfully deleted!'
