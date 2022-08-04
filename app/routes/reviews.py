@@ -33,17 +33,18 @@ def create_reviews():
     form = ReviewsForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     data = request.json
-    if form.validate_on_submit():
-        new_review = Reviews(
-            userId=data['userId'],
-            spotId=data['spotId'],
-            review=form.data['review'],
-            rating=form.data['rating'],
-        )
-        db.session.add(new_review)
-        db.session.commit()
-        return new_review.toDict()
-    return 400
+    new_review = Reviews(
+        userId=data['userId'],
+        spotId=data['spotId'],
+        review=data['review'],
+        rating=data['rating'],
+        username=data['username']
+    )
+
+    db.session.add(new_review)
+    db.session.commit()
+    return new_review.toDict()
+
 
 
 @reviews.route('/update', methods=['PUT'])

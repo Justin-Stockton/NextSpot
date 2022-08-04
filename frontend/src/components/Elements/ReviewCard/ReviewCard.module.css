@@ -1,0 +1,29 @@
+.review {
+  min-height: 200px;
+  max-width: 457px;
+  width: 457px;
+  margin-bottom: 40px;
+  padding: 2%;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 1.5rem;
+  padding-bottom: 2%;
+}
+
+.body {
+  line-height: 26px;
+  font-size: 20px;
+  max-height: 80px;
+  overflow-y: hidden;
+}
+
+.more {
+  padding-top: 2%;
+  display: flex;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+  width: 30%;
+}
