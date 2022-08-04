@@ -36,7 +36,10 @@ function SpotPage() {
         <div className={classes.reviews}>
           {reviews.length > 0 ? (
             <div>
-              <ReviewCard review={reviews[reviews.length - 1]} />
+              <ReviewCard
+                reviews={reviews}
+                review={reviews[reviews.length - 1]}
+              />
             </div>
           ) : (
             "Be the first to leave a review!"
@@ -48,9 +51,17 @@ function SpotPage() {
           ) : null}
         </div>
         {display === true ? (
-          <div>
-            <ReviewForm spotId={spot.id} />
-          </div>
+          <>
+            <div>
+              <ReviewForm spotId={spot.id} />
+            </div>
+            <div
+              className={classes.addAReview}
+              onClick={() => setDisplay(false)}
+            >
+              CLICK ME
+            </div>
+          </>
         ) : (
           <div className={classes.addAReview} onClick={() => setDisplay(true)}>
             CLICK ME
