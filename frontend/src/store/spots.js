@@ -71,7 +71,6 @@ const spots = (state = {}, action) => {
 
     case UPDATE_REVIEW: {
       const review = action.review;
-      console.log(review, "This is my data");
       newState[review.spotId].spot.reviews[review.id] = review;
       return newState;
     }
