@@ -1,0 +1,77 @@
+.background {
+  display: flex;
+  z-index: 10;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 74px;
+  left: 0;
+  height: 200%;
+  width: 100%;
+}
+
+.reviewsContainer {
+  position: relative;
+  z-index: 11;
+  padding: 2% 5%;
+  opacity: none;
+  margin-top: 100px;
+  height: 2280px;
+  width: 1200px;
+  background-color: #fff;
+  overflow-y: scroll;
+}
+
+.reviewContainer {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid black;
+}
+.username {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.body {
+  padding: 2% 20% 2% 0;
+  line-height: 26px;
+}
+
+.delete {
+  display: flex;
+  padding: 2%;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  border-radius: 15px;
+}
+.delete:hover {
+  background-color: rgb(253, 73, 2);
+  transition: ease-in 0.2s;
+}
+
+.close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 22px;
+  width: 22px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #2c2c2c;
+  cursor: pointer;
+}
+.empty {
+  width: 100%;
+}
+.xcontainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 60px;
+}
