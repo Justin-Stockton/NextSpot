@@ -5,6 +5,7 @@ import classes from "./HomePage.module.css";
 
 function HomePage() {
   let spots = useSelector((state) => state.spots);
+
   return (
     <div>
       <h1>HomePage</h1>
@@ -13,7 +14,7 @@ function HomePage() {
           Object.values(spots).map((spot, i) => {
             return (
               <div className={classes.container} key={i}>
-                <SpotCard spot={spot} />
+                <SpotCard spot={spot.spot} />
               </div>
             );
           })

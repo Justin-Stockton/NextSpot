@@ -5,10 +5,10 @@ import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
 import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
-import User from "./components/User";
 import { authenticate } from "./store/session";
 import { thunkGetSpots } from "./store/spots";
 import HomePage from "./components/Pages/HomePage";
+import SpotPage from "./components/Pages/SpotPage/SpotPage";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -36,8 +36,8 @@ function App() {
         <Route path="/sign-up" exact={true}>
           <SignUpForm />
         </Route>
-        <ProtectedRoute path="/users/:userId" exact={true}>
-          <User />
+        <ProtectedRoute path="/spots/:spotId" exact={true}>
+          <SpotPage />
         </ProtectedRoute>
         <ProtectedRoute path="/" exact={true}>
           <HomePage />

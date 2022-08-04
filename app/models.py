@@ -122,6 +122,7 @@ class Reviews(db.Model):
     spotId = db.Column(db.Integer, db.ForeignKey("spots.id", ondelete='CASCADE'), nullable=False)
     review = db.Column(db.String(1000), nullable=False)
     rating = db.Column(db.Integer, nullable=False)
+    username = db.Column(db.String(50), nullable=False)
     createdAt = db.Column(db.DateTime(timezone=True), nullable=False, server_default=func.now())
     updatedAt = db.Column(db.DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
 
@@ -134,6 +135,8 @@ class Reviews(db.Model):
             userId=self.userId,
             spotId=self.spotId,
             review=self.review,
+            rating=self.rating,
+            username=self.username,
             createdAt=self.createdAt,
             updatedAt=self.updatedAt
         )
