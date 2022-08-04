@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkDeleteReview } from "../../../store/reviews";
+import EditReviewForm from "../../forms/EditReviewForm";
 import classes from "./ReviewModal.module.css";
 
 function ReviewModal({ reviews, setDispaly }) {
   const user = useSelector((state) => state.session.user);
+  const [toggleForm, setToggleForm] = useState(false);
   const dispatch = useDispatch();
   return (
     <div className={classes.background}>
@@ -37,11 +39,24 @@ function ReviewModal({ reviews, setDispaly }) {
               </div>
               <div className={classes.body}>{review.review}</div>
               {user.id === review.userId ? (
-                <div className={classes.edit}>Edit</div>
+                <>
+                  {!toggleForm ? (
+                    <div
+                      className={classes.edit}
+                      onClick={() => setToggleForm(true)}
+                    >
+                      Edit
+                    </div>
+                  ) : null}
+
+                  <EditReviewForm
+                    setToggleForm={setToggleForm}
+                    toggleForm={toggleForm}
+                    spotId={review.spotId}
+                    currentReview={review}
+                  />
+                </>
               ) : null}
-              <form>
-                <textarea />
-              </form>
             </div>
           );
         })}
