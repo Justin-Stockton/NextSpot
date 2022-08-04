@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, session, request
 from ..models import Bookings, db
 from ..forms import BookingsForm
 
-bookings_route = Blueprint('auth', __name__, url_prefix='/api/bookings')
+bookings = Blueprint('bookings', __name__, url_prefix='/api/bookings')
 
 def validation_errors_to_error_messages(validation_errors):
     """
@@ -15,7 +15,7 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 
-@bookings_route.route('/spot/<spotId>')
+@bookings.route('/spot/<spotId>')
 def get_spot_bookings(spotId):
     spotBookings = Bookings.query.filter_by(spotId=spotId).all()
     data = [i.toDict() for i in spotBookings]
@@ -27,7 +27,7 @@ def get_spot_bookings(spotId):
         return {'bookings': data}
 
 
-@bookings_route.route('/user/<userId>')
+@bookings.route('/user/<userId>')
 def get_user_bookings(userId):
 
     userBookings = Bookings.query.filter_by(userId=userId).all()
@@ -40,7 +40,7 @@ def get_user_bookings(userId):
         return {'bookings': data}
 
 
-@bookings_route.route('/create', methods=['POST'])
+@bookings.route('/create', methods=['POST'])
 def create_bookings():
     data=request.json
     form = BookingsForm()
@@ -58,7 +58,7 @@ def create_bookings():
     return 400
 
 
-@bookings_route.route('/update', methods=['PUT'])
+@bookings.route('/update', methods=['PUT'])
 def update_booking():
 
     data = request.json
@@ -69,7 +69,7 @@ def update_booking():
     return booking.toDict()
 
 
-@bookings_route.route('/delete', methods=['DELETE'])
+@bookings.route('/delete', methods=['DELETE'])
 def delete_booking():
     data = request.json
     Bookings.query.filter_by(id=data).delete()

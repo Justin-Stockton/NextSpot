@@ -1,0 +1,13 @@
+.mainContainer {
+  background-color: #fff;
+  border: 1px solid black;
+  padding: 24px;
+  border-radius: 15px;
+  height: 460px;
+  width: 372px;
+}
+
+.formTop {
+  display: flex;
+  justify-content: space-between;
+}

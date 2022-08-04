@@ -36,9 +36,8 @@ const spots = (state = {}, action) => {
   switch (action.type) {
     case GET_SPOTS: {
       const { spots } = action.spots;
-
       spots.forEach((spot) => {
-        newState.spots[spot.id] = spot;
+        newState[spot.id] = { spot };
       });
 
       return newState;
@@ -57,20 +56,21 @@ const spots = (state = {}, action) => {
       const { reviews } = action.reviews;
 
       reviews.forEach((review) => {
-        newState.spots[review.spotId].reviews[review.id] = review;
+        newState.spots[review.spotId].reviews = { [review.id]: review };
       });
       return newState;
     }
 
     case CREATE_REVIEW: {
-      const { review } = action.review;
-      newState.spots[review.spotId].reviews[review.id] = review;
+      const { review } = action;
+      console.log(newState[review.spotId].spot.reviews);
+      console.log((newState[review.spotId].spot.reviews[review.id] = review));
+      console.log(newState[review.spotId].spot.reviews);
       return newState;
     }
 
     case UPDATE_REVIEW: {
-      const { review } = action.review;
-      newState.spots[review.spotId].reviews[review.id] = review;
+      // const { review } = action.review;
       return newState;
     }
 

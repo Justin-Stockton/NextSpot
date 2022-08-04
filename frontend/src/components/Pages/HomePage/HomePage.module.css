@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 2%;
+  border-radius: 3px;
+  border: 1px solid red;
+  width: 15%;
+  height: 10%;
+  min-height: 300px;
+  max-width: 385px;
+}
+
+.mainContainer {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin: 0 10%;
+}
