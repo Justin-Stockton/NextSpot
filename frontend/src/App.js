@@ -8,7 +8,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { authenticate } from "./store/session";
 import { thunkGetSpots } from "./store/spots";
 import HomePage from "./components/Pages/HomePage";
-import SpotPage from "./components/Pages/SpotPage/SpotPage";
+import SpotPage from "./components/Pages/SpotPage";
 
 function App() {
   const [loaded, setLoaded] = useState(false);

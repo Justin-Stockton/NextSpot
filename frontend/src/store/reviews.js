@@ -61,7 +61,7 @@ export const thunkGetSpotReviews = (spotId) => async (dispatch) => {
 };
 
 export const thunkUpdateSpotReview = (updatedReview) => async (dispatch) => {
-  const response = await fetch(`apli/reviews/update`, {
+  const response = await fetch(`/api/reviews/update`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
