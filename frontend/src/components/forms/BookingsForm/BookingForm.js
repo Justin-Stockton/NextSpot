@@ -1,17 +1,31 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { thunkCreateBooking } from "../../../store/bookings";
 
 import classes from "./BookingsForm.module.css";
 
 function BookingForm({ spot }) {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.session.user);
+
   const defaultStart = new Date();
   defaultStart.setDate(defaultStart.getDate() + 1);
   const tomorrow = defaultStart.toISOString().split("T")[0];
-  const defaultMin = new Date();
-  defaultMin.setDate(defaultMin.getDate() + 3);
-  const defaultEnd = defaultMin.toISOString().split("T")[0];
-  // let userId = useSelector((state) => state.session.user.id);
-  const [startDate, setStartDate] = useState(defaultMin);
-  const [endDate, setEndDate] = useState(defaultEnd);
+
+  const [startDate, setStartDate] = useState(tomorrow);
+  const [endDate, setEndDate] = useState("");
+
+  const submit = () => {
+    const data = {
+      userId: user.id,
+      spotId: spot.id,
+      startDate,
+      endDate,
+    };
+
+    dispatch(thunkCreateBooking(data));
+    console.log(data);
+  };
 
   return (
     <div className={classes.mainContainer}>
@@ -33,8 +47,6 @@ function BookingForm({ spot }) {
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
                   min={tomorrow}
-                  max={endDate}
-                  className="dates"
                   required
                 />
               </label>
@@ -44,16 +56,17 @@ function BookingForm({ spot }) {
                 End Date:
                 <input
                   type="date"
-                  value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
-                  min={tomorrow}
-                  className="dates"
+                  min={startDate}
                   required
                 />
               </label>
             </div>
           </div>
-          <div className={classes.bookingsButton}> Book </div>
+          <div className={classes.guests}>test</div>
+          <div className={classes.bookingsButton} onClick={submit}>
+            Book
+          </div>
         </form>
       </div>
     </div>

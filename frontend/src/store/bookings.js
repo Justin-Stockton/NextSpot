@@ -1,5 +1,5 @@
 export const GET_BOOKINGS = "bookings/GET_BOOKINGS";
-const CREATE_BOOKING = "bookings/CREATE_BOOKING";
+export const CREATE_BOOKING = "bookings/CREATE_BOOKING";
 const GET_USER_BOOKINGS = "bookings/GET_USER_BOOKINGS";
 const UPDATE_BOOKING = "bookings/UPDATE_BOOKING";
 const DELETE_BOOKING = "bookings/DELETE_BOOKING";
@@ -113,42 +113,42 @@ export const thunkDeleteBooking = (bookingId) => async (dispatch) => {
   }
 };
 
-const bookings = (state = {}, action) => {
-  let newState = JSON.parse(JSON.stringify(state));
+// const bookings = (state = {}, action) => {
+//   let newState = JSON.parse(JSON.stringify(state));
 
-  switch (action.type) {
-    case GET_USER_BOOKINGS: {
-      const { bookings } = action.bookings;
+//   switch (action.type) {
+//     case GET_USER_BOOKINGS: {
+//       const { bookings } = action.bookings;
 
-      bookings.forEach((booking) => {
-        newState.bookings[booking.id] = booking;
-      });
+//       bookings.forEach((booking) => {
+//         newState.bookings[booking.id] = booking;
+//       });
 
-      return newState;
-    }
+//       return newState;
+//     }
 
-    case CREATE_BOOKING: {
-      const { booking } = action.booking;
-      newState.bookings[booking.id] = booking;
-      return;
-    }
+//     case CREATE_BOOKING: {
+//       const { booking } = action.booking;
+//       newState.bookings[booking.id] = booking;
+//       return;
+//     }
 
-    case UPDATE_BOOKING: {
-      const { booking } = action.booking;
-      newState.bookings[booking.id] = booking;
-      return newState;
-    }
+//     case UPDATE_BOOKING: {
+//       const { booking } = action.booking;
+//       newState.bookings[booking.id] = booking;
+//       return newState;
+//     }
 
-    case DELETE_BOOKING: {
-      const { bookingId } = action.bookingId;
-      delete newState.bookings[bookingId];
-      return newState;
-    }
+//     case DELETE_BOOKING: {
+//       const { bookingId } = action.bookingId;
+//       delete newState.bookings[bookingId];
+//       return newState;
+//     }
 
-    default: {
-      return state;
-    }
-  }
-};
+//     default: {
+//       return state;
+//     }
+//   }
+// };
 
-export default bookings;
+// export default bookings;

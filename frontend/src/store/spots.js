@@ -5,7 +5,7 @@ import {
   UPDATE_REVIEW,
 } from "./reviews";
 
-import { GET_BOOKINGS } from "./bookings";
+import { GET_BOOKINGS, CREATE_BOOKING } from "./bookings";
 
 const GET_SPOTS = "spots/GET_SPOTS";
 
@@ -43,11 +43,17 @@ const spots = (state = {}, action) => {
       return newState;
     }
 
-    case GET_BOOKINGS: {
+    case CREATE_BOOKING: {
+      const { booking } = action;
+      newState[booking.spotId].spot.bookings[booking.id] = booking;
+      return newState;
+    }
+
+    case GET_USER_BOOKINGS: {
       const { bookings } = action.bookings;
 
       bookings.forEach((booking) => {
-        newState.spots[booking.spotId].booking[booking.id] = booking;
+        newState[booking.spotId].spot.bookings[booking.id] = booking;
       });
       return newState;
     }

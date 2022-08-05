@@ -45,17 +45,17 @@ def create_bookings():
     data=request.json
     form = BookingsForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
-        new_booking = Bookings(
-            userId=data['userId'],
-            spotId=data['spotId'],
-            startDate=form.data['startDate'],
-            endDate=form.data['endDate'],
-        )
-        db.session.add(new_booking)
-        db.session.commit()
-        return new_booking.toDict()
-    return 400
+
+    new_booking = Bookings(
+        userId=data['userId'],
+        spotId=data['spotId'],
+        startDate=data['startDate'],
+        endDate=data['endDate'],
+    )
+    db.session.add(new_booking)
+    db.session.commit()
+    return new_booking.toDict()
+
 
 
 @bookings.route('/update', methods=['PUT'])
