@@ -69,10 +69,7 @@ function BookingForm({ spot }) {
               </label>
             </div>
           </div>
-          <div className={classes.guests}>
-            <label>Number of guests:</label>
-            <input type="number" min="0" />
-          </div>
+          <div className={classes.guests}></div>
           <div className={classes.bookingsButton} onClick={submit}>
             Book
           </div>
