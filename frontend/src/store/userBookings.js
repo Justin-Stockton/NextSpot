@@ -1,5 +1,6 @@
 export const GET_USER_BOOKINGS = "userBookings/GET_USER_BOOKINGS";
 export const DELETE_USER_BOOKING = "userBookings/DELETE_USER_BOOKING";
+export const UPDATE_BOOKING = "userBookings/UPDATE_BOOKING";
 
 const actionGetUserBookings = (bookings) => {
   return {
@@ -7,6 +8,14 @@ const actionGetUserBookings = (bookings) => {
     bookings,
   };
 };
+
+const actionUpdateBooking = (booking) => {
+  return {
+    type: UPDATE_BOOKING,
+    booking,
+  };
+};
+
 const actionDeleteUserBookings = (bookingId) => {
   return {
     type: DELETE_USER_BOOKING,
@@ -27,6 +36,22 @@ export const thunkGetUserBookings = (userId) => async (dispatch) => {
     dispatch(actionGetUserBookings(bookings));
   }
 };
+
+export const thunkUpdateBooking = (booking) => async (dispatch) => {
+  const response = await fetch("/api/bookings/update", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(booking),
+  });
+
+  if (response.ok) {
+    const booking = await response.json();
+    dispatch(actionUpdateBooking(booking));
+  }
+};
+
 export const thunkDeleteUserBookings = (bookingId) => async (dispatch) => {
   const response = await fetch(`/api/bookings/delete`, {
     method: "delete",
@@ -51,6 +76,12 @@ const userBookings = (state = {}, action) => {
       bookings.forEach((booking) => {
         newState[booking.id] = booking;
       });
+      return newState;
+    }
+
+    case UPDATE_BOOKING: {
+      const { booking } = action;
+      newState[booking.id] = booking;
       return newState;
     }
 

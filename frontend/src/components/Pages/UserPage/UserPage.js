@@ -4,6 +4,7 @@ import {
   thunkGetUserBookings,
   thunkDeleteUserBookings,
 } from "../../../store/userBookings";
+import EditBookingForm from "../../forms/EditBookingForm";
 import classes from "./UserPage.module.css";
 
 function UserPage() {
@@ -42,7 +43,9 @@ function UserPage() {
               <div> {booking.startDate}</div>
               <div> {booking.endDate}</div>
               <div>
-                <div>TODO UPDATE</div>
+                <div>
+                  <EditBookingForm booking={booking} />
+                </div>
                 <div onClick={() => deleteBooking(booking.id)}>TODO DELETE</div>
               </div>
             </div>

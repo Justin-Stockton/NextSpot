@@ -1,0 +1,54 @@
+.mainContainer {
+  background-color: #fff;
+  border: 1px solid black;
+  padding: 24px;
+  border-radius: 15px;
+  height: fit-content;
+  width: 372px;
+}
+
+.formTop {
+  display: flex;
+  justify-content: space-between;
+}
+
+.calendars {
+  display: flex;
+  justify-content: space-between;
+
+  border: 1px solid black;
+  border-radius: 15px 15px 0 0;
+  min-height: fit-content;
+
+  margin-top: 25px;
+}
+
+.calendar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5%;
+}
+
+.bookingsButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 50px;
+  cursor: pointer;
+  border: 1px solid green;
+  border-radius: 15px;
+  margin-top: 10%;
+}
+
+.guests {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-top: none;
+  border-radius: 0 0 15px 15px;
+
+  height: 60px;
+}
