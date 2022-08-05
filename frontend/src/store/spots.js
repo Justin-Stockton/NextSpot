@@ -5,11 +5,7 @@ import {
   UPDATE_REVIEW,
 } from "./reviews";
 
-import {
-  CREATE_BOOKING,
-  // UPDATE_BOOKING,
-  // DELETE_BOOKING,
-} from "./bookings";
+import { CREATE_BOOKING } from "./bookings";
 
 const GET_SPOTS = "spots/GET_SPOTS";
 

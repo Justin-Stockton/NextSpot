@@ -45,6 +45,7 @@ def create_bookings():
     new_booking = Bookings(
         userId=data['userId'],
         spotId=data['spotId'],
+        spotName=data['spotName'],
         startDate=data['startDate'],
         endDate=data['endDate'],
     )

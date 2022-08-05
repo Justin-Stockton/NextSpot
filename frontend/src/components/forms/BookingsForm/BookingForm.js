@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkCreateBooking } from "../../../store/bookings";
+import { thunkGetUserBookings } from "../../../store/userBookings";
 
 import classes from "./BookingsForm.module.css";
 
 function BookingForm({ spot }) {
+  const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
 
@@ -14,16 +17,19 @@ function BookingForm({ spot }) {
 
   const [startDate, setStartDate] = useState(tomorrow);
   const [endDate, setEndDate] = useState("");
+  // const [guestCount, setGuestCount] = useState(1);
 
-  const submit = () => {
+  const submit = async () => {
     const data = {
       userId: user.id,
       spotId: spot.id,
+      spotName: spot.name,
       startDate,
       endDate,
     };
-
+    await dispatch(thunkGetUserBookings(user.id));
     dispatch(thunkCreateBooking(data));
+    history.push(`/${user.username}`);
     console.log(data);
   };
 
@@ -63,7 +69,10 @@ function BookingForm({ spot }) {
               </label>
             </div>
           </div>
-          <div className={classes.guests}>test</div>
+          <div className={classes.guests}>
+            <label>Number of guests:</label>
+            <input type="number" min="0" />
+          </div>
           <div className={classes.bookingsButton} onClick={submit}>
             Book
           </div>

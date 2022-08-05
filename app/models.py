@@ -92,6 +92,7 @@ class Bookings(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     userId = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'), nullable=False)
     spotId = db.Column(db.Integer, db.ForeignKey("spots.id", ondelete='CASCADE'), nullable=False)
+    spotName = db.Column(db.String(50),nullable=False)
     startDate = db.Column(db.Date, nullable = False)
     endDate = db.Column(db.Date, nullable = False)
     createdAt = db.Column(db.DateTime(timezone=True), nullable=False, server_default=func.now())
@@ -107,6 +108,7 @@ class Bookings(db.Model):
             id=self.id,
             userId=self.userId,
             spotId=self.spotId,
+            spotName=self.spotName,
             startDate=self.startDate,
             endDate=self.endDate,
             createdAt=self.createdAt,
