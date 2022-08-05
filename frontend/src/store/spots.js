@@ -54,15 +54,6 @@ const spots = (state = {}, action) => {
       return newState;
     }
 
-    case GET_USER_BOOKINGS: {
-      const { bookings } = action.bookings;
-
-      bookings.forEach((booking) => {
-        newState[booking.spotId].spot.bookings[booking.id] = booking;
-      });
-      return newState;
-    }
-
     case GET_SPOT_REVIEWS: {
       const { reviews } = action.reviews;
 

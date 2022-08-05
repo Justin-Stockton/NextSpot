@@ -34,8 +34,8 @@ def get_user_bookings(userId):
     data = [i.toDict() for i in userBookings]
 
     for i in range(len(userBookings)):
-        bookingsDict = {i.id: i.toDict() for i in userBookings[i].boards}
-        data[i]['boards'] = bookingsDict
+        bookingsDict = {i.id: i.toDict() for i in userBookings[i].bookings}
+        data[i]['booking'] = bookingsDict
 
         return {'bookings': data}
 

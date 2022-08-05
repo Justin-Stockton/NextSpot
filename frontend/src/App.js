@@ -9,6 +9,7 @@ import { authenticate } from "./store/session";
 import { thunkGetSpots } from "./store/spots";
 import HomePage from "./components/Pages/HomePage";
 import SpotPage from "./components/Pages/SpotPage";
+import UserPage from "./components/Pages/UserPage";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -41,6 +42,9 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path="/" exact={true}>
           <HomePage />
+        </ProtectedRoute>
+        <ProtectedRoute path="/:username" exact={true}>
+          <UserPage />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>
