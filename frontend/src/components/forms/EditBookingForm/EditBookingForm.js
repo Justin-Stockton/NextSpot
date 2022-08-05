@@ -6,7 +6,6 @@ import { thunkUpdateBooking } from "../../../store/userBookings";
 import classes from "./EditBookingForm.module.css";
 
 function EditBookingForm({ booking, setDisplay, display }) {
-  //   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
 
@@ -29,12 +28,16 @@ function EditBookingForm({ booking, setDisplay, display }) {
     // await dispatch(thunkGetUserBookings(user.id));
     // dispatch(thunkUpdateBooking(data));
     dispatch(thunkUpdateBooking(data));
+    setDisplay(false);
     // history.push(`/${user.username}`);
     console.log(data);
   };
 
+  if (!display) return null;
+
   return (
     <div className={classes.mainContainer}>
+      <div onClick={() => setDisplay(false)}>x</div>
       <div className={classes.formTop}>
         <div>Edit your stay at {booking.spotName}</div>
       </div>

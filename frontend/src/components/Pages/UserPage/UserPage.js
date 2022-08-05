@@ -13,6 +13,7 @@ function UserPage() {
   const dispatch = useDispatch();
   const userBookings = useSelector((state) => state.userBookings);
   const observer = useSelector((state) => state.spots);
+  const [display, setDisplay] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -44,9 +45,19 @@ function UserPage() {
               <div> {booking.endDate}</div>
               <div>
                 <div>
-                  <EditBookingForm booking={booking} />
+                  {!display ? (
+                    <div onClick={() => setDisplay(true)}>Edit</div>
+                  ) : (
+                    <EditBookingForm
+                      booking={booking}
+                      display={display}
+                      setDisplay={setDisplay}
+                    />
+                  )}
                 </div>
-                <div onClick={() => deleteBooking(booking.id)}>TODO DELETE</div>
+                <div onClick={() => deleteBooking(booking.id)}>
+                  Cancel Booking
+                </div>
               </div>
             </div>
           );
