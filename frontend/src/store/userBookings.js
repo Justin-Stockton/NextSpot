@@ -29,7 +29,7 @@ const userBookings = (state = {}, action) => {
       const { bookings } = action.bookings;
 
       bookings.forEach((booking) => {
-        newState[booking.spotId].spot.bookings[booking.id] = booking;
+        newState[booking.id] = booking;
       });
       return newState;
     }

@@ -33,11 +33,7 @@ def get_user_bookings(userId):
     userBookings = Bookings.query.filter_by(userId=userId).all()
     data = [i.toDict() for i in userBookings]
 
-    for i in range(len(userBookings)):
-        bookingsDict = {i.id: i.toDict() for i in userBookings[i].bookings}
-        data[i]['booking'] = bookingsDict
-
-        return {'bookings': data}
+    return {'bookings': data}
 
 
 @bookings.route('/create', methods=['POST'])

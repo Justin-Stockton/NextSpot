@@ -6,10 +6,9 @@ import {
 } from "./reviews";
 
 import {
-  GET_USER_BOOKINGS,
   CREATE_BOOKING,
-  UPDATE_BOOKING,
-  DELETE_BOOKING,
+  // UPDATE_BOOKING,
+  // DELETE_BOOKING,
 } from "./bookings";
 
 const GET_SPOTS = "spots/GET_SPOTS";
