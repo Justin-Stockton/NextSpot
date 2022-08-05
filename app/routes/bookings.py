@@ -33,11 +33,7 @@ def get_user_bookings(userId):
     userBookings = Bookings.query.filter_by(userId=userId).all()
     data = [i.toDict() for i in userBookings]
 
-    for i in range(len(userBookings)):
-        bookingsDict = {i.id: i.toDict() for i in userBookings[i].boards}
-        data[i]['boards'] = bookingsDict
-
-        return {'bookings': data}
+    return {'bookings': data}
 
 
 @bookings.route('/create', methods=['POST'])
@@ -45,17 +41,18 @@ def create_bookings():
     data=request.json
     form = BookingsForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
-        new_booking = Bookings(
-            userId=data['userId'],
-            spotId=data['spotId'],
-            startDate=form.data['startDate'],
-            endDate=form.data['endDate'],
-        )
-        db.session.add(new_booking)
-        db.session.commit()
-        return new_booking.toDict()
-    return 400
+
+    new_booking = Bookings(
+        userId=data['userId'],
+        spotId=data['spotId'],
+        spotName=data['spotName'],
+        startDate=data['startDate'],
+        endDate=data['endDate'],
+    )
+    db.session.add(new_booking)
+    db.session.commit()
+    return new_booking.toDict()
+
 
 
 @bookings.route('/update', methods=['PUT'])
