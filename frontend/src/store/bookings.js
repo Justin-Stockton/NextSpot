@@ -1,8 +1,8 @@
 export const GET_BOOKINGS = "bookings/GET_BOOKINGS";
 export const CREATE_BOOKING = "bookings/CREATE_BOOKING";
-const GET_USER_BOOKINGS = "bookings/GET_USER_BOOKINGS";
-const UPDATE_BOOKING = "bookings/UPDATE_BOOKING";
-const DELETE_BOOKING = "bookings/DELETE_BOOKING";
+export const GET_USER_BOOKINGS = "bookings/GET_USER_BOOKINGS";
+export const UPDATE_BOOKING = "bookings/UPDATE_BOOKING";
+export const DELETE_BOOKING = "bookings/DELETE_BOOKING";
 
 const actionCreateBooking = (booking) => {
   return {
@@ -112,43 +112,3 @@ export const thunkDeleteBooking = (bookingId) => async (dispatch) => {
     dispatch(actionDeleteBooking(bookingId));
   }
 };
-
-// const bookings = (state = {}, action) => {
-//   let newState = JSON.parse(JSON.stringify(state));
-
-//   switch (action.type) {
-//     case GET_USER_BOOKINGS: {
-//       const { bookings } = action.bookings;
-
-//       bookings.forEach((booking) => {
-//         newState.bookings[booking.id] = booking;
-//       });
-
-//       return newState;
-//     }
-
-//     case CREATE_BOOKING: {
-//       const { booking } = action.booking;
-//       newState.bookings[booking.id] = booking;
-//       return;
-//     }
-
-//     case UPDATE_BOOKING: {
-//       const { booking } = action.booking;
-//       newState.bookings[booking.id] = booking;
-//       return newState;
-//     }
-
-//     case DELETE_BOOKING: {
-//       const { bookingId } = action.bookingId;
-//       delete newState.bookings[bookingId];
-//       return newState;
-//     }
-
-//     default: {
-//       return state;
-//     }
-//   }
-// };
-
-// export default bookings;
