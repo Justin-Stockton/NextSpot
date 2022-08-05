@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkCreateBooking } from "../../../store/bookings";
-import { thunkGetUserBookings } from "../../../store/userBookings";
+import { thunkUpdateBooking } from "../../../store/userBookings";
 
-import classes from "./BookingsForm.module.css";
+import classes from "./EditBookingForm.module.css";
 
-function BookingForm({ spot }) {
-  const history = useHistory();
+function EditBookingForm({ booking, setDisplay, display }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
 
@@ -15,29 +13,33 @@ function BookingForm({ spot }) {
   defaultStart.setDate(defaultStart.getDate() + 1);
   const tomorrow = defaultStart.toISOString().split("T")[0];
 
-  const [startDate, setStartDate] = useState(tomorrow);
-  const [endDate, setEndDate] = useState("");
-  // const [guestCount, setGuestCount] = useState(1);
+  const [startDate, setStartDate] = useState(booking.startDate);
+  const [endDate, setEndDate] = useState(booking.endDate);
 
   const submit = async () => {
     const data = {
+      id: booking.id,
       userId: user.id,
-      spotId: spot.id,
-      spotName: spot.name,
+      spotId: booking.spotId,
+      spotName: booking.spotName,
       startDate,
       endDate,
     };
-    await dispatch(thunkGetUserBookings(user.id));
-    dispatch(thunkCreateBooking(data));
-    history.push(`/${user.username}`);
+    // await dispatch(thunkGetUserBookings(user.id));
+    // dispatch(thunkUpdateBooking(data));
+    dispatch(thunkUpdateBooking(data));
+    setDisplay(false);
+    // history.push(`/${user.username}`);
     console.log(data);
   };
 
+  if (!display) return null;
+
   return (
     <div className={classes.mainContainer}>
+      <div onClick={() => setDisplay(false)}>x</div>
       <div className={classes.formTop}>
-        <div> $ {spot.price} night</div>
-        <div> reviews</div>
+        <div>Edit your stay at {booking.spotName}</div>
       </div>
       <div>
         <form>
@@ -69,9 +71,12 @@ function BookingForm({ spot }) {
               </label>
             </div>
           </div>
-          <div className={classes.guests}></div>
+          <div className={classes.guests}>
+            {/* <label>Number of guests:</label>
+            <input type="number" min="0" /> */}
+          </div>
           <div className={classes.bookingsButton} onClick={submit}>
-            Book
+            Edit
           </div>
         </form>
       </div>
@@ -79,4 +84,4 @@ function BookingForm({ spot }) {
   );
 }
 
-export default BookingForm;
+export default EditBookingForm;

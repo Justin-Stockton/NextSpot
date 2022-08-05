@@ -1,8 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import LogoutButton from "./auth/LogoutButton";
 
 const NavBar = () => {
+  const user = useSelector((state) => state.session.user);
   return (
     <div>
       <div
@@ -19,22 +21,48 @@ const NavBar = () => {
             Home
           </NavLink>
         </div>
-        <div>
-          <NavLink to="/login" exact={true} activeClassName="active">
-            Login
-          </NavLink>
-        </div>
-        <div>
-          <NavLink to="/sign-up" exact={true} activeClassName="active">
-            Sign Up
-          </NavLink>
-        </div>
-        <div>
-          <LogoutButton />
-        </div>
+        {!user ? (
+          <>
+            <div>
+              <NavLink to="/login" exact={true} activeClassName="active">
+                Login
+              </NavLink>
+            </div>
+            <div>
+              <NavLink to="/sign-up" exact={true} activeClassName="active">
+                Sign Up
+              </NavLink>
+            </div>
+          </>
+        ) : (
+          <>
+            <div>
+              <NavLink to={`/${user.username}`}>Profile</NavLink>
+            </div>
+            <div>
+              <LogoutButton />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
 };
 
 export default NavBar;
+// {!user.username ?
+// <div>
+//   <NavLink to="/login" exact={true} activeClassName="active">
+//     Login
+//   </NavLink>
+// </div>
+// <div>
+//   <NavLink to="/sign-up" exact={true} activeClassName="active">
+//     Sign Up
+//   </NavLink>
+// </div>
+//   :
+// <div>
+//   <LogoutButton />
+// </div>
+// }
