@@ -22,7 +22,19 @@ function SpotPage() {
           {reviews.length} reviews - {spot.city}, {spot.state}, United States
         </div>
       </div>
-      <div className={classes.photos}>Test</div>
+      <div className={classes.photos}>
+        <div className={classes.mainImg}></div>
+        <div className={classes.subimgContainer}>
+          <div className={classes.topImgs}>
+            <div className={classes.subImg}></div>
+            <div className={`${classes.subImg} ${classes.topRight}`}></div>
+          </div>
+          <div className={classes.bottomImgs}>
+            <div className={classes.subImg}></div>
+            <div className={`${classes.subImg} ${classes.bottomRight}`}></div>
+          </div>
+        </div>
+      </div>
       <div className={classes.bottomContainer}>
         <div className={classes.textContainer}></div>
         <div className={classes.formContainer}>

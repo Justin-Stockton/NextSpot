@@ -5,6 +5,7 @@
   margin: 0 20% 0 20%;
 }
 .photos {
+  display: flex;
   width: 100%;
   min-height: 560px;
   border-radius: 5px;
@@ -65,4 +66,35 @@
   cursor: pointer;
   height: 40px;
   width: 100px;
+}
+
+.mainImg {
+  height: 100%;
+  width: 49%;
+  background-color: aqua;
+  min-height: 560px;
+  border-radius: 15px 0 0 15px;
+}
+
+.subImg {
+  min-width: 266px;
+  height: 275.6px;
+  background-color: aqua;
+  margin: 0 0 0 8px;
+}
+.topImgs {
+  display: flex;
+}
+.topRight {
+  display: flex;
+  border-radius: 0 15px 0 0;
+}
+
+.bottomImgs {
+  display: flex;
+  padding-top: 8px;
+}
+
+.bottomRight {
+  border-radius: 0 0 15px 0;
 }
