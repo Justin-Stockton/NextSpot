@@ -12,6 +12,14 @@ function SpotPage() {
   let spot = useSelector((state) => state.spots[spotId].spot);
   let reviews = Object.values(spot.reviews);
 
+  let ratings = 0;
+
+  reviews.forEach((review) => {
+    ratings += review.rating;
+  });
+
+  let rating = ratings / reviews.length;
+
   const [display, setDisplay] = useState(false);
 
   return (
@@ -43,7 +51,12 @@ function SpotPage() {
       </div>
       <div className={classes.reviewsMainContainer}>
         <div className={classes.reviewsContainer}>
-          {reviews.length} {reviews.length === 1 ? "Review" : "Reviews"}
+          <div>
+            {reviews.length} {reviews.length === 1 ? "Review" : "Reviews"}
+          </div>
+          <div>
+            {reviews.length > 4 ? `Average Rating ${rating.toFixed(1)}` : "New"}
+          </div>
         </div>
         <div className={classes.reviews}>
           {reviews.length > 0 ? (
@@ -58,7 +71,7 @@ function SpotPage() {
           )}
           {reviews.length > 1 ? (
             <div>
-              <ReviewCard reviews={reviews} review={reviews[1]} />
+              <ReviewCard reviews={reviews} review={reviews[0]} />
             </div>
           ) : null}
         </div>
