@@ -6,7 +6,7 @@
   position: absolute;
   top: 74px;
   left: 0;
-  height: 200%;
+  height: 300%;
   width: 100%;
 }
 
@@ -16,8 +16,8 @@
   padding: 2% 5%;
   opacity: none;
   margin-top: 100px;
-  height: 2280px;
-  width: 1200px;
+  height: 30%;
+  width: 50%;
   background-color: #fff;
   overflow-y: scroll;
 }

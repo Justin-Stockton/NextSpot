@@ -5,6 +5,7 @@
   margin: 0 20% 0 20%;
 }
 .photos {
+  display: flex;
   width: 100%;
   min-height: 560px;
   border-radius: 5px;
@@ -25,8 +26,8 @@
   display: flex;
   justify-content: space-evenly;
   min-height: 900px;
-  border-bottom: 1px solid black;
-  border-top: 1px solid black;
+  border-bottom: 1px solid #dddddd;
+  border-top: 1px solid #dddddd;
 }
 
 .formContainer {
@@ -34,8 +35,12 @@
   justify-content: center;
   height: 100%;
   width: 100%;
-  min-height: 900px;
+  /* min-height: 900px; */
+  position: sticky;
+  padding-bottom: 24px;
+  top: 10rem;
 }
+
 .textContainer {
   height: 100%;
   width: 100%;
@@ -46,7 +51,7 @@
   margin-top: 24px;
   height: fit-content;
   min-height: 400px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #dddddd;
   display: flex;
   flex-direction: column;
 }
@@ -65,4 +70,35 @@
   cursor: pointer;
   height: 40px;
   width: 100px;
+}
+
+.mainImg {
+  height: 100%;
+  width: 49%;
+  background-color: aqua;
+  min-height: 560px;
+  border-radius: 15px 0 0 15px;
+}
+
+.subImg {
+  min-width: 266px;
+  height: 275.6px;
+  background-color: aqua;
+  margin: 0 0 0 8px;
+}
+.topImgs {
+  display: flex;
+}
+.topRight {
+  display: flex;
+  border-radius: 0 15px 0 0;
+}
+
+.bottomImgs {
+  display: flex;
+  padding-top: 8px;
+}
+
+.bottomRight {
+  border-radius: 0 0 15px 0;
 }

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkUpdateBooking } from "../../../store/userBookings";
 
@@ -25,12 +24,8 @@ function EditBookingForm({ booking, setDisplay, display }) {
       startDate,
       endDate,
     };
-    // await dispatch(thunkGetUserBookings(user.id));
-    // dispatch(thunkUpdateBooking(data));
     dispatch(thunkUpdateBooking(data));
     setDisplay(false);
-    // history.push(`/${user.username}`);
-    console.log(data);
   };
 
   if (!display) return null;

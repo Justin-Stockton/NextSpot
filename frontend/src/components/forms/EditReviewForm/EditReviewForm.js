@@ -18,7 +18,6 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
       rating,
       review,
     };
-    console.log(data);
     dispatch(thunkUpdateSpotReview(data));
   };
   return (

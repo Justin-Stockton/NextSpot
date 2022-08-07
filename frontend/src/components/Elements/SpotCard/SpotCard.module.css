@@ -1,11 +1,15 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  padding: 2%;
-  border-radius: 3px;
-  border: 1px solid red;
-  width: 15%;
-  height: 10%;
+.imgSlideShowContainer {
   min-height: 300px;
-  max-width: 385px;
+  min-width: 285px;
+  max-width: 285px;
+
+  border-radius: 15px;
+  background-color: aqua;
+  overflow: none;
+}
+
+.textContainer {
+  padding-top: 5%;
+  padding-left: 1%;
+  cursor: pointer;
 }
