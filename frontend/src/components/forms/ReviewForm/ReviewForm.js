@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import classes from "./ReviewForm.module.css";
 import { thunkCreateReview } from "../../../store/reviews";
+import classes from "./ReviewForm.module.css";
 
 function ReviewForm({ spotId }) {
   let user = useSelector((state) => state.session.user);
@@ -14,7 +14,7 @@ function ReviewForm({ spotId }) {
     e.preventDefault();
     setErrors([]);
     if (!review.length) {
-      setErrors(["You must provide a description when adding a review"]);
+      setErrors(["You must provide a description when adding a review."]);
     }
 
     const data = {
@@ -35,25 +35,35 @@ function ReviewForm({ spotId }) {
   return (
     <div className={classes.reviewFormContainer}>
       <form onSubmit={handleSubmit} className={classes.form}>
-        <div>Let others know how your stay was</div>
-        <div>
-          {errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          {errors.map((error, i) => (
+            <div className={classes.errors} key={i}>
+              {error}
+            </div>
           ))}
         </div>
+        <div className={classes.ratingContainer}>
+          <strong>Let others know how your stay was</strong>
+          <div>
+            <select
+              className={classes.select}
+              onChange={(e) => setRating(e.target.value)}
+            >
+              <option value={5}>5</option>
+              <option value={4}>4</option>
+              <option value={3}>3</option>
+              <option value={2}>2</option>
+              <option value={1}>1</option>
+            </select>
+          </div>
+        </div>
         <textarea
-          placeholder="Leave a review"
+          className={classes.ta}
+          placeholder="* Write your review"
           value={review}
           onChange={(e) => setReview(e.target.value)}
         />
-        <select onChange={(e) => setRating(e.target.value)}>
-          <option value={5}>5</option>
-          <option value={4}>4</option>
-          <option value={3}>3</option>
-          <option value={2}>2</option>
-          <option value={1}>1</option>
-        </select>
-        <button>Submit</button>
+        <button className={classes.button}>Submit</button>
       </form>
     </div>
   );
