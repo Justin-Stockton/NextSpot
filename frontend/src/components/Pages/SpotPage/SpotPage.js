@@ -46,7 +46,7 @@ function SpotPage() {
       <div className={classes.bottomContainer}>
         <div className={classes.textContainer}></div>
         <div className={classes.formContainer}>
-          <BookingForm spot={spot} />
+          <BookingForm spot={spot} reviewsTotal={reviews.length} />
         </div>
       </div>
       <div className={classes.reviewsMainContainer}>

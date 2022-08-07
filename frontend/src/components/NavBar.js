@@ -14,7 +14,7 @@ const NavBar = () => {
       <div className={classes.container}>
         <img
           className={classes.logo}
-          src="media/1.svg"
+          src="/media/1.svg"
           alt="Next Spot Logo"
           onClick={() => history.push("/")}
         />
