@@ -7,10 +7,16 @@ function ReviewForm({ spotId }) {
   let user = useSelector((state) => state.session.user);
   const [rating, setRating] = useState(5);
   const [review, setReview] = useState("");
+  const [errors, setErrors] = useState([]);
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setErrors([]);
+    if (!review.length) {
+      setErrors(["You must provide a description when adding a review"]);
+    }
+
     const data = {
       userId: user.id,
       username: user.username,
@@ -18,14 +24,28 @@ function ReviewForm({ spotId }) {
       rating,
       review,
     };
-    dispatch(thunkCreateReview(data));
-    setReview("");
-    setRating(5);
+
+    if (review.length) {
+      dispatch(thunkCreateReview(data));
+      setReview("");
+      setRating(5);
+    }
   };
+
   return (
     <div className={classes.reviewFormContainer}>
       <form onSubmit={handleSubmit} className={classes.form}>
-        <textarea onChange={(e) => setReview(e.target.value)} />
+        <div>Let others know how your stay was</div>
+        <div>
+          {errors.map((error, ind) => (
+            <div key={ind}>{error}</div>
+          ))}
+        </div>
+        <textarea
+          placeholder="Leave a review"
+          value={review}
+          onChange={(e) => setReview(e.target.value)}
+        />
         <select onChange={(e) => setRating(e.target.value)}>
           <option value={5}>5</option>
           <option value={4}>4</option>

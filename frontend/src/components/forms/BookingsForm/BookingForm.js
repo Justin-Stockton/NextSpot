@@ -39,7 +39,6 @@ function BookingForm({ spot, reviewsTotal }) {
     await dispatch(thunkGetUserBookings(user.id));
     dispatch(thunkCreateBooking(data));
     history.push(`/${user.username}`);
-    console.log(data);
   };
 
   return (

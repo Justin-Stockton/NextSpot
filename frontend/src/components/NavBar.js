@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
-import LogoutButton from "./auth/LogoutButton";
 import ProfilePopup from "./Elements/ProfilePopup";
 import classes from "./Navbar.module.css";
 

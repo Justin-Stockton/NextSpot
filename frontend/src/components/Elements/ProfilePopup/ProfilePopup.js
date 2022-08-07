@@ -23,6 +23,7 @@ function ProfilePopup({ setDisplay, display }) {
           <div onClick={onLogout}>Log Out</div>
           <a
             target="_blank"
+            rel="noreferrer"
             href="https://github.com/Justin-Stockton"
             className={classes.links}
           >
