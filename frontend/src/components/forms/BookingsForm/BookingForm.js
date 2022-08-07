@@ -45,10 +45,10 @@ function BookingForm({ spot, reviewsTotal }) {
   return (
     <div className={classes.mainContainer}>
       <div className={classes.formTop}>
-        <div>
+        <div className={classes.price}>
           <strong>${spot.price}</strong> night
         </div>
-        <div>{reviewsTotal} reviews</div>
+        <div className={classes.reviews}>{reviewsTotal} reviews</div>
       </div>
       <div>
         <form>

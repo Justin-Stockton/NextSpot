@@ -80,3 +80,14 @@
   font-weight: 800;
   color: 222222;
 }
+
+.reviews {
+  color: #717171;
+  font-size: 14px;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.price {
+  font-size: 22px;
+}
