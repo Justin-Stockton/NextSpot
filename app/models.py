@@ -46,7 +46,7 @@ class Spots(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     userId = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'), nullable=False)
-    name = db.Column(db.String(50),nullable=False)
+    name = db.Column(db.String(500),nullable=False)
     price = db.Column(db.Integer,nullable=False)
     streetAdress = db.Column(db.String(400), nullable=False)
     city = db.Column(db.String(50), nullable=False)
@@ -58,6 +58,7 @@ class Spots(db.Model):
     img3 = db.Column(db.String(1000), nullable=True)
     img4 = db.Column(db.String(1000), nullable=True)
     img5 = db.Column(db.String(1000), nullable=True)
+    img6 = db.Column(db.String(1000), nullable=True)
     createdAt = db.Column(db.DateTime(timezone=True), nullable=False, server_default=func.now())
     updatedAt = db.Column(db.DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
 
@@ -81,6 +82,7 @@ class Spots(db.Model):
             img3=self.img3,
             img4=self.img4,
             img5=self.img5,
+            img6=self.img6,
             location=self.location,
             createdAt=self.createdAt,
             updatedAt=self.updatedAt,
