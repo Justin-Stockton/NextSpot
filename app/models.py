@@ -58,6 +58,7 @@ class Spots(db.Model):
     img3 = db.Column(db.String(1000), nullable=True)
     img4 = db.Column(db.String(1000), nullable=True)
     img5 = db.Column(db.String(1000), nullable=True)
+    img6 = db.Column(db.String(1000), nullable=True)
     createdAt = db.Column(db.DateTime(timezone=True), nullable=False, server_default=func.now())
     updatedAt = db.Column(db.DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
 
@@ -81,6 +82,7 @@ class Spots(db.Model):
             img3=self.img3,
             img4=self.img4,
             img5=self.img5,
+            img6=self.img6,
             location=self.location,
             createdAt=self.createdAt,
             updatedAt=self.updatedAt,
