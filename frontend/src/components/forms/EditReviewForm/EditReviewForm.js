@@ -7,9 +7,14 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
   let user = useSelector((state) => state.session.user);
   const [rating, setRating] = useState(currentReview.rating);
   const [review, setReview] = useState(currentReview.review);
+  const [errors, setErrors] = useState([]);
   const dispatch = useDispatch();
 
   const handleSubmit = () => {
+    setErrors([]);
+    if (!review.length) {
+      setErrors(["You must provide a description when adding a review."]);
+    }
     const data = {
       id: currentReview.id,
       userId: user.id,
@@ -18,8 +23,9 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
       rating,
       review,
     };
-    console.log(data);
-    dispatch(thunkUpdateSpotReview(data));
+    if (review.length) {
+      dispatch(thunkUpdateSpotReview(data));
+    }
   };
   return (
     <>

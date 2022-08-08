@@ -46,7 +46,7 @@ class Spots(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     userId = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'), nullable=False)
-    name = db.Column(db.String(50),nullable=False)
+    name = db.Column(db.String(200),nullable=False)
     price = db.Column(db.Integer,nullable=False)
     streetAdress = db.Column(db.String(400), nullable=False)
     city = db.Column(db.String(50), nullable=False)

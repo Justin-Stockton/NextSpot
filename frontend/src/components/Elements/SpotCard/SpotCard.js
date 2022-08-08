@@ -1,19 +1,27 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-// import classes from "./SpotCard.module.css";
+import { useHistory } from "react-router-dom";
+import classes from "./SpotCard.module.css";
 
 function SpotCard({ spot }) {
+  const history = useHistory();
   return (
     <>
-      <NavLink to={`/spots/${spot.id}`}>
+      <div className={classes.imgSlideShowContainer}>
+        <img className={classes.img} src={`${spot.img1}`} />
+      </div>
+      <div
+        className={classes.textContainer}
+        onClick={() => history.push(`/spots/${spot.id}`)}
+      >
         <div>
-          <div>{spot.name}</div>
-          <div>{spot.streetAdress}</div>
-          <div>{spot.city}</div>
-          <div>{spot.state}</div>
-          <div>{spot.zip}</div>
+          <strong>
+            {spot.city}, {spot.state}
+          </strong>
         </div>
-      </NavLink>
+        <div>
+          <strong>${spot.price}</strong> night
+        </div>
+      </div>
     </>
   );
 }

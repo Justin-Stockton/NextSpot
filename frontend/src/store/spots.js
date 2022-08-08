@@ -60,9 +60,7 @@ const spots = (state = {}, action) => {
 
     case CREATE_REVIEW: {
       const { review } = action;
-      console.log(newState[review.spotId].spot.reviews);
-      console.log((newState[review.spotId].spot.reviews[review.id] = review));
-      console.log(newState[review.spotId].spot.reviews);
+      newState[review.spotId].spot.reviews[review.id] = review;
       return newState;
     }
 

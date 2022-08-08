@@ -46,7 +46,7 @@ function UserPage() {
               <div>
                 <div>
                   {!display ? (
-                    <div onClick={() => setDisplay(true)}>Edit</div>
+                    <div onDoubleClick={() => setDisplay(true)}>Edit</div>
                   ) : (
                     <EditBookingForm
                       booking={booking}

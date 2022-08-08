@@ -8,7 +8,7 @@ function HomePage() {
 
   return (
     <div>
-      <h1>HomePage</h1>
+      <div className={classes.filterBar}></div>
       <div className={classes.mainContainer}>
         {Object.values(spots).length > 0 ? (
           Object.values(spots).map((spot, i) => {
