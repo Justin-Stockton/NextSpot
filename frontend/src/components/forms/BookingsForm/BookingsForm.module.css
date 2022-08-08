@@ -5,7 +5,7 @@
   padding: 24px;
   border-radius: 15px;
   height: fit-content;
-  width: 372px;
+  width: 400px;
 }
 
 .formTop {
@@ -20,6 +20,7 @@
   border: 1px solid #7b7b7b;
   border-radius: 15px 15px 0 0;
   min-height: fit-content;
+  min-width: 300px;
 
   margin-top: 25px;
 }
@@ -39,7 +40,7 @@
   min-height: 50px;
   cursor: pointer;
   border-radius: 8px;
-  margin-top: 10%;
+  margin-top: 5%;
   color: #fff;
   font-weight: bold;
   font-size: 16px;
@@ -84,10 +85,14 @@
 .reviews {
   color: #717171;
   font-size: 14px;
-  text-decoration: underline;
+  /* text-decoration: underline; */
   font-weight: 600;
 }
 
 .price {
   font-size: 22px;
+}
+
+.input {
+  border: none;
 }

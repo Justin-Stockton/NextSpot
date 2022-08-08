@@ -6,7 +6,9 @@ function SpotCard({ spot }) {
   const history = useHistory();
   return (
     <>
-      <div className={classes.imgSlideShowContainer}></div>
+      <div className={classes.imgSlideShowContainer}>
+        <img className={classes.img} src={`${spot.img1}`} />
+      </div>
       <div
         className={classes.textContainer}
         onClick={() => history.push(`/spots/${spot.id}`)}

@@ -43,14 +43,14 @@ function SpotPage() {
           <div className={classes.topImgs}>
             <div className={classes.subImg}>
               <img
-                className={`${classes.img} ${classes.subImg}`}
+                className={`${classes.img} `}
                 src={`${spot.img2}`}
                 alt="The house"
               />
             </div>
             <div className={`${classes.subImg} ${classes.topRight}`}>
               <img
-                className={`${classes.img} ${classes.subImg} ${classes.topRight}`}
+                className={`${classes.img} ${classes.topRight}`}
                 src={`${spot.img3}`}
                 alt="The house"
               />
@@ -59,14 +59,14 @@ function SpotPage() {
           <div className={classes.bottomImgs}>
             <div className={classes.subImg}>
               <img
-                className={`${classes.img} ${classes.subImg}`}
+                className={`${classes.img} `}
                 src={`${spot.img4}`}
                 alt="The house"
               />
             </div>
             <div className={`${classes.subImg} ${classes.bottomRight}`}>
               <img
-                className={`${classes.img} ${classes.subImg} ${classes.bottomRight}`}
+                className={`${classes.img}  ${classes.bottomRight}`}
                 src={`${spot.img5}`}
                 alt="The house"
               />

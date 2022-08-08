@@ -64,6 +64,7 @@ function BookingForm({ spot, reviewsTotal }) {
                   onChange={(e) => setStartDate(e.target.value)}
                   min={tomorrow}
                   required
+                  className={classes.input}
                 />
               </label>
             </div>
@@ -76,6 +77,7 @@ function BookingForm({ spot, reviewsTotal }) {
                   onChange={(e) => setEndDate(e.target.value)}
                   min={initialMin}
                   required
+                  className={classes.input}
                 />
               </label>
             </div>
