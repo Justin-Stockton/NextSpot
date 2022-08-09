@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { thunkCreateReview } from "../../../store/reviews";
 import classes from "./ReviewForm.module.css";
 
 function ReviewForm({ spotId }) {
   let user = useSelector((state) => state.session.user);
+  const history = useHistory();
   const [rating, setRating] = useState(5);
   const [review, setReview] = useState("");
   const [errors, setErrors] = useState([]);
@@ -12,9 +14,18 @@ function ReviewForm({ spotId }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!user) {
+      history.push("/login");
+      return alert("You must be logged in to leave a review");
+    }
     setErrors([]);
     if (!review.length) {
       setErrors(["You must provide a description when adding a review."]);
+    }
+    if (review.length > 1000) {
+      setErrors([
+        "You must provide a description less than 1000 characters when adding a review.",
+      ]);
     }
 
     const data = {

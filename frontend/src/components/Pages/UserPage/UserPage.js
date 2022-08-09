@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  thunkGetUserBookings,
-  thunkDeleteUserBookings,
-} from "../../../store/userBookings";
+import { thunkGetUserBookings } from "../../../store/userBookings";
 import EditBookingForm from "../../forms/EditBookingForm";
 import classes from "./UserPage.module.css";
 
@@ -26,38 +23,25 @@ function UserPage() {
     return null;
   }
 
-  const deleteBooking = (bookingId) => {
-    dispatch(thunkDeleteUserBookings(bookingId));
-  };
-
   return (
-    <>
+    <div className={classes.container}>
       {Object.values(userBookings).length > 0 ? (
         Object.values(userBookings).map((booking, i) => {
           return (
-            <div className={classes.container} key={i}>
-              {/*
-              <div> {booking.guestCount}</div>
-            <div> {booking.cost}</div> */}
-              <div> {booking.spotName}</div>
-              <div> {booking.id}</div>
-              <div> {booking.startDate}</div>
-              <div> {booking.endDate}</div>
-              <div>
-                <div>
-                  {!display ? (
-                    <div onDoubleClick={() => setDisplay(true)}>Edit</div>
-                  ) : (
-                    <EditBookingForm
-                      booking={booking}
-                      display={display}
-                      setDisplay={setDisplay}
-                    />
-                  )}
+            <div className={classes.mainContainer} key={i}>
+              <div className={classes.infoContainer}>
+                <div className={classes.spotName}> {booking.spotName}</div>
+                <div className={classes.bookingDates}>
+                  <div>Check in</div>
+                  <div>
+                    {booking.startDate.split(" ").splice(0, 4).join(" ")}
+                  </div>
                 </div>
-                <div onClick={() => deleteBooking(booking.id)}>
-                  Cancel Booking
+                <div className={classes.bookingDates}>
+                  <div>Check out</div>
+                  <div>{booking.endDate.split(" ").splice(0, 4).join(" ")}</div>
                 </div>
+                <EditBookingForm booking={booking} />
               </div>
             </div>
           );
@@ -65,7 +49,7 @@ function UserPage() {
       ) : (
         <p>It looks like you havent booked anything yet!</p>
       )}
-    </>
+    </div>
   );
 }
 export default UserPage;

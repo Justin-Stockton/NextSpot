@@ -1,0 +1,86 @@
+.modalBackground {
+  display: flex;
+  z-index: 10;
+  justify-content: center;
+  position: absolute;
+  top: 80px;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.modalForeground {
+  position: sticky;
+  border: 1px solid #dddddd;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+
+  z-index: 11;
+  opacity: none;
+  margin-top: 100px;
+  height: 12.5%;
+  min-height: 40%;
+  width: 30%;
+  background-color: #fff;
+  border-radius: 6px;
+  top: 25%;
+  min-width: fit-content;
+  padding: 0 2%;
+}
+
+.formTop {
+  display: flex;
+  justify-content: space-between;
+  padding: 4% 2%;
+  border-bottom: 1px solid #dddddd;
+}
+
+.placeHolder {
+  height: 1px;
+  width: 1px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  width: 100%;
+  min-width: 400px;
+  min-height: 50px;
+  padding: 4%;
+  border: none;
+  border: 1px solid rgb(34 34 34 / 0.5);
+}
+
+.password {
+  border-radius: 0 0 12px 12px;
+  border-top: none;
+  margin-bottom: 5%;
+}
+
+.email {
+  border-radius: 12px 12px 0 0;
+}
+
+.signup {
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+  /* background-color: aqua; */
+}
+
+.button {
+  background-color: #ff385c;
+  border: none;
+  color: #fff;
+  height: 45px;
+  width: 100px;
+  border-radius: 12px;
+}
+
+.header {
+  font-size: 22px;
+  font-weight: 600;
+  padding: 5% 0;
+}
