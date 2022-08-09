@@ -10,6 +10,7 @@ import { thunkGetSpots } from "./store/spots";
 import HomePage from "./components/Pages/HomePage";
 import SpotPage from "./components/Pages/SpotPage";
 import UserPage from "./components/Pages/UserPage";
+import LoginModal from "./components/forms/LoginModal";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -32,7 +33,7 @@ function App() {
       <NavBar />
       <Switch>
         <Route path="/login" exact={true}>
-          <LoginForm />
+          <LoginModal />
         </Route>
         <Route path="/sign-up" exact={true}>
           <SignUpForm />
