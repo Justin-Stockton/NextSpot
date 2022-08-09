@@ -113,6 +113,7 @@
 .amenitiesContainer {
   display: flex;
   width: 100%;
+
   justify-content: space-between;
 }
 .amenitiesContainer > * {
@@ -128,4 +129,34 @@
   display: flex;
   justify-content: space-between;
   padding: 22px 0;
+}
+
+.spotCover {
+  border: none;
+  width: 23%;
+  min-width: 123.9px;
+  height: 30%;
+  min-height: 49px;
+  padding: 2% 0;
+}
+
+.spotCoverContainer {
+  padding-top: 0;
+}
+
+.amenitiesIcons {
+  height: 25px;
+  width: 25px;
+  margin-right: 5%;
+}
+
+.subContainer {
+  display: flex;
+  justify-content: left;
+
+  min-width: 100px;
+}
+
+.amenities {
+  min-width: 230px;
 }

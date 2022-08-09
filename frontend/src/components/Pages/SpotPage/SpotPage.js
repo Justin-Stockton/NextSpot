@@ -75,10 +75,13 @@ function SpotPage() {
         </div>
       </div>
       <div className={classes.bottomContainer}>
-        <div className={classes.textContainer}>
-          <div>
-            Every booking includes free protection from Host cancellations,
-            listing inaccuracies, and other issues like trouble checking in.
+        <div className={`${classes.textContainer}`}>
+          <div className={classes.spotCoverContainer}>
+            <img className={classes.spotCover} src="/static/spotcover.svg" />
+            <div>
+              Every booking includes free protection from Host cancellations,
+              listing inaccuracies, and other issues like trouble checking in.
+            </div>
           </div>
           <div>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -93,18 +96,78 @@ function SpotPage() {
             <strong style={{ fontSize: "22px" }}>What this spot offers</strong>
             <div className={classes.amenitiesContainer}>
               <div className={classes.amenities}>
-                <div>Lake view</div>
-                <div>Waterfront</div>
-                <div>Kitchen</div>
-                <div>Wifi</div>
-                <div>Dedicated workspace</div>
+                <div className={classes.subContainer}>
+                  <img
+                    className={classes.amenitiesIcons}
+                    src="/static/stay.svg"
+                  />
+                  <div>Long term stays allowed</div>
+                </div>
+                <div className={classes.subContainer}>
+                  <img
+                    className={classes.amenitiesIcons}
+                    src="/static/waterfront.svg"
+                  />
+                  <div>Waterfront</div>
+                </div>
+                <div className={classes.subContainer}>
+                  <img
+                    className={classes.amenitiesIcons}
+                    src="/static/kitchen.svg"
+                  />
+                  <div>Kitchen</div>
+                </div>
+                <div className={classes.subContainer}>
+                  <img
+                    className={classes.amenitiesIcons}
+                    src="/static/wifi.svg"
+                  />
+                  <div>Wifi</div>
+                </div>
+                <div className={classes.subContainer}>
+                  <img
+                    className={classes.amenitiesIcons}
+                    src="/static/workspace.svg"
+                  />
+                  <div>Dedicated workspace</div>
+                </div>
               </div>
               <div className={classes.amenities}>
-                <div>Free parking on premises</div>
-                <div>50" HDTV with Roku</div>
-                <div>Free washer – In unit</div>
-                <div>Free dryer – In unit</div>
-                <div>Central air conditioning</div>
+                <div className={classes.subContainer}>
+                  <img
+                    className={classes.amenitiesIcons}
+                    src="/static/parking.svg"
+                  />
+                  <div>Free parking on premises</div>
+                </div>
+                <div className={classes.subContainer}>
+                  <img
+                    className={classes.amenitiesIcons}
+                    src="/static/tv.svg"
+                  />
+                  <div>50" HDTV with Roku</div>
+                </div>
+                <div className={classes.subContainer}>
+                  <img
+                    className={classes.amenitiesIcons}
+                    src="/static/washer.svg"
+                  />
+                  <div>Free washer – In unit</div>
+                </div>
+                <div className={classes.subContainer}>
+                  <img
+                    className={classes.amenitiesIcons}
+                    src="/static/dryer.svg"
+                  />
+                  <div>Free dryer – In unit</div>
+                </div>
+                <div className={classes.subContainer}>
+                  <img
+                    className={classes.amenitiesIcons}
+                    src="/static/ac.svg"
+                  />
+                  <div>Central air conditioning</div>
+                </div>
               </div>
             </div>
           </div>
