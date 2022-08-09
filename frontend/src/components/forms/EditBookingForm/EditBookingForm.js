@@ -85,9 +85,11 @@ function EditBookingForm({ booking }) {
                 </div>
               </div>
               <div className={classes.guests}>
-                {stayLength <= 0
-                  ? "Invalid booking"
-                  : `Stay length ${stayLength} nights`}
+                {stayLength <= 0 ? (
+                  <div>Checkout date must come after checkin date</div>
+                ) : (
+                  `Stay length ${stayLength} nights`
+                )}
               </div>
               {stayLength > 0 ? (
                 <div className={classes.bookingsButton} onClick={submit}>

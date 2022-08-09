@@ -29,6 +29,10 @@ function BookingForm({ spot, reviewsTotal }) {
   let stayLength = (new Date(endDate) - new Date(startDate)) / 1000 / 86400;
 
   const submit = async () => {
+    if (!user) {
+      history.push("/login");
+      return alert("You must be logged in to reserve a booking");
+    }
     const data = {
       userId: user.id,
       spotId: spot.id,
@@ -83,9 +87,11 @@ function BookingForm({ spot, reviewsTotal }) {
             </div>
           </div>
           <div className={classes.guests}>
-            {stayLength <= 0
-              ? "Invalid booking"
-              : `Stay length ${stayLength} nights`}
+            {stayLength <= 0 ? (
+              <div>Checkout date must come after checkin date</div>
+            ) : (
+              `Stay length ${stayLength} nights`
+            )}
           </div>
           {stayLength > 0 ? (
             <div className={classes.bookingsButton} onClick={submit}>
