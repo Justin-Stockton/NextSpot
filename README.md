@@ -2,7 +2,7 @@
 
 > _Airbnb Clone_
 
-- 'NextSpot' is designed for users to plan out their next getaway. Users will be able to book trips to destinations ('Spots') that they would like to visit. If a user is having problems deciding on what to pick next there will be a wish list feature for them to add as many spots as they would like to sort through.
+- 'NextSpot' is designed for users to plan out their next getaway. Users will be able to book trips to destinations ('Spots') that they would like to visit and leave a review of spots.
 
 # Technologies & Tools
 
