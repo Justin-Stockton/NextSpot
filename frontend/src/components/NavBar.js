@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { NavLink, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import LoginPopup from "./Elements/LoginPopup";
 import ProfilePopup from "./Elements/ProfilePopup";
 import classes from "./Navbar.module.css";
@@ -26,7 +26,11 @@ const NavBar = () => {
                 !display ? setDisplay(true) : setDisplay(false);
               }}
             >
-              <img className={classes.hamburger} src="/static/hamburger.svg" />{" "}
+              <img
+                alt="menu"
+                className={classes.hamburger}
+                src="/static/hamburger.svg"
+              />{" "}
               Login
             </div>
             <LoginPopup setDisplay={setDisplay} display={display} />
@@ -39,7 +43,11 @@ const NavBar = () => {
                 !display ? setDisplay(true) : setDisplay(false);
               }}
             >
-              <img className={classes.hamburger} src="/static/hamburger.svg" />{" "}
+              <img
+                alt="menu"
+                className={classes.hamburger}
+                src="/static/hamburger.svg"
+              />{" "}
               {user.username}
             </div>
             <ProfilePopup setDisplay={setDisplay} display={display} />

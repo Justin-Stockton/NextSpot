@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import classes from "../ProfilePopup/ProfilePopup.module.css";
 import { login } from "../../../store/session";

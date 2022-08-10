@@ -15,6 +15,11 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
     if (!review.length) {
       setErrors(["You must provide a description when adding a review."]);
     }
+    if (review.length > 1000) {
+      setErrors([
+        "You must provide a description less than 1000 characters when adding a review.",
+      ]);
+    }
     const data = {
       id: currentReview.id,
       userId: user.id,
@@ -32,6 +37,13 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
       {toggleForm ? (
         <div>
           <form>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              {errors.map((error, i) => (
+                <div className={classes.errors} key={i}>
+                  {error}
+                </div>
+              ))}
+            </div>
             <textarea
               value={review}
               onChange={(e) => setReview(e.target.value)}

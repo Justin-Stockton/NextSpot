@@ -10,7 +10,6 @@ function UserPage() {
   const dispatch = useDispatch();
   const userBookings = useSelector((state) => state.userBookings);
   const observer = useSelector((state) => state.spots);
-  const [display, setDisplay] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -47,7 +46,9 @@ function UserPage() {
           );
         })
       ) : (
-        <p>It looks like you havent booked anything yet!</p>
+        <div className={classes.noSpots}>
+          It looks like you havent booked anything yet!
+        </div>
       )}
     </div>
   );

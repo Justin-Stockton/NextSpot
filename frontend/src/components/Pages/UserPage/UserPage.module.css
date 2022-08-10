@@ -60,3 +60,14 @@
 .cancel {
   padding: 0 3%;
 }
+
+.noSpots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+}
+.container {
+  display: flex;
+  justify-content: center;
+}

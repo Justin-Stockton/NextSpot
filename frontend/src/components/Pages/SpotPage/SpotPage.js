@@ -10,7 +10,6 @@ import ReviewCard from "../../Elements/ReviewCard";
 function SpotPage() {
   const { spotId } = useParams();
   let spot = useSelector((state) => state.spots[spotId].spot);
-  console.log(spot);
   let reviews = Object.values(spot.reviews);
 
   let ratings = 0;
@@ -35,7 +34,7 @@ function SpotPage() {
         <h1>{spot.name}</h1>
         <div>
           {rating > 0 ? rating : "New"}{" "}
-          <img className={classes.star} src="/static/star.svg" />{" "}
+          <img alt="star" className={classes.star} src="/static/star.svg" />{" "}
           <strong>·</strong> {reviews.length} reviews <strong>·</strong>{" "}
           {spot.city}, {spot.state}, United States
         </div>
@@ -86,7 +85,11 @@ function SpotPage() {
       <div className={classes.bottomContainer}>
         <div className={`${classes.textContainer}`}>
           <div className={classes.spotCoverContainer}>
-            <img className={classes.spotCover} src="/static/spotcover.svg" />
+            <img
+              alt="spot cover"
+              className={classes.spotCover}
+              src="/static/spotcover.svg"
+            />
             <div>
               Every booking includes free protection from Host cancellations,
               listing inaccuracies, and other issues like trouble checking in.
@@ -107,6 +110,7 @@ function SpotPage() {
               <div className={classes.amenities}>
                 <div className={classes.subContainer}>
                   <img
+                    alt="amenities"
                     className={classes.amenitiesIcons}
                     src="/static/stay.svg"
                   />
@@ -114,6 +118,7 @@ function SpotPage() {
                 </div>
                 <div className={classes.subContainer}>
                   <img
+                    alt="amenities"
                     className={classes.amenitiesIcons}
                     src="/static/waterfront.svg"
                   />
@@ -121,6 +126,7 @@ function SpotPage() {
                 </div>
                 <div className={classes.subContainer}>
                   <img
+                    alt="amenities"
                     className={classes.amenitiesIcons}
                     src="/static/kitchen.svg"
                   />
@@ -128,6 +134,7 @@ function SpotPage() {
                 </div>
                 <div className={classes.subContainer}>
                   <img
+                    alt="amenities"
                     className={classes.amenitiesIcons}
                     src="/static/wifi.svg"
                   />
@@ -135,6 +142,7 @@ function SpotPage() {
                 </div>
                 <div className={classes.subContainer}>
                   <img
+                    alt="amenities"
                     className={classes.amenitiesIcons}
                     src="/static/workspace.svg"
                   />
@@ -144,6 +152,7 @@ function SpotPage() {
               <div className={classes.amenities}>
                 <div className={classes.subContainer}>
                   <img
+                    alt="amenities"
                     className={classes.amenitiesIcons}
                     src="/static/parking.svg"
                   />
@@ -151,6 +160,7 @@ function SpotPage() {
                 </div>
                 <div className={classes.subContainer}>
                   <img
+                    alt="amenities"
                     className={classes.amenitiesIcons}
                     src="/static/tv.svg"
                   />
@@ -158,6 +168,7 @@ function SpotPage() {
                 </div>
                 <div className={classes.subContainer}>
                   <img
+                    alt="amenities"
                     className={classes.amenitiesIcons}
                     src="/static/washer.svg"
                   />
@@ -165,6 +176,7 @@ function SpotPage() {
                 </div>
                 <div className={classes.subContainer}>
                   <img
+                    alt="amenities"
                     className={classes.amenitiesIcons}
                     src="/static/dryer.svg"
                   />
@@ -172,6 +184,7 @@ function SpotPage() {
                 </div>
                 <div className={classes.subContainer}>
                   <img
+                    alt="amenities"
                     className={classes.amenitiesIcons}
                     src="/static/ac.svg"
                   />
@@ -189,7 +202,7 @@ function SpotPage() {
         <div className={classes.reviewsContainer}>
           <div>
             {rating > 0 ? rating : "New"}{" "}
-            <img className={classes.star} src="/static/star.svg" />{" "}
+            <img alt="star" className={classes.star} src="/static/star.svg" />{" "}
             <strong>·</strong> {reviews.length}{" "}
             {reviews.length === 1 ? "Review" : "Reviews"}
           </div>
