@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import classes from "./ProfilePopup.module.css";
 import { logout } from "../../../store/session";
+import { thunkLogout } from "../../../store/userBookings";
 
 function ProfilePopup({ setDisplay, display }) {
   const user = useSelector((state) => state.session.user);
@@ -11,6 +12,7 @@ function ProfilePopup({ setDisplay, display }) {
 
   const onLogout = async (e) => {
     setDisplay(false);
+    await dispatch(thunkLogout());
     await dispatch(logout());
   };
 

@@ -53,7 +53,7 @@ function BookingForm({ spot, reviewsTotal, rating }) {
         </div>
         <div className={classes.reviews}>
           {rating > 0 ? rating : "New"}{" "}
-          <img className={classes.star} src="/static/star.svg" />{" "}
+          <img alt="star" className={classes.star} src="/static/star.svg" />{" "}
           <strong>·</strong> {reviewsTotal} reviews
         </div>
       </div>

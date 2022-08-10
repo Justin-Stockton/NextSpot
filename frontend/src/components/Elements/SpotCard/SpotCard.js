@@ -7,7 +7,7 @@ function SpotCard({ spot }) {
   return (
     <>
       <div className={classes.imgSlideShowContainer}>
-        <img className={classes.img} src={`${spot.img1}`} />
+        <img alt="Spot exterior" className={classes.img} src={`${spot.img1}`} />
       </div>
       <div
         className={classes.textContainer}

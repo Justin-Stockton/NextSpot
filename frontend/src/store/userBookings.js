@@ -1,6 +1,7 @@
 export const GET_USER_BOOKINGS = "userBookings/GET_USER_BOOKINGS";
 export const DELETE_USER_BOOKING = "userBookings/DELETE_USER_BOOKING";
 export const UPDATE_BOOKING = "userBookings/UPDATE_BOOKING";
+export const LOGOUT_BOOKING = "userBookings/LOGOUT_BOOKING";
 
 const actionGetUserBookings = (bookings) => {
   return {
@@ -13,6 +14,12 @@ const actionUpdateBooking = (booking) => {
   return {
     type: UPDATE_BOOKING,
     booking,
+  };
+};
+
+const actionLogout = () => {
+  return {
+    type: LOGOUT_BOOKING,
   };
 };
 
@@ -52,6 +59,10 @@ export const thunkUpdateBooking = (booking) => async (dispatch) => {
   }
 };
 
+export const thunkLogout = () => async (dispatch) => {
+  await dispatch(actionLogout());
+};
+
 export const thunkDeleteUserBookings = (bookingId) => async (dispatch) => {
   const response = await fetch(`/api/bookings/delete`, {
     method: "delete",
@@ -88,6 +99,10 @@ const userBookings = (state = {}, action) => {
     case DELETE_USER_BOOKING: {
       const id = action.bookingId;
       delete newState[id];
+      return newState;
+    }
+    case LOGOUT_BOOKING: {
+      newState = {};
       return newState;
     }
     default: {
