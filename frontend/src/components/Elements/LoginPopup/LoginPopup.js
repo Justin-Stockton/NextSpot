@@ -34,9 +34,33 @@ function LoginPopup({ display, setDisplay }) {
             Sign up
           </div>
 
-          <div onClick={handleDemoLogin} style={{ borderBottom: "none" }}>
-            Demo
-          </div>
+          <div onClick={handleDemoLogin}>Demo</div>
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://github.com/Justin-Stockton"
+            className={classes.links}
+          >
+            <div
+              onClick={() => setDisplay(false)}
+              style={{ borderBottom: "none" }}
+            >
+              GitHub
+            </div>
+          </a>
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://www.linkedin.com/"
+            className={classes.links}
+          >
+            <div
+              onClick={() => setDisplay(false)}
+              style={{ borderBottom: "none" }}
+            >
+              Linkedin
+            </div>
+          </a>
         </div>
       ) : null}
     </>
