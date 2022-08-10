@@ -1,17 +1,76 @@
-.buttonContainer {
+.reviewFormContainer {
+  margin-top: 24px;
   display: flex;
-  width: 20%;
-  justify-content: space-between;
+  flex-direction: column;
+  background-color: #fff;
+  border: 1px solid #dddddd;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+  padding: 24px;
+  border-radius: 15px;
+  height: fit-content;
+  width: 40%;
+  margin-bottom: 25px;
+  min-width: 300px;
+}
+
+.errors {
+  /* display: flex;
+  align-items: center; */
+  padding: 4%;
+  width: 80%;
+  background-color: red;
+  color: #fff;
+  border-radius: 15px;
   margin-bottom: 15px;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 4% 0 4%;
 }
 
 .button {
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 40px;
-  width: 60px;
-  border: 1px solid black;
-  border-radius: 15px;
+  justify-content: center;
+  background-color: #ff385c;
+  border-radius: 12px;
+  color: white;
+  border: none;
+  width: 100px;
+  padding: 15px;
   cursor: pointer;
+}
+
+.ta {
+  resize: none;
+  height: 100px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.select {
+  display: flex;
+  height: 32px;
+  width: 40px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-left: 80%;
+}
+
+.ratingContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.buttonContainer {
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+  margin-bottom: 15px;
 }
