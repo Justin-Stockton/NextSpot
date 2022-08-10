@@ -49,10 +49,12 @@ function EditBookingForm({ booking }) {
     <div>
       {formDisplay ? (
         <div className={classes.mainContainer}>
-          <div onClick={() => setFormDisplay(false)}>x</div>
-          <div className={classes.formTop}>
-            <div>Edit your booking</div>
-          </div>
+          <img
+            src="/static/x.svg"
+            className={classes.x}
+            alt="x"
+            onClick={() => setFormDisplay(false)}
+          />
           <div>
             <form>
               <div className={classes.calendars}>
@@ -60,26 +62,28 @@ function EditBookingForm({ booking }) {
                   className={classes.calendar}
                   style={{ borderRight: "1px solid #7b7b7b" }}
                 >
-                  <label>
-                    Start Date:
+                  <label className={classes.check}>
+                    CHECK-IN
                     <input
                       type="date"
                       value={startDate}
                       onChange={(e) => setStartDate(e.target.value)}
                       min={tomorrow}
                       required
+                      className={classes.input}
                     />
                   </label>
                 </div>
                 <div className={classes.calendar}>
-                  <label>
-                    End Date:
+                  <label className={classes.check}>
+                    CHECKOUT
                     <input
                       type="date"
                       value={endDate}
                       onChange={(e) => setEndDate(e.target.value)}
                       min={startDate}
                       required
+                      className={classes.input}
                     />
                   </label>
                 </div>
