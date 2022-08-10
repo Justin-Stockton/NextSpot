@@ -21,7 +21,8 @@
   padding: 5px 5px 5px 5px;
 
   height: 42px;
-  width: 77px;
+  width: fit-content;
+  min-width: 77px;
 
   cursor: pointer;
   -webkit-user-select: none;

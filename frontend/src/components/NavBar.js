@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
+import LoginPopup from "./Elements/LoginPopup";
 import ProfilePopup from "./Elements/ProfilePopup";
 import classes from "./Navbar.module.css";
 
@@ -19,16 +20,15 @@ const NavBar = () => {
         />
         {!user ? (
           <>
-            <div>
-              <NavLink to="/login" exact={true} activeClassName="active">
-                Login
-              </NavLink>
+            <div
+              className={classes.profile}
+              onClick={() => {
+                !display ? setDisplay(true) : setDisplay(false);
+              }}
+            >
+              Login
             </div>
-            <div>
-              <NavLink to="/sign-up" exact={true} activeClassName="active">
-                Sign Up
-              </NavLink>
-            </div>
+            <LoginPopup setDisplay={setDisplay} display={display} />
           </>
         ) : (
           <>
@@ -38,7 +38,7 @@ const NavBar = () => {
                 !display ? setDisplay(true) : setDisplay(false);
               }}
             >
-              Profile
+              {user.username}
             </div>
             <ProfilePopup setDisplay={setDisplay} display={display} />
           </>

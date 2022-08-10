@@ -19,7 +19,13 @@ function SpotPage() {
     ratings += review.rating;
   });
 
-  let rating = ratings / reviews.length;
+  let rating;
+
+  if ((ratings / reviews.length).toFixed(2).toString().split("")[3] === "0") {
+    rating = (ratings / reviews.length).toFixed(1);
+  } else {
+    rating = (ratings / reviews.length).toFixed(2);
+  }
 
   const [display, setDisplay] = useState(false);
 
@@ -28,7 +34,10 @@ function SpotPage() {
       <div className={classes.nameHeading}>
         <h1>{spot.name}</h1>
         <div>
-          {reviews.length} reviews - {spot.city}, {spot.state}, United States
+          {rating > 0 ? rating : "New"}{" "}
+          <img className={classes.star} src="/static/star.svg" />{" "}
+          <strong>·</strong> {reviews.length} reviews <strong>·</strong>{" "}
+          {spot.city}, {spot.state}, United States
         </div>
       </div>
       <div className={classes.photos}>
@@ -179,10 +188,10 @@ function SpotPage() {
       <div className={classes.reviewsMainContainer}>
         <div className={classes.reviewsContainer}>
           <div>
-            {reviews.length} {reviews.length === 1 ? "Review" : "Reviews"}
-          </div>
-          <div>
-            {reviews.length > 4 ? `Average Rating ${rating.toFixed(1)}` : "New"}
+            {rating > 0 ? rating : "New"}{" "}
+            <img className={classes.star} src="/static/star.svg" />{" "}
+            <strong>·</strong> {reviews.length}{" "}
+            {reviews.length === 1 ? "Review" : "Reviews"}
           </div>
         </div>
         <div className={classes.reviews}>
@@ -191,6 +200,7 @@ function SpotPage() {
               <ReviewCard
                 reviews={reviews}
                 review={reviews[reviews.length - 1]}
+                rating={rating}
               />
             </div>
           ) : (

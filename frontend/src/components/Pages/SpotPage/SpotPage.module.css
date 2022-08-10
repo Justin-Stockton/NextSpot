@@ -4,6 +4,7 @@
   height: fit-content;
   margin: 0 20% 0 20%;
 }
+
 .photos {
   display: flex;
   width: 100%;
@@ -65,11 +66,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 15px;
-  border: 1px solid black;
+  border-radius: 12px;
+  color: #fff;
   cursor: pointer;
-  height: 40px;
-  width: 100px;
+  height: 50px;
+  width: 150px;
+  background-color: #ff385c;
+  padding: 0 5px;
+  margin-top: 20px;
+  font-weight: 600;
 }
 
 .mainImg {
@@ -86,9 +91,11 @@
   /* background-color: aqua; */
   margin: 0 0 0 8px;
 }
+
 .topImgs {
   display: flex;
 }
+
 .topRight {
   display: flex;
   border-radius: 0 15px 0 0;
@@ -159,4 +166,9 @@
 
 .amenities {
   min-width: 230px;
+}
+
+.star {
+  height: 12px;
+  width: 10px;
 }

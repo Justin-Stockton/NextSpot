@@ -10,6 +10,7 @@ function ProfilePopup({ setDisplay, display }) {
   const dispatch = useDispatch();
 
   const onLogout = async (e) => {
+    setDisplay(false);
     await dispatch(logout());
   };
 
@@ -17,7 +18,12 @@ function ProfilePopup({ setDisplay, display }) {
     <>
       {display ? (
         <div className={classes.mainContainer}>
-          <div onClick={() => history.push(`/${user.username}`)}>
+          <div
+            onClick={() => {
+              history.push(`/${user.username}`);
+              setDisplay(false);
+            }}
+          >
             My Bookings
           </div>
           <div onClick={onLogout}>Log Out</div>
@@ -27,7 +33,12 @@ function ProfilePopup({ setDisplay, display }) {
             href="https://github.com/Justin-Stockton"
             className={classes.links}
           >
-            <div style={{ borderBottom: "none" }}>GitHub</div>
+            <div
+              onClick={() => setDisplay(false)}
+              style={{ borderBottom: "none" }}
+            >
+              GitHub
+            </div>
           </a>
         </div>
       ) : null}
