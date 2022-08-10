@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { thunkCreateReview } from "../../../store/reviews";
 import classes from "./ReviewForm.module.css";
 
-function ReviewForm({ spotId }) {
+function ReviewForm({ spotId, setDisplay }) {
   let user = useSelector((state) => state.session.user);
   const history = useHistory();
   const [rating, setRating] = useState(5);
@@ -40,6 +40,7 @@ function ReviewForm({ spotId }) {
       dispatch(thunkCreateReview(data));
       setReview("");
       setRating(5);
+      setDisplay(false);
     }
   };
 

@@ -2,11 +2,11 @@
   display: flex;
   z-index: 10;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.3);
   position: absolute;
-  top: 74px;
+  top: 0px;
   left: 0;
-  height: 300%;
+  height: 255%;
   width: 100%;
 }
 
@@ -29,13 +29,13 @@
   z-index: 11;
   padding: 2% 5%;
   opacity: none;
-  margin-top: 100px;
-  height: 25%;
+  margin-top: 150px;
+  height: 24%;
   width: 42%;
   background-color: #fff;
   overflow-y: scroll;
   border-radius: 6px;
-  top: 5rem;
+  top: 6rem;
 }
 
 .reviewContainer {
@@ -48,7 +48,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 600;
 }
 
@@ -67,29 +67,28 @@
   cursor: pointer;
   border-radius: 15px;
 }
-.delete:hover {
+/* .delete:hover {
   background-color: #dddddd;
   border: 1px solid #272727;
   transition: ease-in 0.2s;
-}
+} */
 
 .close {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  height: 22px;
-  width: 22px;
   font-size: 32px;
   font-weight: bold;
   color: #2c2c2c;
-  cursor: pointer;
+  min-height: 40px;
 }
 .empty {
   width: 100%;
 }
 .xcontainer {
-  display: flex;
-  justify-content: space-between;
+  /* display: flex; */
+  justify-content: left;
+  /* justify-content: ; */
   margin-bottom: 60px;
 }
 
@@ -106,4 +105,22 @@
   cursor: pointer;
   max-height: 40px;
   margin-bottom: 12px;
+}
+
+.x {
+  cursor: pointer;
+  height: 24px;
+  width: 24px;
+  padding: 3px;
+}
+
+.x:hover {
+  border-radius: 100%;
+  background-color: #dddddd;
+}
+
+.star {
+  height: 14px;
+  width: 20px;
+  margin: 0 2px 2px 0;
 }

@@ -195,7 +195,11 @@ function SpotPage() {
           </div>
         </div>
         <div className={classes.formContainer}>
-          <BookingForm spot={spot} reviewsTotal={reviews.length} />
+          <BookingForm
+            rating={rating}
+            spot={spot}
+            reviewsTotal={reviews.length}
+          />
         </div>
       </div>
       <div className={classes.reviewsMainContainer}>
@@ -228,7 +232,7 @@ function SpotPage() {
         {display === true ? (
           <>
             <div>
-              <ReviewForm spotId={spot.id} />
+              <ReviewForm setDisplay={setDisplay} spotId={spot.id} />
             </div>
             <div
               className={classes.addAReview}

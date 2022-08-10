@@ -5,7 +5,7 @@ import classes from "./EditReviewForm.module.css";
 
 function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
   let user = useSelector((state) => state.session.user);
-  const [rating, setRating] = useState(currentReview.rating);
+  const [rating, setRating] = useState(5);
   const [review, setReview] = useState(currentReview.review);
   const [errors, setErrors] = useState([]);
   const dispatch = useDispatch();
@@ -49,6 +49,9 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
               className={classes.select}
               onChange={(e) => setRating(e.target.value)}
             >
+              <option value={currentReview.rating}>
+                {currentReview.rating}
+              </option>
               <option value={5}>5</option>
               <option value={4}>4</option>
               <option value={3}>3</option>
