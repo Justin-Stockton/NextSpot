@@ -2,6 +2,7 @@
   height: 300px;
   width: 285px;
   max-width: 285px;
+  cursor: pointer;
 
   border-radius: 15px;
   background-color: #d7d7d7;
