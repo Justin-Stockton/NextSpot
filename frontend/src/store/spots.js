@@ -5,7 +5,7 @@ import {
   UPDATE_REVIEW,
 } from "./reviews";
 
-import { GET_BOOKINGS } from "./bookings";
+import { CREATE_BOOKING } from "./bookings";
 
 const GET_SPOTS = "spots/GET_SPOTS";
 
@@ -43,12 +43,9 @@ const spots = (state = {}, action) => {
       return newState;
     }
 
-    case GET_BOOKINGS: {
-      const { bookings } = action.bookings;
-
-      bookings.forEach((booking) => {
-        newState.spots[booking.spotId].booking[booking.id] = booking;
-      });
+    case CREATE_BOOKING: {
+      const { booking } = action;
+      newState[booking.spotId].spot.bookings[booking.id] = booking;
       return newState;
     }
 
@@ -63,15 +60,12 @@ const spots = (state = {}, action) => {
 
     case CREATE_REVIEW: {
       const { review } = action;
-      console.log(newState[review.spotId].spot.reviews);
-      console.log((newState[review.spotId].spot.reviews[review.id] = review));
-      console.log(newState[review.spotId].spot.reviews);
+      newState[review.spotId].spot.reviews[review.id] = review;
       return newState;
     }
 
     case UPDATE_REVIEW: {
       const review = action.review;
-      console.log(review, "This is my data");
       newState[review.spotId].spot.reviews[review.id] = review;
       return newState;
     }

@@ -1,37 +1,58 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import LogoutButton from "./auth/LogoutButton";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import LoginPopup from "./Elements/LoginPopup";
+import ProfilePopup from "./Elements/ProfilePopup";
+import classes from "./Navbar.module.css";
 
 const NavBar = () => {
+  const history = useHistory();
+  const user = useSelector((state) => state.session.user);
+  const [display, setDisplay] = useState(false);
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          borderBottom: "1px solid rgb(235,235,235)",
-          alignItems: "center",
-          padding: "1%",
-        }}
-      >
-        <div style={{ alignItems: "center", width: "80%" }}>
-          <NavLink to="/" exact={true} activeClassName="active">
-            Home
-          </NavLink>
-        </div>
-        <div>
-          <NavLink to="/login" exact={true} activeClassName="active">
-            Login
-          </NavLink>
-        </div>
-        <div>
-          <NavLink to="/sign-up" exact={true} activeClassName="active">
-            Sign Up
-          </NavLink>
-        </div>
-        <div>
-          <LogoutButton />
-        </div>
+      <div className={classes.container}>
+        <img
+          className={classes.logo}
+          src="/static/1.svg"
+          alt="Next Spot Logo"
+          onClick={() => history.push("/")}
+        />
+        {!user ? (
+          <>
+            <div
+              className={classes.profile}
+              onClick={() => {
+                !display ? setDisplay(true) : setDisplay(false);
+              }}
+            >
+              <img
+                alt="menu"
+                className={classes.hamburger}
+                src="/static/hamburger.svg"
+              />{" "}
+              Login
+            </div>
+            <LoginPopup setDisplay={setDisplay} display={display} />
+          </>
+        ) : (
+          <>
+            <div
+              className={classes.profile}
+              onClick={() => {
+                !display ? setDisplay(true) : setDisplay(false);
+              }}
+            >
+              <img
+                alt="menu"
+                className={classes.hamburger}
+                src="/static/hamburger.svg"
+              />{" "}
+              {user.username}
+            </div>
+            <ProfilePopup setDisplay={setDisplay} display={display} />
+          </>
+        )}
       </div>
     </div>
   );

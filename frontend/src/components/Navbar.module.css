@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-bottom: 1px solid rgb(235, 235, 235);
+
+  padding: 0 8% 0 8%;
+  min-height: 80px;
+  margin-bottom: 24px;
+}
+
+.profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid #dddddd;
+  border-radius: 21px;
+
+  padding: 8px;
+
+  height: 42px;
+  width: fit-content;
+  min-width: 77px;
+
+  cursor: pointer;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: -moz-none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.profile:hover {
+  transition: ease;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.18);
+}
+
+.logo {
+  height: 80px;
+  width: 100px;
+  margin-right: 70%;
+  cursor: pointer;
+}
+
+.hamburger {
+  height: 17px;
+  width: 17px;
+  margin-right: 5px;
+}

@@ -5,17 +5,27 @@
 * {
   box-sizing: border-box;
   text-decoration: none;
-}
+  line-height: 24px;
+  color: #222222;
+  font-size: 16px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 
+  font-family: "Nunito Sans", sans-serif;
+}
+h1 {
+  font-size: 26px;
+}
 body {
   margin: 0;
   padding: 0;
-  /* margin-top: 5rem; */
   margin-bottom: 5rem;
-
-  font-family: "Nunito Sans", sans-serif;
 }
-
+/*
 button {
   font-family: "Nunito Sans", sans-serif;
-}
+} */

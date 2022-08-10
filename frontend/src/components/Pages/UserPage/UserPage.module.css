@@ -1,0 +1,73 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  max-width: 600px;
+  padding: 0 5% 3% 5%;
+}
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: top;
+  width: fit-content;
+  min-width: 450px;
+  max-width: 420px;
+  min-height: 200px;
+  padding: 5%;
+  border-radius: 12px;
+  border: 1px solid #dddddd;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+}
+
+.infoContainer > * {
+  padding: 1% 0;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bookingDates {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1%;
+  min-width: 90px;
+  margin-top: 24px;
+  min-height: 35px;
+  border-radius: 7px;
+  background-color: #ff385c;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.spotName {
+  min-width: 400px;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cancel {
+  padding: 0 3%;
+}
+
+.noSpots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+}
+.container {
+  display: flex;
+  justify-content: center;
+}
