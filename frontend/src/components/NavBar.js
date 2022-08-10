@@ -26,6 +26,7 @@ const NavBar = () => {
                 !display ? setDisplay(true) : setDisplay(false);
               }}
             >
+              <img className={classes.hamburger} src="/static/hamburger.svg" />{" "}
               Login
             </div>
             <LoginPopup setDisplay={setDisplay} display={display} />
@@ -38,6 +39,7 @@ const NavBar = () => {
                 !display ? setDisplay(true) : setDisplay(false);
               }}
             >
+              <img className={classes.hamburger} src="/static/hamburger.svg" />{" "}
               {user.username}
             </div>
             <ProfilePopup setDisplay={setDisplay} display={display} />

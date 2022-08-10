@@ -18,7 +18,7 @@
   border: 1px solid #dddddd;
   border-radius: 21px;
 
-  padding: 5px 5px 5px 5px;
+  padding: 8px;
 
   height: 42px;
   width: fit-content;
@@ -42,4 +42,10 @@
   width: 100px;
   margin-right: 70%;
   cursor: pointer;
+}
+
+.hamburger {
+  height: 17px;
+  width: 17px;
+  margin-right: 5px;
 }
