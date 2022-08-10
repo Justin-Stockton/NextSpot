@@ -2,11 +2,11 @@
   display: flex;
   z-index: 10;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.3);
   position: absolute;
-  top: 78px;
+  top: 0px;
   left: 0;
-  height: 300%;
+  height: 255%;
   width: 100%;
 }
 
@@ -29,13 +29,13 @@
   z-index: 11;
   padding: 2% 5%;
   opacity: none;
-  margin-top: 100px;
-  height: 25%;
+  margin-top: 150px;
+  height: 24%;
   width: 42%;
   background-color: #fff;
   overflow-y: scroll;
   border-radius: 6px;
-  top: 5rem;
+  top: 6rem;
 }
 
 .reviewContainer {
@@ -48,7 +48,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 600;
 }
 
