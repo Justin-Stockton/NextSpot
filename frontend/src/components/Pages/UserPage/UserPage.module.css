@@ -63,11 +63,79 @@
 
 .noSpots {
   display: flex;
-  justify-content: center;
   align-items: center;
-  font-size: 22px;
+  font-size: 32px;
+  font-weight: 700;
+  padding-bottom: 4%;
 }
 .container {
   display: flex;
+  flex-direction: column;
+
+  padding: 1% 9%;
+}
+.noBookingContainer {
+  display: flex;
+  border-radius: 12px;
+  border: 1px solid #dddddd;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+}
+
+.subHeader {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.wave {
+  height: 50px;
+  width: 50px;
+}
+
+.subTextContainer {
+  display: flex;
+  flex-direction: column;
+  width: 27%;
+  padding: 2%;
+  margin-top: 24px;
+}
+.subTextContainer > *:not(:first-child) {
+  padding: 4% 0;
+}
+
+.searchButton {
+  display: flex;
   justify-content: center;
+  align-items: center;
+  padding: 2%;
+  width: 40%;
+  height: 48px;
+  min-width: 90px;
+  margin-top: 24px;
+  min-height: 35px;
+  border-radius: 7px;
+  background-color: #ff385c;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.dust {
+  font-size: 16px;
+  color: rgb(22 22 22 / 0.7);
+  /* line-height: 20%; */
+}
+
+.imgContainer {
+  width: 74%;
+  max-height: 350px;
+  border-radius: 0 12px 12px 0;
+  background-color: aqua;
+}
+
+.img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+  border-radius: 0 12px 12px 0;
 }
