@@ -96,3 +96,8 @@
 .input {
   border: none;
 }
+
+.star {
+  height: 12px;
+  width: 10px;
+}

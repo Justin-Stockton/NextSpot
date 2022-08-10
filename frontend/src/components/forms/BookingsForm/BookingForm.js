@@ -6,7 +6,7 @@ import { thunkGetUserBookings } from "../../../store/userBookings";
 
 import classes from "./BookingsForm.module.css";
 
-function BookingForm({ spot, reviewsTotal }) {
+function BookingForm({ spot, reviewsTotal, rating }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
@@ -51,7 +51,11 @@ function BookingForm({ spot, reviewsTotal }) {
         <div className={classes.price}>
           <strong>${spot.price}</strong> night
         </div>
-        <div className={classes.reviews}>{reviewsTotal} reviews</div>
+        <div className={classes.reviews}>
+          {rating > 0 ? rating : "New"}{" "}
+          <img className={classes.star} src="/static/star.svg" />{" "}
+          <strong>·</strong> {reviewsTotal} reviews
+        </div>
       </div>
       <div>
         <form>

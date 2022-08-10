@@ -2,7 +2,7 @@
   display: flex;
   z-index: 10;
   justify-content: center;
-  position: absolute;
+  /* position: absolute; */
   top: 80px;
   left: 0;
   height: 100%;
@@ -11,7 +11,7 @@
 }
 
 .modalForeground {
-  position: sticky;
+  /* position: sticky; */
   border: 1px solid #dddddd;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
 
@@ -78,6 +78,7 @@
   height: 45px;
   width: 100px;
   border-radius: 12px;
+  margin-bottom: 24px;
 }
 
 .header {

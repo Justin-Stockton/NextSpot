@@ -68,9 +68,22 @@ function ReviewForm({ spotId }) {
             </select>
           </div>
         </div>
+        <div
+          style={{
+            color: "red",
+            fontSize: "12px",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          * Required
+          <div style={{ color: "red", fontSize: "12px" }}>
+            * Rating defaults to 5
+          </div>
+        </div>
         <textarea
           className={classes.ta}
-          placeholder="* Write your review"
+          placeholder="Write your review"
           value={review}
           onChange={(e) => setReview(e.target.value)}
         />

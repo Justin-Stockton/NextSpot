@@ -19,7 +19,13 @@ function SpotPage() {
     ratings += review.rating;
   });
 
-  let rating = ratings / reviews.length;
+  let rating;
+
+  if ((ratings / reviews.length).toFixed(2).toString().split("")[3] === "0") {
+    rating = (ratings / reviews.length).toFixed(1);
+  } else {
+    rating = (ratings / reviews.length).toFixed(2);
+  }
 
   const [display, setDisplay] = useState(false);
 
@@ -28,7 +34,10 @@ function SpotPage() {
       <div className={classes.nameHeading}>
         <h1>{spot.name}</h1>
         <div>
-          {reviews.length} reviews - {spot.city}, {spot.state}, United States
+          {rating > 0 ? rating : "New"}{" "}
+          <img className={classes.star} src="/static/star.svg" />{" "}
+          <strong>·</strong> {reviews.length} reviews <strong>·</strong>{" "}
+          {spot.city}, {spot.state}, United States
         </div>
       </div>
       <div className={classes.photos}>
@@ -75,10 +84,13 @@ function SpotPage() {
         </div>
       </div>
       <div className={classes.bottomContainer}>
-        <div className={classes.textContainer}>
-          <div>
-            Every booking includes free protection from Host cancellations,
-            listing inaccuracies, and other issues like trouble checking in.
+        <div className={`${classes.textContainer}`}>
+          <div className={classes.spotCoverContainer}>
+            <img className={classes.spotCover} src="/static/spotcover.svg" />
+            <div>
+              Every booking includes free protection from Host cancellations,
+              listing inaccuracies, and other issues like trouble checking in.
+            </div>
           </div>
           <div>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -93,18 +105,78 @@ function SpotPage() {
             <strong style={{ fontSize: "22px" }}>What this spot offers</strong>
             <div className={classes.amenitiesContainer}>
               <div className={classes.amenities}>
-                <div>Lake view</div>
-                <div>Waterfront</div>
-                <div>Kitchen</div>
-                <div>Wifi</div>
-                <div>Dedicated workspace</div>
+                <div className={classes.subContainer}>
+                  <img
+                    className={classes.amenitiesIcons}
+                    src="/static/stay.svg"
+                  />
+                  <div>Long term stays allowed</div>
+                </div>
+                <div className={classes.subContainer}>
+                  <img
+                    className={classes.amenitiesIcons}
+                    src="/static/waterfront.svg"
+                  />
+                  <div>Waterfront</div>
+                </div>
+                <div className={classes.subContainer}>
+                  <img
+                    className={classes.amenitiesIcons}
+                    src="/static/kitchen.svg"
+                  />
+                  <div>Kitchen</div>
+                </div>
+                <div className={classes.subContainer}>
+                  <img
+                    className={classes.amenitiesIcons}
+                    src="/static/wifi.svg"
+                  />
+                  <div>Wifi</div>
+                </div>
+                <div className={classes.subContainer}>
+                  <img
+                    className={classes.amenitiesIcons}
+                    src="/static/workspace.svg"
+                  />
+                  <div>Dedicated workspace</div>
+                </div>
               </div>
               <div className={classes.amenities}>
-                <div>Free parking on premises</div>
-                <div>50" HDTV with Roku</div>
-                <div>Free washer – In unit</div>
-                <div>Free dryer – In unit</div>
-                <div>Central air conditioning</div>
+                <div className={classes.subContainer}>
+                  <img
+                    className={classes.amenitiesIcons}
+                    src="/static/parking.svg"
+                  />
+                  <div>Free parking on premises</div>
+                </div>
+                <div className={classes.subContainer}>
+                  <img
+                    className={classes.amenitiesIcons}
+                    src="/static/tv.svg"
+                  />
+                  <div>50" HDTV with Roku</div>
+                </div>
+                <div className={classes.subContainer}>
+                  <img
+                    className={classes.amenitiesIcons}
+                    src="/static/washer.svg"
+                  />
+                  <div>Free washer – In unit</div>
+                </div>
+                <div className={classes.subContainer}>
+                  <img
+                    className={classes.amenitiesIcons}
+                    src="/static/dryer.svg"
+                  />
+                  <div>Free dryer – In unit</div>
+                </div>
+                <div className={classes.subContainer}>
+                  <img
+                    className={classes.amenitiesIcons}
+                    src="/static/ac.svg"
+                  />
+                  <div>Central air conditioning</div>
+                </div>
               </div>
             </div>
           </div>
@@ -116,10 +188,10 @@ function SpotPage() {
       <div className={classes.reviewsMainContainer}>
         <div className={classes.reviewsContainer}>
           <div>
-            {reviews.length} {reviews.length === 1 ? "Review" : "Reviews"}
-          </div>
-          <div>
-            {reviews.length > 4 ? `Average Rating ${rating.toFixed(1)}` : "New"}
+            {rating > 0 ? rating : "New"}{" "}
+            <img className={classes.star} src="/static/star.svg" />{" "}
+            <strong>·</strong> {reviews.length}{" "}
+            {reviews.length === 1 ? "Review" : "Reviews"}
           </div>
         </div>
         <div className={classes.reviews}>
@@ -128,6 +200,7 @@ function SpotPage() {
               <ReviewCard
                 reviews={reviews}
                 review={reviews[reviews.length - 1]}
+                rating={rating}
               />
             </div>
           ) : (
