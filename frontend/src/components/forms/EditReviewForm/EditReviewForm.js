@@ -35,8 +35,8 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
   return (
     <>
       {toggleForm ? (
-        <div>
-          <form>
+        <div className={classes.reviewFormContainer}>
+          <form className={classes.form}>
             <div style={{ display: "flex", justifyContent: "center" }}>
               {errors.map((error, i) => (
                 <div className={classes.errors} key={i}>
@@ -44,17 +44,35 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
                 </div>
               ))}
             </div>
-            <textarea
-              value={review}
-              onChange={(e) => setReview(e.target.value)}
-            />
-            <select onChange={(e) => setRating(e.target.value)}>
+            <strong>Edit your thoughts</strong>
+            <select
+              className={classes.select}
+              onChange={(e) => setRating(e.target.value)}
+            >
               <option value={5}>5</option>
               <option value={4}>4</option>
               <option value={3}>3</option>
               <option value={2}>2</option>
               <option value={1}>1</option>
             </select>
+            <div
+              style={{
+                color: "red",
+                fontSize: "12px",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              * Required
+              <div style={{ color: "red", fontSize: "12px" }}>
+                * Rating defaults to 5
+              </div>
+            </div>
+            <textarea
+              className={classes.ta}
+              value={review}
+              onChange={(e) => setReview(e.target.value)}
+            />
             <div className={classes.buttonContainer}>
               <div
                 className={classes.button}
