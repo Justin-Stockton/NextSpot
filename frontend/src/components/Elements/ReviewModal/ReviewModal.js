@@ -6,7 +6,6 @@ import classes from "./ReviewModal.module.css";
 
 function ReviewModal({ reviews, setDispaly, rating }) {
   let user = useSelector((state) => state.session.user);
-  const [toggleForm, setToggleForm] = useState(false);
   const dispatch = useDispatch();
 
   return (
@@ -71,18 +70,7 @@ function ReviewModal({ reviews, setDispaly, rating }) {
                   <div className={classes.body}>{review.review}</div>
                   {user.id === review.userId ? (
                     <>
-                      {!toggleForm ? (
-                        <div
-                          className={classes.edit}
-                          onClick={() => setToggleForm(true)}
-                        >
-                          Edit
-                        </div>
-                      ) : null}
-
                       <EditReviewForm
-                        setToggleForm={setToggleForm}
-                        toggleForm={toggleForm}
                         spotId={review.spotId}
                         currentReview={review}
                       />

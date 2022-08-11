@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { thunkUpdateSpotReview } from "../../../store/reviews";
 import classes from "./EditReviewForm.module.css";
 
-function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
+function EditReviewForm({ spotId, currentReview }) {
   let user = useSelector((state) => state.session.user);
   const [rating, setRating] = useState(currentReview.rating);
   const [review, setReview] = useState(currentReview.review);
   const [errors, setErrors] = useState([]);
+  const [toggleForm, setToggleForm] = useState(false);
   const dispatch = useDispatch();
 
   const handleSubmit = async () => {
@@ -93,7 +94,13 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
             </div>
           </form>
         </div>
-      ) : null}
+      ) : (
+        <>
+          <div className={classes.edit} onClick={() => setToggleForm(true)}>
+            Edit
+          </div>
+        </>
+      )}
     </>
   );
 }
