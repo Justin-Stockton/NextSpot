@@ -18,6 +18,37 @@
 
 ### [The Database Schema](https://github.com/Justin-Stockton/NextSpot/wiki/Database-Schema)
 
+## Site Preview
+### Landing page
+![image](https://user-images.githubusercontent.com/99220434/184055341-2efb87d0-7387-4fa1-8079-d5d3cfc5c994.png)
+
+### Login Modal
+![image](https://user-images.githubusercontent.com/99220434/184055466-4d5aeb29-4e63-4705-842f-453acedcb7c4.png)
+
+### Profile Modal
+![image](https://user-images.githubusercontent.com/99220434/184055525-bd4f45f4-182a-4eaa-8b04-4439bbd0870d.png)
+
+### Booking Page with no bookings
+![image](https://user-images.githubusercontent.com/99220434/184055597-d4d07f3c-70c1-4a03-b081-9ed97b8db7bf.png)
+### Booking Page with a booking
+![image](https://user-images.githubusercontent.com/99220434/184056070-85372fc4-ebb8-4d77-8e4a-d84744f4c1ee.png)
+
+
+### Spot Page view
+![image](https://user-images.githubusercontent.com/99220434/184055678-6ddec54a-61b6-42b3-a78e-1a542ce4a7f5.png)
+
+### Booking Form
+![image](https://user-images.githubusercontent.com/99220434/184055723-5f7c92f7-ba4d-420f-b3ff-4b78c9c20880.png)
+
+### Spot Review Modal
+![image](https://user-images.githubusercontent.com/99220434/184055787-098f2aba-fad6-4e74-8fe7-349c4bcd20a8.png)
+
+### Edit a Review Modal
+![image](https://user-images.githubusercontent.com/99220434/184055893-aee464ed-9065-42d9-931b-70f2b4b7f831.png)
+
+
+
+
 ## Development
 
 ### Want to contribute?

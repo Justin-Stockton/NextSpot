@@ -5,7 +5,7 @@ import classes from "./EditReviewForm.module.css";
 
 function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
   let user = useSelector((state) => state.session.user);
-  const [rating, setRating] = useState(5);
+  const [rating, setRating] = useState(currentReview.rating);
   const [review, setReview] = useState(currentReview.review);
   const [errors, setErrors] = useState([]);
   const dispatch = useDispatch();
@@ -52,6 +52,7 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
               <option value={currentReview.rating}>
                 {currentReview.rating}
               </option>
+              <option disabled="disabled">----</option>
               <option value={5}>5</option>
               <option value={4}>4</option>
               <option value={3}>3</option>
@@ -67,9 +68,6 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
               }}
             >
               * Required
-              <div style={{ color: "red", fontSize: "12px" }}>
-                * Rating defaults to 5
-              </div>
             </div>
             <textarea
               className={classes.ta}
