@@ -10,7 +10,7 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
   const [errors, setErrors] = useState([]);
   const dispatch = useDispatch();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setErrors([]);
     if (!review.length) {
       setErrors(["You must provide a description when adding a review."]);
@@ -28,8 +28,9 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
       rating,
       review,
     };
-    if (review.length) {
-      dispatch(thunkUpdateSpotReview(data));
+    if (review.length && review.length <= 1000) {
+      await dispatch(thunkUpdateSpotReview(data));
+      setToggleForm(false);
     }
   };
   return (
@@ -78,7 +79,6 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
               <div
                 className={classes.button}
                 onClick={() => {
-                  setToggleForm(false);
                   handleSubmit();
                 }}
               >
