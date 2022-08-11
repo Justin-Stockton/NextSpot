@@ -36,12 +36,12 @@ const SignUpForm = () => {
       setErrors(["You must provide a password"]);
       return;
     }
+    if (!username.length) {
+      return setErrors(["You must provide a username"]);
+    }
     if (!email.length) {
       setErrors(["You must provide an email"]);
       return;
-    }
-    if (!username.length) {
-      return setErrors(["You must provide a username"]);
     }
     if (password === repeatPassword) {
       const data = await dispatch(signUp(username, email, password));
