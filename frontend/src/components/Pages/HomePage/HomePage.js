@@ -12,7 +12,7 @@ function HomePage() {
         <h1 className={classes.buisnessProp}>
           NextSpot is designed for users to plan out their next getaway. Users
           will be able to book trips to destinations that they would like to
-          visit and leave a review of spots.
+          visit and leave reviews of spots.
         </h1>
       </div>
       <div className={classes.mainContainer}>
