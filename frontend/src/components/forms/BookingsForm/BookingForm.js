@@ -73,6 +73,7 @@ function BookingForm({ spot, reviewsTotal, rating }) {
                 <input
                   type="date"
                   value={startDate}
+                  onKeyDown={(e) => e.preventDefault()}
                   onChange={(e) => setStartDate(e.target.value)}
                   min={tomorrow}
                   required
