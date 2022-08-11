@@ -61,7 +61,7 @@ function ReviewModal({ reviews, setDispaly, rating }) {
                         >
                           <img
                             className={classes.x}
-                            src="/static/x.svg"
+                            src="/static/trashcan.svg"
                             alt="delete"
                           />
                         </div>
