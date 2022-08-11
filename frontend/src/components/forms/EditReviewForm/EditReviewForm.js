@@ -49,9 +49,10 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
               className={classes.select}
               onChange={(e) => setRating(e.target.value)}
             >
-              <option value={currentReview.rating}>
+              <option disabled="disabled" value={currentReview.rating}>
                 {currentReview.rating}
               </option>
+              <option disabled="disabled">----</option>
               <option value={5}>5</option>
               <option value={4}>4</option>
               <option value={3}>3</option>
@@ -67,9 +68,6 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
               }}
             >
               * Required
-              <div style={{ color: "red", fontSize: "12px" }}>
-                * Rating defaults to 5
-              </div>
             </div>
             <textarea
               className={classes.ta}
