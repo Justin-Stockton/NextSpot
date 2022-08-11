@@ -17,10 +17,32 @@ const SignUpForm = () => {
 
   const onSignUp = async (e) => {
     e.preventDefault();
+    if (
+      !email.length &&
+      !password.length &&
+      !username.length &&
+      !repeatPassword.length
+    )
+      return setErrors(["All fields are required!"]);
     if (!email.split("").includes("@"))
       return setErrors(["You must provide a valid email"]);
     if (!email.split("").includes("."))
       return setErrors(["You must provide a valid email"]);
+    if (!password.length && !email.length) {
+      setErrors(["You must provide an email and password"]);
+      return;
+    }
+    if (!password.length) {
+      setErrors(["You must provide a password"]);
+      return;
+    }
+    if (!username.length) {
+      return setErrors(["You must provide a username"]);
+    }
+    if (!email.length) {
+      setErrors(["You must provide an email"]);
+      return;
+    }
     if (password === repeatPassword) {
       const data = await dispatch(signUp(username, email, password));
       if (data) {
@@ -112,7 +134,6 @@ const SignUpForm = () => {
               placeholder="Confirm password"
               onChange={updateRepeatPassword}
               value={repeatPassword}
-              required={true}
             ></input>
           </div>
           <button className={classes.button} type="submit">

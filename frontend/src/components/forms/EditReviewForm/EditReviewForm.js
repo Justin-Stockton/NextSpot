@@ -3,14 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { thunkUpdateSpotReview } from "../../../store/reviews";
 import classes from "./EditReviewForm.module.css";
 
-function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
+function EditReviewForm({ spotId, currentReview }) {
   let user = useSelector((state) => state.session.user);
-  const [rating, setRating] = useState(5);
+  const [rating, setRating] = useState(currentReview.rating);
   const [review, setReview] = useState(currentReview.review);
   const [errors, setErrors] = useState([]);
+  const [toggleForm, setToggleForm] = useState(false);
   const dispatch = useDispatch();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setErrors([]);
     if (!review.length) {
       setErrors(["You must provide a description when adding a review."]);
@@ -28,8 +29,9 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
       rating,
       review,
     };
-    if (review.length) {
-      dispatch(thunkUpdateSpotReview(data));
+    if (review.length && review.length <= 1000) {
+      await dispatch(thunkUpdateSpotReview(data));
+      setToggleForm(false);
     }
   };
   return (
@@ -52,6 +54,7 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
               <option value={currentReview.rating}>
                 {currentReview.rating}
               </option>
+              <option disabled="disabled">----</option>
               <option value={5}>5</option>
               <option value={4}>4</option>
               <option value={3}>3</option>
@@ -67,9 +70,6 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
               }}
             >
               * Required
-              <div style={{ color: "red", fontSize: "12px" }}>
-                * Rating defaults to 5
-              </div>
             </div>
             <textarea
               className={classes.ta}
@@ -80,7 +80,6 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
               <div
                 className={classes.button}
                 onClick={() => {
-                  setToggleForm(false);
                   handleSubmit();
                 }}
               >
@@ -95,7 +94,13 @@ function EditReviewForm({ toggleForm, setToggleForm, spotId, currentReview }) {
             </div>
           </form>
         </div>
-      ) : null}
+      ) : (
+        <>
+          <div className={classes.edit} onClick={() => setToggleForm(true)}>
+            Edit
+          </div>
+        </>
+      )}
     </>
   );
 }

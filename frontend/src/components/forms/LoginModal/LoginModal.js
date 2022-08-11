@@ -15,6 +15,18 @@ function LoginModal() {
 
   const onLogin = async (e) => {
     e.preventDefault();
+    if (!password.length && !email.length) {
+      setErrors(["You must provide an email and password"]);
+      return;
+    }
+    if (!password.length) {
+      setErrors(["You must provide a password"]);
+      return;
+    }
+    if (!email.length) {
+      setErrors(["You must provide an email"]);
+      return;
+    }
     const data = await dispatch(login(email, password));
     if (data) {
       setErrors(data);
