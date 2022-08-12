@@ -235,7 +235,7 @@ function SpotPage() {
         </div>
         {display === true ? (
           <>
-            <div>
+            <div className={classes.reviewFormContainer}>
               <ReviewForm
                 innerRef={modalRef}
                 setDisplay={setDisplay}
@@ -244,11 +244,13 @@ function SpotPage() {
             </div>
           </>
         ) : (
-          <div
-            className={classes.addAReview}
-            onClick={() => setDisplay(!display)}
-          >
-            Add a review
+          <div className={classes.reviewFormContainer}>
+            <div
+              className={classes.addAReview}
+              onClick={() => setDisplay(!display)}
+            >
+              Add a review
+            </div>
           </div>
         )}
       </div>
