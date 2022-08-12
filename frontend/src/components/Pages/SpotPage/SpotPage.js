@@ -252,5 +252,3 @@ function SpotPage() {
 }
 
 export default SpotPage;
-
-// {spot.img1?`style={{backgroundImage:'${spot.img1}'}}`:null}
