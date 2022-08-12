@@ -2,12 +2,20 @@ import React, { useState } from "react";
 import classes from "./ReviewCard.module.css";
 import ReviewModal from "../ReviewModal";
 
+import { useClickOutside } from "../../../App";
+
 function ReviewCard({ review, reviews, rating }) {
   const [display, setDisplay] = useState(false);
+
+  const modalRef = useClickOutside(() => {
+    setDisplay(false);
+  });
+
   return (
     <>
       {display ? (
         <ReviewModal
+          innerRef={modalRef}
           rating={rating}
           reviews={reviews}
           setDispaly={setDisplay}
@@ -19,7 +27,7 @@ function ReviewCard({ review, reviews, rating }) {
         <div
           className={classes.more}
           onClick={() => {
-            display ? setDisplay(false) : setDisplay(true);
+            setDisplay(!display);
           }}
         >
           Show more{" "}

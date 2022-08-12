@@ -5,7 +5,7 @@ import classes from "./ProfilePopup.module.css";
 import { logout } from "../../../store/session";
 import { thunkLogout } from "../../../store/userBookings";
 
-function ProfilePopup({ setDisplay, display }) {
+function ProfilePopup({ display, setDisplay, innerRef }) {
   const user = useSelector((state) => state.session.user);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ function ProfilePopup({ setDisplay, display }) {
   return (
     <>
       {display ? (
-        <div className={classes.mainContainer}>
+        <div className={classes.mainContainer} ref={innerRef}>
           <div
             onClick={() => {
               history.push(`/${user.username}`);
