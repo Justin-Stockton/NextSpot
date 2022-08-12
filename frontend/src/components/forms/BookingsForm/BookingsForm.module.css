@@ -101,14 +101,3 @@
   height: 12px;
   width: 10px;
 }
-
-input[type="date"]::-webkit-calendar-picker-indicator {
-  bottom: 0;
-  background: transparent;
-  position: absolute;
-  top: 118px;
-  width: 130px;
-  color: transparent;
-  cursor: pointer;
-  height: 20px;
-}
