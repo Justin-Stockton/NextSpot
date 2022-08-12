@@ -45,7 +45,7 @@ function ProfilePopup({ display, setDisplay, innerRef }) {
           <a
             target="_blank"
             rel="noreferrer"
-            href="https://www.linkedin.com/"
+            href="https://www.linkedin.com/in/justin-stockton-101a38a4/"
             className={classes.links}
           >
             <div
