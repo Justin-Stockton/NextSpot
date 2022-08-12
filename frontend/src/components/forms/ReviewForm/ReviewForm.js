@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { thunkCreateReview } from "../../../store/reviews";
 import classes from "./ReviewForm.module.css";
 
-function ReviewForm({ spotId, setDisplay }) {
+function ReviewForm({ spotId, setDisplay, innerRef }) {
   let user = useSelector((state) => state.session.user);
   const history = useHistory();
   const [rating, setRating] = useState(5);
@@ -20,7 +20,7 @@ function ReviewForm({ spotId, setDisplay }) {
     }
     setErrors([]);
     if (!review.length) {
-      setErrors(["You must provide a description when adding a review."]);
+      setErrors(["You must provide a description when adding a review"]);
     }
     if (review.length > 1000) {
       setErrors([
@@ -45,7 +45,7 @@ function ReviewForm({ spotId, setDisplay }) {
   };
 
   return (
-    <div className={classes.reviewFormContainer}>
+    <div ref={innerRef} className={classes.reviewFormContainer}>
       <form onSubmit={handleSubmit} className={classes.form}>
         <div style={{ display: "flex", justifyContent: "center" }}>
           {errors.map((error, i) => (

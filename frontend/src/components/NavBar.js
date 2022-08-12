@@ -4,11 +4,15 @@ import { useHistory } from "react-router-dom";
 import LoginPopup from "./Elements/LoginPopup";
 import ProfilePopup from "./Elements/ProfilePopup";
 import classes from "./Navbar.module.css";
-
+import { useClickOutside } from "../App.js";
 const NavBar = () => {
   const history = useHistory();
   const user = useSelector((state) => state.session.user);
   const [display, setDisplay] = useState(false);
+
+  const popupRef = useClickOutside(() => {
+    setDisplay(false);
+  });
   return (
     <div>
       <div className={classes.container}>
@@ -23,7 +27,7 @@ const NavBar = () => {
             <div
               className={classes.profile}
               onClick={() => {
-                !display ? setDisplay(true) : setDisplay(false);
+                setDisplay(!display);
               }}
             >
               <img
@@ -33,14 +37,18 @@ const NavBar = () => {
               />{" "}
               Login
             </div>
-            <LoginPopup setDisplay={setDisplay} display={display} />
+            <LoginPopup
+              innerRef={popupRef}
+              setDisplay={setDisplay}
+              display={display}
+            />
           </>
         ) : (
           <>
             <div
               className={classes.profile}
               onClick={() => {
-                !display ? setDisplay(true) : setDisplay(false);
+                setDisplay(!display);
               }}
             >
               <img
@@ -50,7 +58,11 @@ const NavBar = () => {
               />{" "}
               {user.username}
             </div>
-            <ProfilePopup setDisplay={setDisplay} display={display} />
+            <ProfilePopup
+              setDisplay={setDisplay}
+              innerRef={popupRef}
+              display={display}
+            />
           </>
         )}
       </div>

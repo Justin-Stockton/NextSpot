@@ -7,6 +7,8 @@ import BookingForm from "../../forms/BookingsForm";
 import classes from "./SpotPage.module.css";
 import ReviewCard from "../../Elements/ReviewCard";
 
+import { useClickOutside } from "../../../App";
+
 function SpotPage() {
   const { spotId } = useParams();
   let spot = useSelector((state) => state.spots[spotId].spot);
@@ -27,7 +29,9 @@ function SpotPage() {
   }
 
   const [display, setDisplay] = useState(false);
-
+  const modalRef = useClickOutside(() => {
+    setDisplay(false);
+  });
   return (
     <div className={classes.mainContainer}>
       <div className={classes.nameHeading}>
@@ -231,19 +235,22 @@ function SpotPage() {
         </div>
         {display === true ? (
           <>
-            <div>
-              <ReviewForm setDisplay={setDisplay} spotId={spot.id} />
-            </div>
-            <div
-              className={classes.addAReview}
-              onClick={() => setDisplay(false)}
-            >
-              Close
+            <div className={classes.reviewFormContainer}>
+              <ReviewForm
+                innerRef={modalRef}
+                setDisplay={setDisplay}
+                spotId={spot.id}
+              />
             </div>
           </>
         ) : (
-          <div className={classes.addAReview} onClick={() => setDisplay(true)}>
-            Add a review
+          <div className={classes.reviewFormContainer}>
+            <div
+              className={classes.addAReview}
+              onClick={() => setDisplay(!display)}
+            >
+              Add a review
+            </div>
           </div>
         )}
       </div>
