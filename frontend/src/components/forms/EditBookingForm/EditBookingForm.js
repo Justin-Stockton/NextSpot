@@ -68,6 +68,7 @@ function EditBookingForm({ booking }) {
                       type="date"
                       value={startDate}
                       onChange={(e) => setStartDate(e.target.value)}
+                      onKeyDown={(e) => e.preventDefault()}
                       min={tomorrow}
                       required
                       className={classes.input}
@@ -81,6 +82,7 @@ function EditBookingForm({ booking }) {
                       type="date"
                       value={endDate}
                       onChange={(e) => setEndDate(e.target.value)}
+                      onKeyDown={(e) => e.preventDefault()}
                       min={startDate}
                       required
                       className={classes.input}
