@@ -50,7 +50,6 @@ function LoginModal() {
       <div className={classes.modalForeground}>
         <div className={classes.formTop}>
           <div className={classes.placeholder}></div>
-          {/* <div onClick={() => setLoginDisplay(false)}>X</div> */}
           <div>
             Log in or{" "}
             <span
