@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import SignUpForm from "./components/auth/SignUpForm";
@@ -10,6 +10,25 @@ import HomePage from "./components/Pages/HomePage";
 import SpotPage from "./components/Pages/SpotPage";
 import UserPage from "./components/Pages/UserPage";
 import LoginModal from "./components/forms/LoginModal";
+
+export const useClickOutside = (handler) => {
+  let domNode = useRef();
+
+  useEffect(() => {
+    let checkHandler = (e) => {
+      if (!domNode.current?.contains(e.target)) {
+        handler();
+      }
+    };
+
+    document.addEventListener("mousedown", checkHandler);
+
+    return () => {
+      document.removeEventListener("mousedown", checkHandler);
+    };
+  });
+  return domNode;
+};
 
 function App() {
   const [loaded, setLoaded] = useState(false);
