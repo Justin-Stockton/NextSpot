@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import classes from "../ProfilePopup/ProfilePopup.module.css";
 import { login } from "../../../store/session";
 
-function LoginPopup({ display, setDisplay }) {
+function LoginPopup({ display, setDisplay, innerRef }) {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -16,7 +16,7 @@ function LoginPopup({ display, setDisplay }) {
   return (
     <>
       {display ? (
-        <div className={classes.mainContainer}>
+        <div className={classes.mainContainer} ref={innerRef}>
           <div
             onClick={() => {
               history.push(`/login`);
