@@ -4,7 +4,7 @@ import { thunkDeleteReview } from "../../../store/reviews";
 import EditReviewForm from "../../forms/EditReviewForm";
 import classes from "./ReviewModal.module.css";
 
-function ReviewModal({ reviews, setDispaly, rating }) {
+function ReviewModal({ reviews, setDispaly, rating, innerRef }) {
   let user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
 
@@ -12,7 +12,7 @@ function ReviewModal({ reviews, setDispaly, rating }) {
     <>
       {user ? (
         <div className={classes.background}>
-          <div className={classes.reviewsContainer}>
+          <div ref={innerRef} className={classes.reviewsContainer}>
             <div className={classes.close}>
               <div>
                 <img

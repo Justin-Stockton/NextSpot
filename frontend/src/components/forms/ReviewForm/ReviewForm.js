@@ -20,7 +20,7 @@ function ReviewForm({ spotId, setDisplay }) {
     }
     setErrors([]);
     if (!review.length) {
-      setErrors(["You must provide a description when adding a review."]);
+      setErrors(["You must provide a description when adding a review"]);
     }
     if (review.length > 1000) {
       setErrors([

@@ -9,6 +9,7 @@ const NavBar = () => {
   const history = useHistory();
   const user = useSelector((state) => state.session.user);
   const [display, setDisplay] = useState(false);
+
   const popupRef = useClickOutside(() => {
     setDisplay(false);
   });

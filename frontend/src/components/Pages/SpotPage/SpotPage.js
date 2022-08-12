@@ -236,13 +236,16 @@ function SpotPage() {
             </div>
             <div
               className={classes.addAReview}
-              onClick={() => setDisplay(false)}
+              onClick={() => setDisplay(!display)}
             >
               Close
             </div>
           </>
         ) : (
-          <div className={classes.addAReview} onClick={() => setDisplay(true)}>
+          <div
+            className={classes.addAReview}
+            onClick={() => setDisplay(!display)}
+          >
             Add a review
           </div>
         )}
