@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkCreateBooking } from "../../../store/bookings";
@@ -25,6 +25,14 @@ function BookingForm({ spot, reviewsTotal, rating }) {
 
   const [startDate, setStartDate] = useState(tomorrow);
   const [endDate, setEndDate] = useState(initialEnd);
+
+  useEffect(() => {
+    const newEnd = new Date(startDate);
+    newEnd.setDate(newEnd.getDate() + 5);
+
+    let newCheckout = newEnd.toISOString().split("T")[0];
+    setEndDate(newCheckout);
+  }, [startDate]);
 
   let stayLength = (new Date(endDate) - new Date(startDate)) / 1000 / 86400;
 
