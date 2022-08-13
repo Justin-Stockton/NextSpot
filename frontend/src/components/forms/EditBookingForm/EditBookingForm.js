@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkUpdateBooking } from "../../../store/userBookings";
 import { thunkDeleteUserBookings } from "../../../store/userBookings";
@@ -31,6 +31,16 @@ function EditBookingForm({ booking }) {
   const [formDisplay, setFormDisplay] = useState(false);
 
   let stayLength = (new Date(endDate) - new Date(startDate)) / 1000 / 86400;
+  useEffect(() => {
+    if (stayLength <= 0) {
+      const newEnd = new Date(startDate);
+      newEnd.setDate(newEnd.getDate() + 5);
+
+      let newCheckout = newEnd.toISOString().split("T")[0];
+      setEndDate(newCheckout);
+    }
+    return;
+  }, [startDate]);
 
   const submit = async () => {
     const data = {
@@ -68,6 +78,7 @@ function EditBookingForm({ booking }) {
                       type="date"
                       value={startDate}
                       onChange={(e) => setStartDate(e.target.value)}
+                      onKeyDown={(e) => e.preventDefault()}
                       min={tomorrow}
                       required
                       className={classes.input}
@@ -81,6 +92,7 @@ function EditBookingForm({ booking }) {
                       type="date"
                       value={endDate}
                       onChange={(e) => setEndDate(e.target.value)}
+                      onKeyDown={(e) => e.preventDefault()}
                       min={startDate}
                       required
                       className={classes.input}
