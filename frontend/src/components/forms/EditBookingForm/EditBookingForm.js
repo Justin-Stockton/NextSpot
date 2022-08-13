@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkUpdateBooking } from "../../../store/userBookings";
 import { thunkDeleteUserBookings } from "../../../store/userBookings";
@@ -29,6 +29,14 @@ function EditBookingForm({ booking }) {
   const [startDate, setStartDate] = useState(initialCheckin);
   const [endDate, setEndDate] = useState(initialCheckOut);
   const [formDisplay, setFormDisplay] = useState(false);
+
+  useEffect(() => {
+    const newEnd = new Date(startDate);
+    newEnd.setDate(newEnd.getDate() + 5);
+
+    let newCheckout = newEnd.toISOString().split("T")[0];
+    setEndDate(newCheckout);
+  }, [startDate]);
 
   let stayLength = (new Date(endDate) - new Date(startDate)) / 1000 / 86400;
 
