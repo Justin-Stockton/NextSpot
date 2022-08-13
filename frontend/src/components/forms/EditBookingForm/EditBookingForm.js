@@ -30,15 +30,17 @@ function EditBookingForm({ booking }) {
   const [endDate, setEndDate] = useState(initialCheckOut);
   const [formDisplay, setFormDisplay] = useState(false);
 
-  useEffect(() => {
-    const newEnd = new Date(startDate);
-    newEnd.setDate(newEnd.getDate() + 5);
-
-    let newCheckout = newEnd.toISOString().split("T")[0];
-    setEndDate(newCheckout);
-  }, [startDate]);
-
   let stayLength = (new Date(endDate) - new Date(startDate)) / 1000 / 86400;
+  useEffect(() => {
+    if (stayLength <= 0) {
+      const newEnd = new Date(startDate);
+      newEnd.setDate(newEnd.getDate() + 5);
+
+      let newCheckout = newEnd.toISOString().split("T")[0];
+      setEndDate(newCheckout);
+    }
+    return;
+  }, [startDate]);
 
   const submit = async () => {
     const data = {
