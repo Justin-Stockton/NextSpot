@@ -10,6 +10,7 @@ import HomePage from "./components/Pages/HomePage";
 import SpotPage from "./components/Pages/SpotPage";
 import UserPage from "./components/Pages/UserPage";
 import LoginModal from "./components/forms/LoginModal";
+import Oops from "./components/Pages/Oops";
 
 export const useClickOutside = (handler) => {
   let domNode = useRef();
@@ -62,9 +63,12 @@ function App() {
         <Route path="/" exact={true}>
           <HomePage />
         </Route>
-        <ProtectedRoute path="/:username" exact={true}>
+        <ProtectedRoute path="/user/:username" exact={true}>
           <UserPage />
         </ProtectedRoute>
+        <Route>
+          <Oops />
+        </Route>
       </Switch>
     </BrowserRouter>
   );

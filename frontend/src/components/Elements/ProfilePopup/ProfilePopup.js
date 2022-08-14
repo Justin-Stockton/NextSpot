@@ -22,7 +22,7 @@ function ProfilePopup({ display, setDisplay, innerRef }) {
         <div className={classes.mainContainer} ref={innerRef}>
           <div
             onClick={() => {
-              history.push(`/${user.username}`);
+              history.push(`/user/${user.username}`);
               setDisplay(false);
             }}
           >

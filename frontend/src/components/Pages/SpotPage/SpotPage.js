@@ -6,21 +6,21 @@ import ReviewForm from "../../forms/ReviewForm";
 import BookingForm from "../../forms/BookingsForm";
 import classes from "./SpotPage.module.css";
 import ReviewCard from "../../Elements/ReviewCard";
+import Oops from "../Oops";
 
 import { useClickOutside } from "../../../App";
 
 function SpotPage() {
   const { spotId } = useParams();
   let spot = useSelector((state) => state.spots[spotId].spot);
-  let reviews = Object.values(spot.reviews);
 
+  let reviews = Object.values(spot.reviews);
   let ratings = 0;
+  let rating;
 
   reviews.forEach((review) => {
     ratings += review.rating;
   });
-
-  let rating;
 
   if ((ratings / reviews.length).toFixed(2).toString().split("")[3] === "0") {
     rating = (ratings / reviews.length).toFixed(1);
@@ -29,9 +29,11 @@ function SpotPage() {
   }
 
   const [display, setDisplay] = useState(false);
+
   const modalRef = useClickOutside(() => {
     setDisplay(false);
   });
+  if (!spot) return <Oops />;
   return (
     <div className={classes.mainContainer}>
       <div className={classes.nameHeading}>
