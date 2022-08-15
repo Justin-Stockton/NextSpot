@@ -1,0 +1,40 @@
+.main {
+  display: flex;
+}
+.text {
+  display: flex;
+  flex-direction: column;
+  padding-left: 25%;
+  width: fit-content;
+}
+.header {
+  font-size: 9rem;
+  color: #484848;
+  margin-bottom: 3rem;
+}
+
+.subHeader {
+  font-size: 2rem;
+  color: #484848;
+  width: 70%;
+  line-height: 1.1;
+  font-weight: 400;
+  margin-bottom: 15px;
+}
+
+.error {
+  font-size: 14px;
+  color: #767676;
+  font-weight: 800;
+  margin-top: 10px;
+}
+
+.links {
+  color: #008489;
+  margin: none;
+}
+
+.img {
+  max-height: 428px;
+  margin-top: 5rem;
+}

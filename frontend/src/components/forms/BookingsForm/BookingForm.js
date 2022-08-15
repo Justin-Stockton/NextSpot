@@ -52,7 +52,7 @@ function BookingForm({ spot, reviewsTotal, rating }) {
     };
     await dispatch(thunkGetUserBookings(user.id));
     dispatch(thunkCreateBooking(data));
-    history.push(`/${user.username}`);
+    history.push(`/user/${user.username}`);
   };
 
   return (

@@ -68,30 +68,30 @@ function LoginModal() {
               <div key={ind}>{error}</div>
             ))}
           </div>
-          <div>
+          <div className={classes.inputContainer}>
             <input
               className={`${classes.input} ${classes.email}`}
-              name="email"
               type="text"
-              placeholder="Email"
-              value={email}
+              name="email"
               onChange={updateEmail}
+              value={email}
             />
+            <label className={email && classes.filled}>Email</label>
           </div>
-          <div>
+          <div className={classes.inputContainer}>
             <input
               className={`${classes.input} ${classes.password}`}
-              name="password"
               type="password"
-              placeholder="Password"
-              value={password}
+              name="password"
               onChange={updatePassword}
+              value={password}
             />
-            <div>
-              <button className={classes.button} type="submit">
-                Log in
-              </button>
-            </div>
+            <label className={password && classes.filled}>Password</label>
+          </div>
+          <div>
+            <button className={classes.button} type="submit">
+              Log in
+            </button>
           </div>
         </form>
       </div>
