@@ -157,7 +157,7 @@ function EditBookingForm({ booking }) {
             </div>
           </div>
           <div
-            className={`${classes.button} ${classes.cancel}`}
+            className={classes.button}
             onClick={() => deleteBooking(booking.id)}
           >
             Cancel Booking
