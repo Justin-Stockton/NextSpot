@@ -96,45 +96,47 @@ const SignUpForm = () => {
               <div key={ind}>{error}</div>
             ))}
           </div>
-          <div>
+          <div className={classes.inputContainer}>
             <input
               className={`${classes.input} ${classes.email}`}
               type="text"
               name="email"
-              placeholder="Email"
               onChange={updateEmail}
               value={email}
-            ></input>
+            />
+            <label className={email && classes.filled}>Email</label>
           </div>
-          <div>
+          <div className={classes.inputContainer}>
             <input
               className={`${classes.input} ${classes.username}`}
               type="text"
               name="username"
-              placeholder="Username"
               onChange={updateUsername}
               value={username}
-            ></input>
+            />
+            <label className={username && classes.filled}>Username</label>
           </div>
-          <div>
+          <div className={classes.inputContainer}>
             <input
               className={classes.input}
               type="password"
               name="password"
-              placeholder="Password"
               onChange={updatePassword}
               value={password}
-            ></input>
+            />
+            <label className={password && classes.filled}>Password</label>
           </div>
-          <div>
+          <div className={classes.inputContainer}>
             <input
               className={`${classes.input} ${classes.password}`}
               type="password"
               name="repeat_password"
-              placeholder="Confirm password"
               onChange={updateRepeatPassword}
               value={repeatPassword}
-            ></input>
+            />
+            <label className={repeatPassword && classes.filled}>
+              Confirm password
+            </label>
           </div>
           <button className={classes.button} type="submit">
             Sign Up
