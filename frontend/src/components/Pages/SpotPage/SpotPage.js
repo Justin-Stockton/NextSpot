@@ -12,8 +12,16 @@ import { useClickOutside } from "../../../App";
 
 function SpotPage() {
   const { spotId } = useParams();
-  let spot = useSelector((state) => state.spots[spotId].spot);
 
+  let spots = useSelector((state) => state.spots);
+
+  const [display, setDisplay] = useState(false);
+
+  const modalRef = useClickOutside(() => {
+    setDisplay(false);
+  });
+  if (!spots[spotId]) return <Oops />;
+  let spot = spots[spotId].spot;
   let reviews = Object.values(spot.reviews);
   let ratings = 0;
   let rating;
@@ -27,13 +35,6 @@ function SpotPage() {
   } else {
     rating = (ratings / reviews.length).toFixed(2);
   }
-
-  const [display, setDisplay] = useState(false);
-
-  const modalRef = useClickOutside(() => {
-    setDisplay(false);
-  });
-  if (!spot) return <Oops />;
   return (
     <div className={classes.mainContainer}>
       <div className={classes.nameHeading}>
