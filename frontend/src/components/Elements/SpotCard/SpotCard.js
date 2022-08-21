@@ -4,6 +4,20 @@ import classes from "./SpotCard.module.css";
 
 function SpotCard({ spot }) {
   const history = useHistory();
+  // console.log(spot);
+  let reviews = Object.values(spot.reviews);
+  let ratings = 0;
+  let rating;
+
+  reviews.forEach((review) => {
+    ratings += review.rating;
+  });
+
+  if ((ratings / reviews.length).toFixed(2).toString().split("")[3] === "0") {
+    rating = (ratings / reviews.length).toFixed(1);
+  } else {
+    rating = (ratings / reviews.length).toFixed(2);
+  }
   return (
     <>
       <div
@@ -14,15 +28,32 @@ function SpotCard({ spot }) {
       </div>
       <div
         className={classes.textContainer}
-        onClick={() => history.push(`/spots/${spot.id}`)}
+        style={{ display: "flex", justifyContent: "space-between" }}
       >
-        <div>
-          <strong>
-            {spot.city}, {spot.state}
-          </strong>
+        <div onClick={() => history.push(`/spots/${spot.id}`)}>
+          <div>
+            <div>
+              <strong>
+                {spot.city}, {spot.state}
+              </strong>
+            </div>
+            <div>
+              <strong>${spot.price}</strong> night
+            </div>
+          </div>
         </div>
         <div>
-          <strong>${spot.price}</strong> night
+          {rating > 0 ? (
+            <strong>
+              <img className={classes.star} src="static/star.svg" />
+              {rating}
+            </strong>
+          ) : (
+            <strong>
+              <img className={classes.star} src="static/star.svg" />
+              New
+            </strong>
+          )}
         </div>
       </div>
     </>

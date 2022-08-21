@@ -10,8 +10,7 @@
 }
 
 .textContainer {
-  padding-top: 5%;
-  padding-left: 1%;
+  padding-top: 4%;
   cursor: pointer;
 }
 
@@ -20,4 +19,10 @@
   height: 100%;
   border-radius: 15px;
   object-fit: cover;
+}
+.star {
+  height: 14px;
+  width: 12px;
+  margin-right: 5px;
+  padding-top: 2px;
 }
