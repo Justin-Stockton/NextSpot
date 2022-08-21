@@ -78,6 +78,7 @@
   width: 100px;
   border-radius: 12px;
   margin-bottom: 24px;
+  cursor: pointer;
 }
 
 .header {

@@ -70,6 +70,7 @@
 }
 
 .button {
+  cursor: pointer;
   background-color: #ff385c;
   border: none;
   color: #fff;
