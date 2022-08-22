@@ -8,7 +8,6 @@ function SpotCard({ spot }) {
   const [img, setImg] = useState(imgArray[count]);
   const [filled, setFilled] = useState(false);
   const history = useHistory();
-  // console.log(spot);
   let reviews = Object.values(spot.reviews);
   let ratings = 0;
   let rating;
