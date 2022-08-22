@@ -144,3 +144,35 @@ class Reviews(db.Model):
             createdAt=self.createdAt,
             updatedAt=self.updatedAt
         )
+
+class wishlists(db.Model):
+    __tablename__ = "whishlists"
+
+    id = db.Column(db.Integer, primary_key=True)
+    userId = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'), nullable=False)
+    name = db.Column(db.String(100), nullable=False)
+
+    user = db.relationship('Users', back_populates='reviews')
+
+    def toDict(self):
+        return dict(
+            id=self.id,
+            userId=self.userId,
+            name=self.name,
+        )
+
+class wishSpots(db.Model):
+    __tablename__ = "wishSpots"
+
+    id = db.Column(db.Integer, primary_key=True)
+    spotId = db.Column(db.Integer, db.ForeignKey("spots.id", ondelete='CASCADE'), nullable=False)
+    wishlistId = db.Column(db.Integer, db.ForeignKey("wishlists.id", ondelete='CASCADE'), nullable=False)
+
+    spot = db.relationship('Spots', back_populates='reviews')
+
+    def toDict(self):
+        return dict(
+            id=self.id,
+            spotId=self.spotId,
+            wishlistId=self.wishlistId,
+        )
