@@ -1,8 +1,14 @@
 const GET_WISHLIST = "wishlists/GET_WISHLISTS";
+const CREATE_WISHLIST = "wishlists/CREATE_WISHLISTS";
 
 const actionGetWishlists = (wishlists) => ({
   type: GET_WISHLIST,
   wishlists,
+});
+
+const actionCreateWishlists = (wishlist) => ({
+  type: CREATE_WISHLIST,
+  wishlist,
 });
 
 export const thunkGetWishlists = (userId) => async (dispatch) => {
@@ -22,6 +28,21 @@ export const thunkGetWishlists = (userId) => async (dispatch) => {
   }
 };
 
+export const thunkCreateWishlist = (wishlist) => async (dispatch) => {
+  const response = await fetch(`/api/wishlists/create`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(wishlist),
+  });
+
+  if (response.ok) {
+    const wishlists = await response.json();
+    dispatch(actionCreateWishlists(wishlists));
+  }
+};
+
 const wishlists = (state = {}, action) => {
   let newState = JSON.parse(JSON.stringify(state));
 
@@ -31,6 +52,12 @@ const wishlists = (state = {}, action) => {
       wishlists.forEach((wishlist) => {
         newState[wishlist.id] = wishlist;
       });
+      return newState;
+    }
+
+    case CREATE_WISHLIST: {
+      const { wishlist } = action.wishlist;
+      newState[wishlist.id] = wishlist;
       return newState;
     }
     default: {
