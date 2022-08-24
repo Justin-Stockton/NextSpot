@@ -19,6 +19,7 @@ class Users(db.Model, UserMixin):
     reviews = db.relationship('Reviews', back_populates='user', cascade="all, delete-orphan")
     spots = db.relationship('Spots', back_populates='user', cascade="all, delete-orphan")
     bookings = db.relationship('Bookings', back_populates='user', cascade="all, delete-orphan")
+    wishlists = db.relationship('Wishlists', back_populates='user', cascade="all, delete-orphan")
 
     @property
     def password(self):
@@ -65,6 +66,7 @@ class Spots(db.Model):
     user = db.relationship('Users', back_populates='spots')
     bookings = db.relationship('Bookings', back_populates='spot')
     reviews = db.relationship('Reviews', back_populates='spot')
+    wishspots = db.relationship('Wishspots', back_populates='spot', cascade="all, delete-orphan")
 
 
     def toDict(self):
@@ -145,14 +147,15 @@ class Reviews(db.Model):
             updatedAt=self.updatedAt
         )
 
-class wishlists(db.Model):
-    __tablename__ = "whishlists"
+class Wishlists(db.Model):
+    __tablename__ = "wishlists"
 
     id = db.Column(db.Integer, primary_key=True)
     userId = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'), nullable=False)
     name = db.Column(db.String(100), nullable=False)
 
-    user = db.relationship('Users', back_populates='reviews')
+    user = db.relationship('Users', back_populates='wishlists')
+    wishspots = db.relationship('Wishspots', back_populates='wishlists',cascade="all, delete-orphan")
 
     def toDict(self):
         return dict(
@@ -161,14 +164,15 @@ class wishlists(db.Model):
             name=self.name,
         )
 
-class wishSpots(db.Model):
-    __tablename__ = "wishSpots"
+class Wishspots(db.Model):
+    __tablename__ = "wishspots"
 
     id = db.Column(db.Integer, primary_key=True)
     spotId = db.Column(db.Integer, db.ForeignKey("spots.id", ondelete='CASCADE'), nullable=False)
     wishlistId = db.Column(db.Integer, db.ForeignKey("wishlists.id", ondelete='CASCADE'), nullable=False)
 
-    spot = db.relationship('Spots', back_populates='reviews')
+    spot = db.relationship('Spots', back_populates='wishspots')
+    wishlists = db.relationship('Wishlists', back_populates='wishspots')
 
     def toDict(self):
         return dict(
