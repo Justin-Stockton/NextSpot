@@ -1,5 +1,5 @@
 from urllib import request
-from flask import Blueprint
+from flask import Blueprint,request
 from ..models import Wishlists, db
 
 wishlists = Blueprint('wishlists', __name__, url_prefix = '/api/wishlists')
@@ -17,12 +17,13 @@ def validation_errors_to_error_messages(validation_errors):
 
 @wishlists.route('/<userId>')
 def get_spot_wishLists(userId):
-    spotWishlists = wishlists.query.filter_by(userId = userId).all()
+
+    spotWishlists = Wishlists.query.filter_by(userId = userId).all()
     lists = [i.toDict() for i in spotWishlists]
 
     for i in range(len(spotWishlists)):
-        wishListsDict = {i.id: i.toDict() for i in spotWishlists[i].wishSpots}
-        lists[i]['wishSpots'] = wishListsDict
+        wishListsDict = {i.id: i.toDict() for i in spotWishlists[i].wishspots}
+        lists[i]['wishspots'] = wishListsDict
 
         return {'wishlists': lists}
 

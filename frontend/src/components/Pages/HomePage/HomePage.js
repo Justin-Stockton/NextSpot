@@ -1,10 +1,18 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { thunkGetWishlists } from "../../../store/wishlists";
 import SpotCard from "../../Elements/SpotCard";
 import classes from "./HomePage.module.css";
 
 function HomePage() {
   let spots = useSelector((state) => state.spots);
+  let user = useSelector((state) => state.session.user);
+  const dispatch = useDispatch();
+
+  if (user) {
+    console.log(user.id);
+    dispatch(thunkGetWishlists(user.id));
+  }
 
   return (
     <div>
