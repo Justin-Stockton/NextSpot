@@ -1,0 +1,91 @@
+.background {
+  display: flex;
+  z-index: 12;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0px;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+}
+.reviewsContainer {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  border-bottom: 1px solid #d7d7d7;
+  position: fixed;
+  z-index: 13;
+  opacity: none;
+  max-height: 60%;
+  width: 29%;
+  background-color: #fff;
+  border-radius: 12px;
+  top: 15rem;
+  overflow: auto;
+  min-width: 200px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #d7d7d7;
+  width: 100%;
+  max-height: 40px;
+  margin-top: 10px;
+  font-size: 16px;
+  padding: 2% 5%;
+  margin-bottom: 5px;
+}
+
+.x {
+  height: 15px;
+  width: 15px;
+}
+.xContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 22px;
+  width: 22px;
+}
+.xContainer:hover {
+  border-radius: 50%;
+  background-color: #d7d7d7;
+}
+
+.filler {
+  height: 12px;
+  width: 12px;
+}
+
+.newList {
+  display: flex;
+  padding: 4% 2% 2% 2%;
+  cursor: pointer;
+}
+.newList:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+.addButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: 60px;
+  min-width: 60px;
+  max-width: 60px;
+  border: 1px solid #d7d7d7;
+  border-radius: 12px;
+}
+
+.create {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 25%;
+}
+.plus {
+  padding: 30%;
+}

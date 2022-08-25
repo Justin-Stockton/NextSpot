@@ -1,0 +1,38 @@
+.newList {
+  display: flex;
+  padding: 2% 2%;
+  margin-bottom: 2%;
+  cursor: pointer;
+}
+.newList:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+.addButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: 60px;
+  min-width: 60px;
+  max-width: 60px;
+  border-radius: 12px;
+}
+
+.create {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 4%;
+}
+.img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: 60px;
+  min-width: 60px;
+  max-width: 60px;
+  max-height: 60px;
+  object-fit: cover;
+  border-radius: 12px;
+}

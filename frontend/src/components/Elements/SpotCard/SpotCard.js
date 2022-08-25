@@ -3,20 +3,24 @@ import { useHistory } from "react-router-dom";
 import classes from "./SpotCard.module.css";
 import { ReactComponent as HeartSVG } from "./heart.svg";
 import { useSelector } from "react-redux";
+import Modal from "../Modal/Modal";
+import { useClickOutside } from "../../../App";
 
 function SpotCard({ spot }) {
   const imgArray = [spot.img1, spot.img2, spot.img3, spot.img4, spot.img5];
   const [count, setCount] = useState(0);
   const [img, setImg] = useState(imgArray[count]);
   const [filled, setFilled] = useState(false);
+  const [display, setDisplay] = useState(false);
   const history = useHistory();
   const user = useSelector((state) => state.session.user);
 
   const handleClick = () => {
     if (!user) {
       history.push("/login");
-    } else {
-      setFilled(!filled);
+    }
+    if (!filled) {
+      setDisplay(true);
     }
   };
   let reviews = Object.values(spot.reviews);
@@ -42,8 +46,12 @@ function SpotCard({ spot }) {
     count > 0 ? setCount(count - 1) : setCount(4);
     setImg(imgArray[count]);
   };
+  const popupRef = useClickOutside(() => {
+    setDisplay(false);
+  });
   return (
     <>
+      <Modal innerRef={popupRef} display={display} setDisplay={setDisplay} />
       <div className={classes.imgSlideShowContainer}>
         <div className={classes.heartContainer}>
           <HeartSVG
