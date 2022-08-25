@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import classes from "./SpotCard.module.css";
+import { ReactComponent as HeartSVG } from "./heart.svg";
 
 function SpotCard({ spot }) {
   const imgArray = [spot.img1, spot.img2, spot.img3, spot.img4, spot.img5];
@@ -35,19 +36,11 @@ function SpotCard({ spot }) {
     <>
       <div className={classes.imgSlideShowContainer}>
         <div className={classes.heartContainer}>
-          {!filled ? (
-            <img
-              onClick={() => setFilled(!filled)}
-              src="static/heart.svg"
-              className={classes.heart}
-            />
-          ) : (
-            <img
-              onClick={() => setFilled(!filled)}
-              src="static/filledHeart.svg"
-              className={classes.heart}
-            />
-          )}
+          <HeartSVG
+            className={classes.heart}
+            onClick={() => setFilled(!filled)}
+            fill={filled ? "#FF385C" : "rgba(0,0,0,.7)"}
+          />
         </div>
         <div className={classes.nextContainer} onClick={handleNext}>
           <img
