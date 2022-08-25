@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import classes from "./ProfilePopup.module.css";
 import { logout } from "../../../store/session";
 import { thunkLogout } from "../../../store/userBookings";
+import { thunkLogoutLists } from "../../../store/wishlists";
 
 function ProfilePopup({ display, setDisplay, innerRef }) {
   const user = useSelector((state) => state.session.user);
@@ -12,6 +13,7 @@ function ProfilePopup({ display, setDisplay, innerRef }) {
 
   const onLogout = async (e) => {
     setDisplay(false);
+    await dispatch(thunkLogoutLists());
     await dispatch(thunkLogout());
     await dispatch(logout());
   };

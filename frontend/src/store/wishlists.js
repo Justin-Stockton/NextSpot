@@ -1,5 +1,6 @@
 const GET_WISHLIST = "wishlists/GET_WISHLISTS";
 const CREATE_WISHLIST = "wishlists/CREATE_WISHLISTS";
+const LOGOUT_LISTS = "wishlists/LOGOUT_LISTS";
 
 const actionGetWishlists = (wishlists) => ({
   type: GET_WISHLIST,
@@ -10,6 +11,12 @@ const actionCreateWishlists = (wishlist) => ({
   type: CREATE_WISHLIST,
   wishlist,
 });
+
+const actionLogoutLists = () => {
+  return {
+    type: LOGOUT_LISTS,
+  };
+};
 
 export const thunkGetWishlists = (userId) => async (dispatch) => {
   const response = await fetch(`/api/wishlists/${userId}`, {
@@ -43,6 +50,10 @@ export const thunkCreateWishlist = (wishlist) => async (dispatch) => {
   }
 };
 
+export const thunkLogoutLists = () => async (dispatch) => {
+  await dispatch(actionLogoutLists());
+};
+
 const wishlists = (state = {}, action) => {
   let newState = JSON.parse(JSON.stringify(state));
 
@@ -58,6 +69,10 @@ const wishlists = (state = {}, action) => {
     case CREATE_WISHLIST: {
       const { wishlist } = action.wishlist;
       newState[wishlist.id] = wishlist;
+      return newState;
+    }
+    case LOGOUT_LISTS: {
+      newState = {};
       return newState;
     }
     default: {

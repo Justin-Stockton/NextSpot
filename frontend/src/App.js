@@ -11,6 +11,7 @@ import SpotPage from "./components/Pages/SpotPage";
 import UserPage from "./components/Pages/UserPage";
 import LoginModal from "./components/forms/LoginModal";
 import Oops from "./components/Pages/Oops";
+import Wishlists from "./components/Pages/Wishlists";
 
 export const useClickOutside = (handler) => {
   let domNode = useRef();
@@ -65,6 +66,12 @@ function App() {
         </Route>
         <ProtectedRoute path="/user/:username" exact={true}>
           <UserPage />
+        </ProtectedRoute>
+        <ProtectedRoute path="/user/:username/host" exact={true}>
+          It looks like this feature isnt quite done yet
+        </ProtectedRoute>
+        <ProtectedRoute path="/my-wishlists" exact={true}>
+          <Wishlists />
         </ProtectedRoute>
         <Route>
           <Oops />
