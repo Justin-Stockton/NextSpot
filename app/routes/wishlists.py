@@ -1,6 +1,6 @@
 from urllib import request
 from flask import Blueprint,request
-from ..models import Wishlists, db
+from ..models import Wishlists, Wishspots, db
 
 wishlists = Blueprint('wishlists', __name__, url_prefix = '/api/wishlists')
 
@@ -16,16 +16,15 @@ def validation_errors_to_error_messages(validation_errors):
 
 
 @wishlists.route('/<userId>')
-def get_spot_wishLists(userId):
-
+def get_user_wishLists(userId):
     spotWishlists = Wishlists.query.filter_by(userId = userId).all()
-    lists = [i.toDict() for i in spotWishlists]
+    list_dict = [i.toDict() for i in spotWishlists]
 
     for i in range(len(spotWishlists)):
-        wishListsDict = {i.id: i.toDict() for i in spotWishlists[i].wishspots}
-        lists[i]['wishspots'] = wishListsDict
+        spotDict = {i.id: i.toDict() for i in spotWishlists[i].wishspots }
+        list_dict[i]['wishspots'] = spotDict
 
-        return {'wishlists': lists}
+    return {'wishlists': list_dict}
 
 
 @wishlists.route('/create', methods = ['POST'])
@@ -56,3 +55,11 @@ def delete_booking():
     Wishlists.query.filter_by(id=data).delete()
     db.session.commit()
     return 'Wishlist successfully deleted!'
+
+
+# [{
+#     'id': 1, 'userId': 1, 'name': 'Test', 'wishspots': {
+#         1: {'id': 1, 'spotId': 1, 'wishlistId': 1},
+#         2: {'id': 2, 'spotId': 2, 'wishlistId': 1}}},
+#          {'id': 2, 'userId': 1, 'name': 'Test 2'},
+#           {'id': 3, 'userId': 1, 'name': 'Test 3'}]

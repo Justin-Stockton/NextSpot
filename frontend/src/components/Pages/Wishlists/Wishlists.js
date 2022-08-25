@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetWishlists } from "../../../store/wishlists";
 import classes from "./Wishlists.module.css";
-
+import Wishlist from "../../Elements/Wishlist";
 function Wishlists() {
   const dispatch = useDispatch();
   useEffect(async () => {
@@ -13,14 +13,15 @@ function Wishlists() {
 
   const wishlists = Object.values(wishlistsObj);
   return (
-    <div>
+    <div className={classes.body}>
+      <h1 className={classes.header}>Wishlists</h1>
       <div className={classes.mainContainer}>
         {wishlists.length > 0 ? (
           wishlists.map((list, i) => {
-            return list.name;
+            return <Wishlist key={i} list={list} />;
           })
         ) : (
-          <p>No lists yet!</p>
+          <h1 className={classes.header}>No lists yet!</h1>
         )}
       </div>
     </div>

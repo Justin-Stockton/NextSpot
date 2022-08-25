@@ -46,6 +46,7 @@ export const thunkCreateWishlist = (wishlist) => async (dispatch) => {
 
   if (response.ok) {
     const wishlists = await response.json();
+    console.log(wishlists);
     dispatch(actionCreateWishlists(wishlists));
   }
 };

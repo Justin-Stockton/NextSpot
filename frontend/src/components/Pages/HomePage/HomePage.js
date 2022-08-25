@@ -10,7 +10,6 @@ function HomePage() {
   const dispatch = useDispatch();
 
   if (user) {
-    console.log(user.id);
     dispatch(thunkGetWishlists(user.id));
   }
 

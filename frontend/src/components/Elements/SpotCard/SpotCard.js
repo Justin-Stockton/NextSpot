@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import classes from "./SpotCard.module.css";
 import { ReactComponent as HeartSVG } from "./heart.svg";
+import { useSelector } from "react-redux";
 
 function SpotCard({ spot }) {
   const imgArray = [spot.img1, spot.img2, spot.img3, spot.img4, spot.img5];
@@ -9,6 +10,15 @@ function SpotCard({ spot }) {
   const [img, setImg] = useState(imgArray[count]);
   const [filled, setFilled] = useState(false);
   const history = useHistory();
+  const user = useSelector((state) => state.session.user);
+
+  const handleClick = () => {
+    if (!user) {
+      history.push("/login");
+    } else {
+      setFilled(!filled);
+    }
+  };
   let reviews = Object.values(spot.reviews);
   let ratings = 0;
   let rating;
@@ -38,7 +48,7 @@ function SpotCard({ spot }) {
         <div className={classes.heartContainer}>
           <HeartSVG
             className={classes.heart}
-            onClick={() => setFilled(!filled)}
+            onClick={handleClick}
             fill={filled ? "#FF385C" : "rgba(0,0,0,.7)"}
           />
         </div>
