@@ -1,3 +1,4 @@
+import { CREATE_WISHSPOT } from "./wishspots";
 const GET_WISHLIST = "wishlists/GET_WISHLISTS";
 const CREATE_WISHLIST = "wishlists/CREATE_WISHLISTS";
 const LOGOUT_LISTS = "wishlists/LOGOUT_LISTS";
@@ -69,6 +70,11 @@ const wishlists = (state = {}, action) => {
     case CREATE_WISHLIST: {
       const { wishlist } = action;
       newState[wishlist.id] = wishlist;
+      return newState;
+    }
+    case CREATE_WISHSPOT: {
+      const { data } = action;
+      newState[data.wishlistId].wishspots[data.id] = data;
       return newState;
     }
     case LOGOUT_LISTS: {
