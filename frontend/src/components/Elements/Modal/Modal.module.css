@@ -89,3 +89,50 @@
 .plus {
   padding: 30%;
 }
+
+.createButton,
+.createButtonDisabled {
+  color: #fff;
+  font-weight: 800;
+  width: 100%;
+  height: 40px;
+  border-radius: 8px;
+  background-color: #222222;
+  border: none;
+  cursor: pointer;
+}
+.createButtonDisabled {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #717171;
+  cursor: not-allowed;
+}
+.createButtonDisabled:active {
+  background-color: red;
+}
+.createButton:hover {
+  background-color: black;
+}
+.buttonContainer {
+  border-top: 1px solid #d7d7d7;
+  padding: 3% 5%;
+}
+
+.form {
+  padding: 5% 5%;
+}
+
+.subText {
+  margin: 0;
+  font-size: 12px;
+  color: #717171;
+}
+
+.input {
+  width: 100%;
+  height: 45px;
+  border: 1px solid #717171;
+  border-radius: 8px;
+  margin-bottom: 2px;
+}

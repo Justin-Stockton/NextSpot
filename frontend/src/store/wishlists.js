@@ -67,7 +67,7 @@ const wishlists = (state = {}, action) => {
     }
 
     case CREATE_WISHLIST: {
-      const { wishlist } = action.wishlist;
+      const { wishlist } = action;
       newState[wishlist.id] = wishlist;
       return newState;
     }

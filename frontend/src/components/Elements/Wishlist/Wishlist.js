@@ -6,7 +6,7 @@ function Wishlist({ list }) {
   let wishSpots;
   let spotIDs;
   const spotObj = useSelector((state) => state.spots);
-  //   console.log(spotObj);
+
   if (list.wishspots) {
     wishSpots = Object.values(list.wishspots);
     spotIDs = wishSpots.map((spot) => {
@@ -14,9 +14,6 @@ function Wishlist({ list }) {
     });
   }
 
-  //   spotIDs && spotIDs.length
-  //     ? console.log(spotObj[spotIDs[0]].spot.img1)
-  //     : console.log("bye");
   return (
     <div className={classes.mainContainer}>
       {wishSpots && wishSpots.length ? (

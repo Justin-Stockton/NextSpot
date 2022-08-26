@@ -55,11 +55,3 @@ def delete_booking():
     Wishlists.query.filter_by(id=data).delete()
     db.session.commit()
     return 'Wishlist successfully deleted!'
-
-
-# [{
-#     'id': 1, 'userId': 1, 'name': 'Test', 'wishspots': {
-#         1: {'id': 1, 'spotId': 1, 'wishlistId': 1},
-#         2: {'id': 2, 'spotId': 2, 'wishlistId': 1}}},
-#          {'id': 2, 'userId': 1, 'name': 'Test 2'},
-#           {'id': 3, 'userId': 1, 'name': 'Test 3'}]

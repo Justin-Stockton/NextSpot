@@ -4,6 +4,7 @@ import classes from "./SpotCard.module.css";
 import { ReactComponent as HeartSVG } from "./heart.svg";
 import { useSelector } from "react-redux";
 import Modal from "../Modal/Modal";
+import WishlistForm from "../../forms/WishlistForm";
 import { useClickOutside } from "../../../App";
 
 function SpotCard({ spot }) {
@@ -12,6 +13,7 @@ function SpotCard({ spot }) {
   const [img, setImg] = useState(imgArray[count]);
   const [filled, setFilled] = useState(false);
   const [display, setDisplay] = useState(false);
+  const [formDisplay, setFormDisplay] = useState(false);
   const history = useHistory();
   const user = useSelector((state) => state.session.user);
 
@@ -48,10 +50,19 @@ function SpotCard({ spot }) {
   };
   const popupRef = useClickOutside(() => {
     setDisplay(false);
+    setFormDisplay(false);
   });
   return (
     <>
-      <Modal innerRef={popupRef} display={display} setDisplay={setDisplay} />
+      <Modal
+        innerRef={popupRef}
+        display={display}
+        setDisplay={setDisplay}
+        formDisplay={formDisplay}
+        setFormDisplay={setFormDisplay}
+        spot={spot}
+        setFilled={setFilled}
+      />
       <div className={classes.imgSlideShowContainer}>
         <div className={classes.heartContainer}>
           <HeartSVG
