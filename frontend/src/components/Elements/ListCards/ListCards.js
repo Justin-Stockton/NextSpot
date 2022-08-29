@@ -1,12 +1,19 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { thunkCreateWishspot } from "../../../store/wishspots";
 import classes from "./ListCards.module.css";
 
-function ListCards({ list, setFilled, setDisplay }) {
-  console.log(list);
+function ListCards({ list, setFilled, setDisplay, spot }) {
+  const dispatch = useDispatch();
   let spots = useSelector((state) => state.spots);
 
-  const handleClick = () => {
+  const handleClick = async () => {
+    let data = {
+      spotId: spot.id,
+      wishlistId: list.id,
+    };
+    console.log(data);
+    await dispatch(thunkCreateWishspot(data));
     setFilled(true);
     setDisplay(false);
   };

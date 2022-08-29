@@ -28,9 +28,8 @@ def get_spot_wishspots(wishlistId):
 @wishspots.route('/create', methods=['POST'])
 def create_wishspot():
     data=request.json
-
     new_wishspot = Wishspots(
-        userId=data['userId'],
+        spotId=data['spotId'],
         wishlistId=data['wishlistId'],
     )
     db.session.add(new_wishspot)

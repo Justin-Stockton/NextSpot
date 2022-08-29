@@ -11,6 +11,7 @@ function Modal({
   formDisplay,
   setFormDisplay,
   setFilled,
+  spot,
 }) {
   let user = useSelector((state) => state.session.user);
   let listsObj = useSelector((state) => state.wishlists);
@@ -63,6 +64,7 @@ function Modal({
                   list={list}
                   setFilled={setFilled}
                   setDisplay={setDisplay}
+                  spot={spot}
                 />
               );
             })}

@@ -7,7 +7,7 @@ from flask_login import LoginManager
 
 from .config import Config
 from .models import db, Users
-from .routes import user_routes, auth_routes, bookings, spots,reviews,wishlists
+from .routes import user_routes, auth_routes, bookings, spots,reviews,wishlists,wishspots
 
 from .seeds import seed_commands
 
@@ -33,6 +33,7 @@ app.register_blueprint(reviews)
 app.register_blueprint(bookings)
 app.register_blueprint(spots)
 app.register_blueprint(wishlists)
+app.register_blueprint(wishspots)
 db.init_app(app)
 Migrate(app, db)
 

@@ -5,13 +5,13 @@ const actionCreateWishspot = (data) => ({
   data,
 });
 
-export const thunkCreateWishlist = (wishlist) => async (dispatch) => {
+export const thunkCreateWishspot = (data) => async (dispatch) => {
   const response = await fetch(`/api/wishspots/create`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(wishlist),
+    body: JSON.stringify(data),
   });
 
   if (response.ok) {

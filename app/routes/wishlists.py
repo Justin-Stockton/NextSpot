@@ -1,6 +1,6 @@
 from urllib import request
 from flask import Blueprint,request
-from ..models import Wishlists, Wishspots, db
+from ..models import Wishlists, db
 
 wishlists = Blueprint('wishlists', __name__, url_prefix = '/api/wishlists')
 
