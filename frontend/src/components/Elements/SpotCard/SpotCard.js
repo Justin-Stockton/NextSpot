@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import classes from "./SpotCard.module.css";
 import { ReactComponent as HeartSVG } from "./heart.svg";
 import { useSelector } from "react-redux";
 import Modal from "../Modal/Modal";
-import WishlistForm from "../../forms/WishlistForm";
 import { useClickOutside } from "../../../App";
 
 function SpotCard({ spot }) {
@@ -16,6 +15,7 @@ function SpotCard({ spot }) {
   const [formDisplay, setFormDisplay] = useState(false);
   const history = useHistory();
   const user = useSelector((state) => state.session.user);
+  const wishlistsObj = useSelector((state) => state.wishlists);
 
   const handleClick = () => {
     if (!user) {
@@ -25,6 +25,7 @@ function SpotCard({ spot }) {
       setDisplay(true);
     }
   };
+
   let reviews = Object.values(spot.reviews);
   let ratings = 0;
   let rating;
@@ -48,10 +49,22 @@ function SpotCard({ spot }) {
     count > 0 ? setCount(count - 1) : setCount(4);
     setImg(imgArray[count]);
   };
+
   const popupRef = useClickOutside(() => {
     setDisplay(false);
     setFormDisplay(false);
   });
+
+  useEffect(() => {
+    const wishlistArr = Object.values(wishlistsObj);
+    const wishlistArrAll = wishlistArr.map((obj) => obj.wishspots);
+    const wishlistSpotIds = wishlistArrAll
+      .map((obj) => Object.values(obj).map((spots) => spots.spotId))
+      .flat();
+
+    if (wishlistSpotIds && wishlistSpotIds.includes(spot.id)) setFilled(true);
+  }, [wishlistsObj]);
+
   return (
     <>
       <Modal
