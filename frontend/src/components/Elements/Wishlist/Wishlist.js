@@ -1,8 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import classes from "./Wishlist.module.css";
+import { useHistory } from "react-router-dom";
 
 function Wishlist({ list }) {
+  const history = useHistory();
+  const user = useSelector((state) => state.session.user);
   let wishSpots;
   let spotIDs;
   const spotObj = useSelector((state) => state.spots);
@@ -14,8 +17,12 @@ function Wishlist({ list }) {
     });
   }
 
+  const handleClick = () => {
+    history.push(`/${user.username}/${list.name}`);
+  };
+
   return (
-    <div className={classes.mainContainer}>
+    <div className={classes.mainContainer} onClick={handleClick}>
       {wishSpots && wishSpots.length ? (
         <div className={classes.imgContainer}>
           <>
