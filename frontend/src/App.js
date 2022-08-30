@@ -12,6 +12,7 @@ import UserPage from "./components/Pages/UserPage";
 import LoginModal from "./components/forms/LoginModal";
 import Oops from "./components/Pages/Oops";
 import Wishlists from "./components/Pages/Wishlists";
+import WishlistPage from "./components/Pages/WishlistPage";
 
 export const useClickOutside = (handler) => {
   let domNode = useRef();
@@ -72,6 +73,9 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path="/my-wishlists" exact={true}>
           <Wishlists />
+        </ProtectedRoute>
+        <ProtectedRoute path="/:username/:wishlistname" exact={true}>
+          <WishlistPage />
         </ProtectedRoute>
         <Route>
           <Oops />
