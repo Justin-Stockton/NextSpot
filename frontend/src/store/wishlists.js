@@ -57,7 +57,7 @@ export const thunkCreateWishlist = (wishlist) => async (dispatch) => {
 };
 
 export const thunkUpdateWishlist = (wishlist) => async (dispatch) => {
-  const response = await fetch(`api/wishlists/update`, {
+  const response = await fetch(`/api/wishlists/update`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import classes from "./EditWishlistModal.module.css";
+import { thunkUpdateWishlist } from "../../../store/wishlists";
 
 function EditWishlistModal({
   innerRef,
@@ -18,6 +19,7 @@ function EditWishlistModal({
       name,
     };
 
+    dispatch(thunkUpdateWishlist(data));
     setFormDisplay(false);
   };
 
@@ -52,7 +54,12 @@ function EditWishlistModal({
                   <strong className={classes.cancel}>Cancel</strong>
                 </div>
                 {name.length > 0 && name.length < 50 ? (
-                  <button className={classes.createButton}>Save</button>
+                  <button
+                    onClick={handleSubmit}
+                    className={classes.createButton}
+                  >
+                    Save
+                  </button>
                 ) : (
                   <div className={classes.createButtonDisabled}>Save</div>
                 )}
