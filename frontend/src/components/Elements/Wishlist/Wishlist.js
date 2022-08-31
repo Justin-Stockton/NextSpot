@@ -18,7 +18,7 @@ function Wishlist({ list }) {
   }
 
   const handleClick = () => {
-    history.push(`/${user.username}/${list.name}`);
+    history.push(`/${user.username}/${list.id}`);
   };
 
   return (

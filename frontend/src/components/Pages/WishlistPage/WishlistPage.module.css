@@ -1,0 +1,34 @@
+.mainContainer {
+  display: flex;
+  position: fixed;
+  justify-content: space-between;
+  height: 95vh;
+  width: 100vw;
+  top: 81px;
+}
+
+.mainContentContainer {
+  display: flex;
+  flex-direction: column;
+  width: 43.7%;
+  padding: 0 2%;
+}
+
+.mapContainer {
+  height: 100%;
+  width: 56.3%;
+  background-color: aqua;
+}
+
+.mainContentNav {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 5%;
+  align-items: center;
+}
+
+.rightButtonContainer {
+  display: flex;
+  justify-content: space-between;
+}

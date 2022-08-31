@@ -74,7 +74,7 @@ function App() {
         <ProtectedRoute path="/my-wishlists" exact={true}>
           <Wishlists />
         </ProtectedRoute>
-        <ProtectedRoute path="/:username/:wishlistname" exact={true}>
+        <ProtectedRoute path="/:username/:wishlistId" exact={true}>
           <WishlistPage />
         </ProtectedRoute>
         <Route>
