@@ -31,4 +31,21 @@
 .rightButtonContainer {
   display: flex;
   justify-content: space-between;
+  min-width: 40px;
+}
+
+.icons {
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  padding: 20%;
+}
+.icons:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+}
+.title {
+  font-weight: 600;
+  font-size: 42px;
+  margin: 20px 0;
 }

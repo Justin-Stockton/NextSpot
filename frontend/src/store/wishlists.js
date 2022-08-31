@@ -1,6 +1,7 @@
 import { CREATE_WISHSPOT } from "./wishspots";
 const GET_WISHLIST = "wishlists/GET_WISHLISTS";
-const CREATE_WISHLIST = "wishlists/CREATE_WISHLISTS";
+const CREATE_WISHLIST = "wishlists/CREATE_WISHLIST";
+const UPDATE_WISHLIST = "wishlists/UPDATE_WISHLIST";
 const LOGOUT_LISTS = "wishlists/LOGOUT_LISTS";
 
 const actionGetWishlists = (wishlists) => ({
@@ -10,6 +11,10 @@ const actionGetWishlists = (wishlists) => ({
 
 const actionCreateWishlists = (wishlist) => ({
   type: CREATE_WISHLIST,
+  wishlist,
+});
+const actionUpdateWishlist = (wishlist) => ({
+  type: UPDATE_WISHLIST,
   wishlist,
 });
 
@@ -51,6 +56,21 @@ export const thunkCreateWishlist = (wishlist) => async (dispatch) => {
   }
 };
 
+export const thunkUpdateWishlist = (wishlist) => async (dispatch) => {
+  const response = await fetch(`api/wishlists/update`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(wishlist),
+  });
+
+  if (response.ok) {
+    const wishlist = await response.json();
+    dispatch(actionUpdateWishlist(wishlist));
+  }
+};
+
 export const thunkLogoutLists = () => async (dispatch) => {
   await dispatch(actionLogoutLists());
 };
@@ -71,6 +91,12 @@ const wishlists = (state = {}, action) => {
       const { wishlist } = action;
       wishlist.wishspots = {};
       newState[wishlist.id] = wishlist;
+      return newState;
+    }
+
+    case UPDATE_WISHLIST: {
+      const { wishlist } = action;
+      newState[wishlist.id].name = wishlist.name;
       return newState;
     }
     case CREATE_WISHSPOT: {
