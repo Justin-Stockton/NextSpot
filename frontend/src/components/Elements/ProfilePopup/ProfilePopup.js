@@ -39,14 +39,14 @@ function ProfilePopup({ display, setDisplay, innerRef }) {
           >
             Trips
           </div>
-          <div
+          {/* <div
             onClick={() => {
               history.push(`/user/${user.username}/host`);
               setDisplay(false);
             }}
           >
             Host your home
-          </div>
+          </div> */}
           <a
             target="_blank"
             rel="noreferrer"
