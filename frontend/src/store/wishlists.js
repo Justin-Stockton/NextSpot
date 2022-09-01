@@ -3,6 +3,7 @@ const GET_WISHLIST = "wishlists/GET_WISHLISTS";
 const CREATE_WISHLIST = "wishlists/CREATE_WISHLIST";
 const UPDATE_WISHLIST = "wishlists/UPDATE_WISHLIST";
 const LOGOUT_LISTS = "wishlists/LOGOUT_LISTS";
+const DELETE_LIST = "wishlists/DELETE_LIST";
 
 const actionGetWishlists = (wishlists) => ({
   type: GET_WISHLIST,
@@ -13,6 +14,7 @@ const actionCreateWishlists = (wishlist) => ({
   type: CREATE_WISHLIST,
   wishlist,
 });
+
 const actionUpdateWishlist = (wishlist) => ({
   type: UPDATE_WISHLIST,
   wishlist,
@@ -21,6 +23,13 @@ const actionUpdateWishlist = (wishlist) => ({
 const actionLogoutLists = () => {
   return {
     type: LOGOUT_LISTS,
+  };
+};
+
+const actionDeleteList = (listId) => {
+  return {
+    type: DELETE_LIST,
+    listId,
   };
 };
 
@@ -70,6 +79,19 @@ export const thunkUpdateWishlist = (wishlist) => async (dispatch) => {
     dispatch(actionUpdateWishlist(wishlist));
   }
 };
+export const thunkDeleteWishlist = (wishlistId) => async (dispatch) => {
+  const response = await fetch(`/api/wishlists/delete`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(wishlistId),
+  });
+
+  if (response.ok) {
+    dispatch(actionDeleteList(wishlistId));
+  }
+};
 
 export const thunkLogoutLists = () => async (dispatch) => {
   await dispatch(actionLogoutLists());
@@ -99,6 +121,12 @@ const wishlists = (state = {}, action) => {
       newState[wishlist.id].name = wishlist.name;
       return newState;
     }
+    case DELETE_LIST: {
+      const id = action.listId;
+      delete newState[id];
+      return newState;
+    }
+
     case CREATE_WISHSPOT: {
       const { data } = action;
       newState[data.wishlistId].wishspots[data.id] = data;

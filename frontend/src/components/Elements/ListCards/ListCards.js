@@ -12,7 +12,7 @@ function ListCards({ list, setFilled, setDisplay, spot }) {
       spotId: spot.id,
       wishlistId: list.id,
     };
-    console.log(data);
+
     await dispatch(thunkCreateWishspot(data));
     setFilled(true);
     setDisplay(false);
