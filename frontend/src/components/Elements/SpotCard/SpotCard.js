@@ -68,7 +68,7 @@ function SpotCard({ spot }) {
     } else {
       setFilled(false);
     }
-  }, [wishlistsObj, spot.id]);
+  }, [wishlistsObj, spot.id, user]);
 
   return (
     <>
@@ -94,10 +94,15 @@ function SpotCard({ spot }) {
             onClick={handleNext}
             className={classes.next}
             src="static/next.svg"
+            alt="house"
           />
         </div>
         <div className={classes.previousContainer} onClick={handlePrevious}>
-          <img className={classes.previous} src="static/leftArrow.svg" />
+          <img
+            className={classes.previous}
+            src="static/leftArrow.svg"
+            alt="back arrow"
+          />
         </div>
 
         <img
@@ -126,12 +131,12 @@ function SpotCard({ spot }) {
         <div>
           {rating > 0 ? (
             <strong>
-              <img className={classes.star} src="/static/star.svg" />
+              <img className={classes.star} src="/static/star.svg" alt="star" />
               {rating}
             </strong>
           ) : (
             <strong>
-              <img className={classes.star} src="/static/star.svg" />
+              <img className={classes.star} src="/static/star.svg" alt="star" />
               New
             </strong>
           )}

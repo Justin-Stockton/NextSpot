@@ -14,9 +14,9 @@ function WishlistPage() {
   const url = useParams();
   const [formDisplay, setFormDisplay] = useState(false);
 
-  useEffect(async () => {
-    await dispatch(thunkGetWishlists(user.id));
-  }, [dispatch]);
+  useEffect(() => {
+    dispatch(thunkGetWishlists(user.id));
+  }, [dispatch, user.id]);
 
   const wishlist = useSelector((state) => state.wishlists[url.wishlistId]);
   const spots = useSelector((state) => state.spots);
@@ -42,14 +42,26 @@ function WishlistPage() {
             >
               <div className={classes.mainContentNav}>
                 <div onClick={() => history.push("/my-wishlists")}>
-                  <img className={classes.icons} src="/static/backArrow.svg" />
+                  <img
+                    className={classes.icons}
+                    alt="back"
+                    src="/static/backArrow.svg"
+                  />
                 </div>
                 <div className={classes.rightButtonContainer}>
                   <div onClick={copy}>
-                    <img className={classes.icons} src="/static/copy.svg" />
+                    <img
+                      className={classes.icons}
+                      alt="copy"
+                      src="/static/copy.svg"
+                    />
                   </div>
                   <div onClick={() => setFormDisplay(true)}>
-                    <img className={classes.icons} src="/static/threedot.svg" />
+                    <img
+                      className={classes.icons}
+                      alt="menu"
+                      src="/static/threedot.svg"
+                    />
                   </div>
                 </div>
               </div>
@@ -72,7 +84,12 @@ function WishlistPage() {
                 )}
               </div>
             </div>
-            <div className={classes.mapContainer}></div>
+            <div className={classes.mapContainer}>
+              <img
+                className={classes.comingSoon}
+                src="/static/coming_soon.png"
+              />
+            </div>
           </div>
           <EditWishlistModal
             innerRef={popupRef}

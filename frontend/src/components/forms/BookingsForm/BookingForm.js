@@ -36,7 +36,7 @@ function BookingForm({ spot, reviewsTotal, rating }) {
       setEndDate(newCheckout);
     }
     return;
-  }, [startDate]);
+  }, [startDate, stayLength]);
 
   const submit = async () => {
     if (!user) {

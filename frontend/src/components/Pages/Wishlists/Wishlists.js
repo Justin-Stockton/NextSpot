@@ -5,11 +5,11 @@ import classes from "./Wishlists.module.css";
 import Wishlist from "../../Elements/Wishlist";
 function Wishlists() {
   const dispatch = useDispatch();
-  useEffect(async () => {
-    await dispatch(thunkGetWishlists(user.id));
-  }, [dispatch]);
-  const wishlistsObj = useSelector((state) => state.wishlists);
   const user = useSelector((state) => state.session.user);
+  useEffect(() => {
+    dispatch(thunkGetWishlists(user.id));
+  }, [dispatch, user.id]);
+  const wishlistsObj = useSelector((state) => state.wishlists);
 
   const wishlists = Object.values(wishlistsObj);
   return (

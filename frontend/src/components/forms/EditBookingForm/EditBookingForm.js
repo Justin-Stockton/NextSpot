@@ -40,7 +40,7 @@ function EditBookingForm({ booking }) {
       setEndDate(newCheckout);
     }
     return;
-  }, [startDate]);
+  }, [startDate, stayLength]);
 
   const submit = async () => {
     const data = {

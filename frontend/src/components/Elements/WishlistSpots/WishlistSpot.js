@@ -79,13 +79,18 @@ function WishlistSpot({ spot, id, wishlistId }) {
         <div className={classes.imgSlideShowContainer}>
           <div className={classes.buttonContainer}>
             <div className={classes.previousContainer} onClick={handlePrevious}>
-              <img className={classes.previous} src="/static/leftArrow.svg" />
+              <img
+                className={classes.previous}
+                src="/static/leftArrow.svg"
+                alt="back"
+              />
             </div>
             <div className={classes.nextContainer} onClick={handleNext}>
               <img
                 onClick={handleNext}
                 className={classes.next}
                 src="/static/next.svg"
+                alt="next"
               />
             </div>
           </div>
@@ -109,7 +114,11 @@ function WishlistSpot({ spot, id, wishlistId }) {
               <>
                 <div>
                   <strong>
-                    <img className={classes.star} src="/static/star.svg" />
+                    <img
+                      className={classes.star}
+                      alt="star"
+                      src="/static/star.svg"
+                    />
                     {rating}
                   </strong>{" "}
                   ({reviews.length} {reviews.length > 1 ? "reviews" : "review"})
@@ -117,7 +126,11 @@ function WishlistSpot({ spot, id, wishlistId }) {
               </>
             ) : (
               <strong>
-                <img className={classes.star} src="/static/star.svg" />
+                <img
+                  alt="star"
+                  className={classes.star}
+                  src="/static/star.svg"
+                />
                 New
               </strong>
             )}
