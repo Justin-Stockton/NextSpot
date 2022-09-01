@@ -121,12 +121,12 @@ function SpotCard({ spot }) {
         <div>
           {rating > 0 ? (
             <strong>
-              <img className={classes.star} src="static/star.svg" />
+              <img className={classes.star} src="/static/star.svg" />
               {rating}
             </strong>
           ) : (
             <strong>
-              <img className={classes.star} src="static/star.svg" />
+              <img className={classes.star} src="/static/star.svg" />
               New
             </strong>
           )}

@@ -5,6 +5,8 @@ import { thunkGetWishlists } from "../../../store/wishlists";
 import classes from "./WishlistPage.module.css";
 import { useClickOutside } from "../../../App";
 import EditWishlistModal from "../../Elements/EditWishlistModal";
+import spots from "../../../store/spots";
+import WishlistSpot from "../../Elements/WishlistSpots";
 
 function WishlistPage() {
   const history = useHistory();
@@ -18,8 +20,7 @@ function WishlistPage() {
   }, [dispatch]);
 
   const wishlist = useSelector((state) => state.wishlists[url.wishlistId]);
-
-  //   const spots = Object.values(wishlist.wishspots);
+  const spots = useSelector((state) => state.spots);
 
   const popupRef = useClickOutside(() => {
     setFormDisplay(false);
@@ -28,10 +29,12 @@ function WishlistPage() {
   const copy = () => {
     navigator.clipboard.writeText(window.location.href);
   };
+  let lSpots;
+  if (wishlist) lSpots = Object.values(wishlist.wishspots);
 
   return (
     <>
-      {wishlist ? (
+      {wishlist && spots ? (
         <>
           <div className={classes.mainContainer}>
             <div
@@ -52,7 +55,15 @@ function WishlistPage() {
                 </div>
               </div>
               <div className={classes.title}>{wishlist.name}</div>
-              <div>components</div>
+              <div className={classes.spotsContainer}>
+                {lSpots.map((spot, i) => {
+                  return (
+                    <div key={i}>
+                      <WishlistSpot id={spot.id} spot={spots[spot.spotId]} />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
             <div className={classes.mapContainer}></div>
           </div>

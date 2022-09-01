@@ -49,3 +49,12 @@
   font-size: 42px;
   margin: 20px 0;
 }
+
+.spotsContainer {
+  margin-top: 5%;
+  overflow-y: auto;
+}
+
+.spotsContainer::-webkit-scrollbar {
+  display: none;
+}
