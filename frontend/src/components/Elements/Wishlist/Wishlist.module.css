@@ -1,0 +1,66 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  min-width: 465.5px;
+  min-height: 200.45px;
+  margin: 0 1%;
+}
+
+.imgContainer {
+  display: flex;
+  gap: 0px 0.3%;
+  cursor: pointer;
+}
+.mainImg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  min-height: 200px;
+  max-height: 200px;
+  max-width: 310px;
+  background-color: #d7d7d7;
+  border-radius: 12px 0 0 12px;
+  object-fit: cover;
+}
+
+.subImgContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1% 0px;
+}
+
+.subImg,
+.topImg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  max-height: 99px;
+  max-width: 136px;
+  background-color: #d7d7d7;
+  border-radius: 0 0 12px 0;
+  object-fit: cover;
+}
+
+.topImg {
+  border-radius: 0 12px 0 0;
+}
+
+.name {
+  font-weight: 600;
+  font-size: 22px;
+  padding: 2% 0;
+  margin-bottom: 5%;
+  cursor: pointer;
+}
+
+.noSpots {
+  background-color: #ddd;
+  border-radius: 12px;
+  min-width: 465.5px;
+  min-height: 200.45px;
+  cursor: pointer;
+}
