@@ -56,14 +56,19 @@ function SpotCard({ spot }) {
   });
 
   useEffect(() => {
-    const wishlistArr = Object.values(wishlistsObj);
-    const wishlistArrAll = wishlistArr.map((obj) => obj.wishspots);
-    const wishlistSpotIds = wishlistArrAll
+    if (!user) setFilled(false);
+    let wishlistArr = Object.values(wishlistsObj);
+    let wishlistArrAll = wishlistArr.map((obj) => obj.wishspots);
+    let wishlistSpotIds = wishlistArrAll
       .map((obj) => Object.values(obj).map((spots) => spots.spotId))
       .flat();
 
-    if (wishlistSpotIds && wishlistSpotIds.includes(spot.id)) setFilled(true);
-  }, [wishlistsObj]);
+    if (wishlistSpotIds && wishlistSpotIds.includes(spot.id)) {
+      setFilled(true);
+    } else {
+      setFilled(false);
+    }
+  }, [wishlistsObj, spot.id]);
 
   return (
     <>

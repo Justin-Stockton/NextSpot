@@ -5,7 +5,6 @@ import { thunkGetWishlists } from "../../../store/wishlists";
 import classes from "./WishlistPage.module.css";
 import { useClickOutside } from "../../../App";
 import EditWishlistModal from "../../Elements/EditWishlistModal";
-import spots from "../../../store/spots";
 import WishlistSpot from "../../Elements/WishlistSpots";
 
 function WishlistPage() {
@@ -56,17 +55,21 @@ function WishlistPage() {
               </div>
               <div className={classes.title}>{wishlist.name}</div>
               <div className={classes.spotsContainer}>
-                {lSpots.map((spot, i) => {
-                  return (
-                    <div key={i}>
-                      <WishlistSpot
-                        id={spot.id}
-                        spot={spots[spot.spotId]}
-                        wishlistId={url.wishlistId}
-                      />
-                    </div>
-                  );
-                })}
+                {lSpots.length > 0 ? (
+                  lSpots.map((spot, i) => {
+                    return (
+                      <div key={i}>
+                        <WishlistSpot
+                          id={spot.id}
+                          spot={spots[spot.spotId]}
+                          wishlistId={url.wishlistId}
+                        />
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div>There are no spots in this list</div>
+                )}
               </div>
             </div>
             <div className={classes.mapContainer}></div>

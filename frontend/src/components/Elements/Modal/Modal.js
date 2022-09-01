@@ -40,7 +40,7 @@ function Modal({
                 onClick={() => setDisplay(false)}
                 className={classes.xContainer}
               >
-                <img className={classes.x} src="/static/x.svg" />
+                <img className={classes.x} alt="x" src="/static/x.svg" />
               </div>
               <strong>Your Wishlists</strong>
               <div className={classes.filler}></div>
@@ -53,7 +53,11 @@ function Modal({
               }}
             >
               <div className={classes.addButton}>
-                <img className={classes.plus} src="/static/plus.svg" />
+                <img
+                  className={classes.plus}
+                  alt="plus"
+                  src="/static/plus.svg"
+                />
               </div>
               <strong className={classes.create}>Create new wishlist</strong>
             </div>
@@ -79,7 +83,7 @@ function Modal({
                 onClick={() => setFormDisplay(false)}
                 className={classes.xContainer}
               >
-                <img className={classes.x} src="/static/x.svg" />
+                <img className={classes.x} alt="x" src="/static/x.svg" />
               </div>
               <strong>Name this wishlist</strong>
               <div className={classes.filler}></div>

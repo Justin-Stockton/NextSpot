@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkDeleteReview } from "../../../store/reviews";
 import EditReviewForm from "../../forms/EditReviewForm";
