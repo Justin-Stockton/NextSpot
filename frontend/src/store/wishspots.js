@@ -5,9 +5,9 @@ const actionCreateWishspot = (data) => ({
   type: CREATE_WISHSPOT,
   data,
 });
-const actionDeleteWishspot = (id) => ({
+const actionDeleteWishspot = (data) => ({
   type: DELETE_WISHSPOT,
-  id,
+  data,
 });
 
 export const thunkCreateWishspot = (data) => async (dispatch) => {
@@ -24,16 +24,16 @@ export const thunkCreateWishspot = (data) => async (dispatch) => {
     dispatch(actionCreateWishspot(wishData));
   }
 };
-export const thunkDeleteWishspot = (id) => async (dispatch) => {
+export const thunkDeleteWishspot = (data) => async (dispatch) => {
   const response = await fetch(`/api/wishspots/delete`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(id),
+    body: JSON.stringify(data),
   });
 
   if (response.ok) {
-    dispatch(actionDeleteWishspot(id));
+    dispatch(actionDeleteWishspot(data));
   }
 };

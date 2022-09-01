@@ -129,6 +129,11 @@ const wishlists = (state = {}, action) => {
 
     case CREATE_WISHSPOT: {
       const { data } = action;
+      let found = false;
+      Object.values(newState[data.wishlistId].wishspots).forEach((spot) => {
+        if (spot.spotId === data.spotId) found = true;
+      });
+      if (found) return newState;
       newState[data.wishlistId].wishspots[data.id] = data;
       return newState;
     }

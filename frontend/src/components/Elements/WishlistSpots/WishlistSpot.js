@@ -4,11 +4,15 @@ import { useDispatch } from "react-redux";
 import classes from "./WishlistSpot.module.css";
 import { ReactComponent as HeartSVG } from "./heart.svg";
 import { thunkDeleteWishspot } from "../../../store/wishspots";
+import Modal from "../Modal";
+import { useClickOutside } from "../../../App";
 
-function WishlistSpot({ spot, id }) {
+function WishlistSpot({ spot, id, wishlistId }) {
   const history = useHistory();
   const dispatch = useDispatch();
+
   const spotObj = spot.spot;
+
   const imgArray = [
     spotObj.img1,
     spotObj.img2,
@@ -16,9 +20,12 @@ function WishlistSpot({ spot, id }) {
     spotObj.img4,
     spotObj.img5,
   ];
+
   const [count, setCount] = useState(0);
   const [img, setImg] = useState(imgArray[count]);
   const [filled, setFilled] = useState(true);
+  const [display, setDisplay] = useState(false);
+  const [formDisplay, setFormDisplay] = useState(false);
 
   const handleNext = () => {
     count < 4 ? setCount(count + 1) : setCount(0);
@@ -45,12 +52,29 @@ function WishlistSpot({ spot, id }) {
   }
 
   const handleClick = () => {
-    if (filled) dispatch(thunkDeleteWishspot(id));
+    let data = {
+      spotId: spotObj.id,
+      wishlistId: wishlistId,
+    };
+    if (filled) dispatch(thunkDeleteWishspot(data));
+    if (!filled) setDisplay(true);
     setFilled(false);
   };
 
+  const modalRef = useClickOutside(() => {
+    setDisplay(false);
+  });
   return (
     <>
+      <Modal
+        display={display}
+        formDisplay={formDisplay}
+        setDisplay={setDisplay}
+        setFormDisplay={setFormDisplay}
+        innerRef={modalRef}
+        spot={spotObj}
+        setFilled={setFilled}
+      />
       <div className={classes.spotContainer}>
         <div className={classes.imgSlideShowContainer}>
           <div className={classes.buttonContainer}>

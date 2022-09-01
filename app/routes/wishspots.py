@@ -49,6 +49,6 @@ def update_wishspot():
 @wishspots.route('/delete', methods=['DELETE'])
 def delete_booking():
     data = request.json
-    Wishspots.query.filter_by(id=data).delete()
+    Wishspots.query.filter_by(spotId=data['spotId']).filter_by(wishlistId=data['wishlistId']).delete()
     db.session.commit()
     return 'Wishspot successfully removed!'

@@ -59,7 +59,11 @@ function WishlistPage() {
                 {lSpots.map((spot, i) => {
                   return (
                     <div key={i}>
-                      <WishlistSpot id={spot.id} spot={spots[spot.spotId]} />
+                      <WishlistSpot
+                        id={spot.id}
+                        spot={spots[spot.spotId]}
+                        wishlistId={url.wishlistId}
+                      />
                     </div>
                   );
                 })}
