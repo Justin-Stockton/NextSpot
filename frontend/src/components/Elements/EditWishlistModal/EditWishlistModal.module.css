@@ -2,7 +2,7 @@
   display: flex;
   z-index: 12;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.06);
   position: fixed;
   top: 0px;
   left: 0;
@@ -18,7 +18,7 @@
   z-index: 13;
   opacity: none;
   max-height: 60%;
-  width: 29%;
+  width: 20%;
   background-color: #fff;
   border-radius: 12px;
   top: 15rem;
@@ -53,7 +53,7 @@
 }
 .xContainer:hover {
   border-radius: 50%;
-  background-color: #d7d7d7;
+  background-color: rgba(0, 0, 0, 0.04);
 }
 
 .filler {
@@ -61,14 +61,6 @@
   width: 12px;
 }
 
-.newList {
-  display: flex;
-  padding: 4% 2% 2% 2%;
-  cursor: pointer;
-}
-.newList:hover {
-  background-color: rgba(0, 0, 0, 0.03);
-}
 .addButton {
   display: flex;
   justify-content: center;
@@ -87,15 +79,12 @@
   align-items: center;
   margin-left: 25%;
 }
-.plus {
-  padding: 30%;
-}
 
 .createButton,
 .createButtonDisabled {
   color: #fff;
   font-weight: 800;
-  width: 100%;
+  width: 20%;
   height: 40px;
   border-radius: 8px;
   background-color: #222222;
@@ -116,6 +105,9 @@
   background-color: black;
 }
 .buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border-top: 1px solid #d7d7d7;
   padding: 3% 5%;
 }
@@ -136,4 +128,33 @@
   border: 1px solid #717171;
   border-radius: 8px;
   margin-bottom: 2px;
+}
+
+.deleteContainer {
+  padding: 1% 2%;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.deleteContainer:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.cancel {
+  text-decoration: underline;
+}
+
+.cancelContainer {
+  display: flex;
+  border-radius: 8px;
+  padding: auto;
+  width: 20%;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.cancelContainer:hover {
+  background-color: rgba(0, 0, 0, 0.04);
 }

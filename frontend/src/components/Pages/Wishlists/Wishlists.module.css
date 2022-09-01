@@ -1,0 +1,16 @@
+.mainContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px 10px;
+  margin-top: 2%;
+}
+
+.body {
+  padding: 0 2% 0 8%;
+}
+
+.header {
+  margin: 3% 1%;
+  font-size: 30px;
+  font-weight: 800;
+}

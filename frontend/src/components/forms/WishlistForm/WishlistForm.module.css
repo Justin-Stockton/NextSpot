@@ -1,0 +1,27 @@
+.background {
+  display: flex;
+  z-index: 12;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0px;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+}
+.reviewsContainer {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  border-bottom: 1px solid #d7d7d7;
+  position: fixed;
+  z-index: 13;
+  opacity: none;
+  max-height: 60%;
+  width: 29%;
+  background-color: #fff;
+  border-radius: 12px;
+  top: 15rem;
+  overflow: auto;
+  min-width: 200px;
+}
