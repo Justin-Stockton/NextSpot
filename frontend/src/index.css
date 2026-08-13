@@ -1,32 +1,10 @@
-/* TODO Add site wide styles */
-@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Flow+Circular&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap");
 
-* {
-  box-sizing: border-box;
-  text-decoration: none;
-  line-height: 24px;
-  color: #222222;
-  font-size: 16px;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  font-family: "Nunito Sans", sans-serif;
-  word-break: break-word;
+@layer base {
+  body { @apply m-0 bg-white font-sans text-slate-800 antialiased; }
+  button, a, input, select, textarea { @apply focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2; }
 }
-h1 {
-  font-size: 26px;
-}
-body {
-  margin: 0;
-  padding: 0;
-  margin-bottom: 5rem;
-}
-/*
-button {
-  font-family: "Nunito Sans", sans-serif;
-} */
