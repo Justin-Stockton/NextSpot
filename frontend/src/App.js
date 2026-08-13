@@ -39,8 +39,8 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      await dispatch(authenticate());
-      await dispatch(thunkGetSpots());
+      const user = await dispatch(authenticate());
+      if (user) await dispatch(thunkGetSpots());
       setLoaded(true);
     })();
   }, [dispatch]);
@@ -59,9 +59,9 @@ function App() {
         <Route path="/sign-up" exact={true}>
           <SignUpForm />
         </Route>
-        <Route path="/spots/:spotId" exact={true}>
+        <ProtectedRoute path="/spots/:spotId" exact={true}>
           <SpotPage />
-        </Route>
+        </ProtectedRoute>
         <Route path="/" exact={true}>
           <HomePage />
         </Route>
