@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkCreateWishlist } from "../../../store/wishlists";
 import ListCards from "../ListCards";
-import classes from "./Modal.module.css";
 
 function Modal({
   display,
@@ -33,33 +32,33 @@ function Modal({
   return (
     <>
       {display ? (
-        <div className={classes.background}>
-          <div ref={innerRef} className={classes.reviewsContainer}>
-            <div className={classes.top}>
+        <div className={'fixed inset-0 z-30 flex items-center justify-center bg-gray-900/40 p-4'}>
+          <div ref={innerRef} className={'max-h-[80vh] w-full max-w-md overflow-y-auto rounded-2xl bg-white shadow-2xl'}>
+            <div className={'flex items-center justify-between border-b border-gray-200 px-5 py-4'}>
               <div
                 onClick={() => setDisplay(false)}
-                className={classes.xContainer}
+                className={'flex h-9 w-9 cursor-pointer items-center justify-center rounded-full hover:bg-gray-100'}
               >
-                <img className={classes.x} alt="x" src="/static/x.svg" />
+                <img className={'h-4 w-4'} alt="x" src="/static/x.svg" />
               </div>
               <strong>Your Wishlists</strong>
-              <div className={classes.filler}></div>
+              <div className={'h-4 w-4'}></div>
             </div>
             <div
-              className={classes.newList}
+              className={'flex cursor-pointer items-center gap-4 px-5 py-3 hover:bg-gray-50'}
               onClick={() => {
                 setDisplay(false);
                 setFormDisplay(true);
               }}
             >
-              <div className={classes.addButton}>
+              <div className={'flex h-14 w-14 flex-none items-center justify-center rounded-xl border border-gray-300'}>
                 <img
-                  className={classes.plus}
+                  className={'h-5 w-5'}
                   alt="plus"
                   src="/static/plus.svg"
                 />
               </div>
-              <strong className={classes.create}>Create new wishlist</strong>
+              <strong className={'font-semibold'}>Create new wishlist</strong>
             </div>
             {lists.map((list, i) => {
               return (
@@ -76,32 +75,32 @@ function Modal({
         </div>
       ) : null}
       {formDisplay ? (
-        <div className={classes.background}>
-          <div ref={innerRef} className={classes.reviewsContainer}>
-            <div className={classes.top}>
+        <div className={'fixed inset-0 z-30 flex items-center justify-center bg-gray-900/40 p-4'}>
+          <div ref={innerRef} className={'max-h-[80vh] w-full max-w-md overflow-y-auto rounded-2xl bg-white shadow-2xl'}>
+            <div className={'flex items-center justify-between border-b border-gray-200 px-5 py-4'}>
               <div
                 onClick={() => setFormDisplay(false)}
-                className={classes.xContainer}
+                className={'flex h-9 w-9 cursor-pointer items-center justify-center rounded-full hover:bg-gray-100'}
               >
-                <img className={classes.x} alt="x" src="/static/x.svg" />
+                <img className={'h-4 w-4'} alt="x" src="/static/x.svg" />
               </div>
               <strong>Name this wishlist</strong>
-              <div className={classes.filler}></div>
+              <div className={'h-4 w-4'}></div>
             </div>
             <form onSubmit={handleSubmit}>
-              <div className={classes.form}>
+              <div className={'p-5'}>
                 <input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className={classes.input}
+                  className={'h-12 w-full rounded-lg border border-gray-300 px-3'}
                 ></input>
-                <p className={classes.subText}>50 characters maximum</p>
+                <p className={'mt-1 text-xs text-gray-500'}>50 characters maximum</p>
               </div>
-              <div className={classes.buttonContainer}>
+              <div className={'border-t border-gray-200 p-5'}>
                 {name.length > 0 && name.length < 50 ? (
-                  <button className={classes.createButton}>Create</button>
+                  <button className={'h-11 w-full rounded-lg bg-rose-500 font-bold text-white hover:bg-rose-600'}>Create</button>
                 ) : (
-                  <div className={classes.createButtonDisabled}> Create</div>
+                  <div className={'flex h-11 w-full cursor-not-allowed items-center justify-center rounded-lg bg-gray-300 font-bold text-white'}> Create</div>
                 )}
               </div>
             </form>

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import classes from "./EditWishlistModal.module.css";
 import { thunkUpdateWishlist } from "../../../store/wishlists";
 import ConfirmDelete from "../ConfirmDelete";
 import { useClickOutside } from "../../../App";
@@ -33,8 +32,8 @@ function EditWishlistModal({
   return (
     <>
       {formDisplay ? (
-        <div className={classes.background}>
-          <div ref={innerRef} className={classes.reviewsContainer}>
+        <div className={'fixed inset-0 z-30 flex items-center justify-center bg-gray-900/40 p-4'}>
+          <div ref={innerRef} className={'max-h-[80vh] w-full max-w-md overflow-y-auto rounded-2xl bg-white shadow-2xl'}>
             {display ? (
               <ConfirmDelete
                 confirmRef={confirmRef}
@@ -44,16 +43,16 @@ function EditWishlistModal({
               />
             ) : (
               <>
-                <div className={classes.top}>
+                <div className={'flex items-center justify-between border-b border-gray-200 px-5 py-4'}>
                   <div
                     onClick={() => setFormDisplay(false)}
-                    className={classes.xContainer}
+                    className={'flex h-9 w-9 cursor-pointer items-center justify-center rounded-full hover:bg-gray-100'}
                   >
-                    <img className={classes.x} src="/static/x.svg" />
+                    <img alt="Close" className={'h-4 w-4'} src="/static/x.svg" />
                   </div>
                   <strong>Settings</strong>
                   <div
-                    className={classes.deleteContainer}
+                    className={'cursor-pointer rounded-lg px-3 py-2 text-rose-600 hover:bg-rose-50'}
                     onClick={() => {
                       setDisplay(true);
                     }}
@@ -62,30 +61,30 @@ function EditWishlistModal({
                   </div>
                 </div>
                 <form onSubmit={handleSubmit}>
-                  <div className={classes.form}>
+                  <div className={'p-5'}>
                     <input
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className={classes.input}
+                      className={'h-12 w-full rounded-lg border border-gray-300 px-3'}
                     ></input>
-                    <p className={classes.subText}>50 characters maximum</p>
+                    <p className={'mt-1 text-xs text-gray-500'}>50 characters maximum</p>
                   </div>
-                  <div className={classes.buttonContainer}>
+                  <div className={'flex items-center justify-between border-t border-gray-200 p-5'}>
                     <div
-                      className={classes.cancelContainer}
+                      className={'cursor-pointer rounded-lg px-3 py-2 hover:bg-gray-100'}
                       onClick={() => setFormDisplay(false)}
                     >
-                      <strong className={classes.cancel}>Cancel</strong>
+                      <strong className={'underline'}>Cancel</strong>
                     </div>
                     {name.length > 0 && name.length < 50 ? (
                       <button
                         onClick={handleSubmit}
-                        className={classes.createButton}
+                        className={'h-11 rounded-lg bg-rose-500 px-6 font-bold text-white hover:bg-rose-600'}
                       >
                         Save
                       </button>
                     ) : (
-                      <div className={classes.createButtonDisabled}>Save</div>
+                      <div className={'flex h-11 cursor-not-allowed items-center rounded-lg bg-gray-300 px-6 font-bold text-white'}>Save</div>
                     )}
                   </div>
                 </form>

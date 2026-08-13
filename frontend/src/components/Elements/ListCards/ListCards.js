@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkCreateWishspot } from "../../../store/wishspots";
-import classes from "./ListCards.module.css";
 
 function ListCards({ list, setFilled, setDisplay, spot }) {
   const dispatch = useDispatch();
@@ -20,22 +19,23 @@ function ListCards({ list, setFilled, setDisplay, spot }) {
   return (
     <>
       {list.wishspots && Object.values(list.wishspots).length ? (
-        <div className={classes.newList} onClick={handleClick}>
-          <div className={classes.addButton}>
+        <div className={'flex cursor-pointer items-center gap-4 px-5 py-3 hover:bg-gray-50'} onClick={handleClick}>
+          <div className={'h-14 w-14 flex-none'}>
             <img
-              className={classes.img}
+              alt="Wishlist preview"
+              className={'h-14 w-14 rounded-xl object-cover'}
               src={`${
                 spots[Object.values(list.wishspots)[0].spotId].spot.img1
               }`}
             />
           </div>
-          <strong className={classes.create}>{list.name}</strong>
+          <strong className={'font-semibold'}>{list.name}</strong>
         </div>
       ) : (
         <>
-          <div className={classes.newList} onClick={handleClick}>
-            <div className={classes.fakeImg}></div>
-            <strong className={classes.create}>{list.name}</strong>
+          <div className={'flex cursor-pointer items-center gap-4 px-5 py-3 hover:bg-gray-50'} onClick={handleClick}>
+            <div className={'h-14 w-14 flex-none rounded-xl bg-gray-200'}></div>
+            <strong className={'font-semibold'}>{list.name}</strong>
           </div>
         </>
       )}

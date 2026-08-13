@@ -2,7 +2,6 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkDeleteReview } from "../../../store/reviews";
 import EditReviewForm from "../../forms/EditReviewForm";
-import classes from "./ReviewModal.module.css";
 
 function ReviewModal({ reviews, setDispaly, rating, innerRef }) {
   let user = useSelector((state) => state.session.user);
@@ -11,13 +10,13 @@ function ReviewModal({ reviews, setDispaly, rating, innerRef }) {
   return (
     <>
       {user ? (
-        <div className={classes.background}>
-          <div ref={innerRef} className={classes.reviewsContainer}>
-            <div className={classes.close}>
+        <div className={'fixed inset-0 z-30 flex justify-center bg-gray-900/40 p-4'}>
+          <div ref={innerRef} className={'mt-16 max-h-[75vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl'}>
+            <div className={'flex min-h-[40px] items-center justify-between text-xl font-bold'}>
               <div>
                 <img
                   onClick={() => setDispaly(false)}
-                  className={classes.x}
+                  className={'h-6 w-6 cursor-pointer rounded-full p-1 hover:bg-gray-100'}
                   src="/static/x.svg"
                   alt="delete"
                 />
@@ -25,7 +24,7 @@ function ReviewModal({ reviews, setDispaly, rating, innerRef }) {
               <div style={{ display: "flex", alignItems: "center" }}>
                 <img
                   alt="star"
-                  className={classes.star}
+                  className={'mx-1 inline h-4 w-4'}
                   src="/static/star.svg"
                 />
                 <span style={{ fontSize: "18px" }}>
@@ -36,19 +35,19 @@ function ReviewModal({ reviews, setDispaly, rating, innerRef }) {
 
             {reviews.map((review, i) => {
               return (
-                <div key={i} className={classes.reviewContainer}>
-                  <div className={classes.username}>
+                <div key={i} className={'mt-5 border-b border-gray-200 pb-5'}>
+                  <div className={'flex items-center justify-between text-xl font-semibold'}>
                     {review.username}{" "}
                     <span style={{ display: "flex", alignItems: "center" }}>
                       {review.rating}
                       <img
-                        className={classes.star}
+                        className={'mx-1 inline h-4 w-4'}
                         alt="star"
                         src="/static/star.svg"
                       />
                       {user.id === review.userId ? (
                         <div
-                          className={classes.delete}
+                          className={'ml-3 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full hover:bg-gray-100'}
                           onClick={() =>
                             dispatch(
                               thunkDeleteReview({
@@ -59,7 +58,7 @@ function ReviewModal({ reviews, setDispaly, rating, innerRef }) {
                           }
                         >
                           <img
-                            className={classes.x}
+                            className={'h-6 w-6 cursor-pointer rounded-full p-1 hover:bg-gray-100'}
                             src="/static/trashcan.svg"
                             alt="delete"
                           />
@@ -67,7 +66,7 @@ function ReviewModal({ reviews, setDispaly, rating, innerRef }) {
                       ) : null}
                     </span>
                   </div>
-                  <div className={classes.body}>{review.review}</div>
+                  <div className={'py-4 leading-7'}>{review.review}</div>
                   {user.id === review.userId ? (
                     <>
                       <EditReviewForm
@@ -83,13 +82,13 @@ function ReviewModal({ reviews, setDispaly, rating, innerRef }) {
         </div>
       ) : (
         <>
-          <div className={classes.background}>
-            <div className={classes.reviewsContainer}>
-              <div className={classes.close}>
+          <div className={'fixed inset-0 z-30 flex justify-center bg-gray-900/40 p-4'}>
+            <div className={'mt-16 max-h-[75vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl'}>
+              <div className={'flex min-h-[40px] items-center justify-between text-xl font-bold'}>
                 <div>
                   <img
                     onClick={() => setDispaly(false)}
-                    className={classes.x}
+                    className={'h-6 w-6 cursor-pointer rounded-full p-1 hover:bg-gray-100'}
                     src="/static/x.svg"
                     alt="delete"
                   />
@@ -97,7 +96,7 @@ function ReviewModal({ reviews, setDispaly, rating, innerRef }) {
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <img
                     alt="star"
-                    className={classes.star}
+                    className={'mx-1 inline h-4 w-4'}
                     src="/static/star.svg"
                   />
                   <span style={{ fontSize: "18px" }}>
@@ -107,19 +106,19 @@ function ReviewModal({ reviews, setDispaly, rating, innerRef }) {
               </div>
               {reviews.map((review, i) => {
                 return (
-                  <div key={i} className={classes.reviewContainer}>
-                    <div className={classes.username}>
+                  <div key={i} className={'mt-5 border-b border-gray-200 pb-5'}>
+                    <div className={'flex items-center justify-between text-xl font-semibold'}>
                       {review.username}{" "}
                       <span style={{ display: "flex", alignItems: "center" }}>
                         {review.rating}
                         <img
-                          className={classes.star}
+                          className={'mx-1 inline h-4 w-4'}
                           alt="star"
                           src="/static/star.svg"
                         />
                       </span>
                     </div>
-                    <div className={classes.body}>{review.review}</div>{" "}
+                    <div className={'py-4 leading-7'}>{review.review}</div>{" "}
                   </div>
                 );
               })}

@@ -2,7 +2,6 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { thunkDeleteWishlist } from "../../../store/wishlists";
-import classes from "./ConfirmDelete.module.css";
 
 function ConfirmDelete({ setDisplay, confirmRef, name, id }) {
   const history = useHistory();
@@ -16,24 +15,24 @@ function ConfirmDelete({ setDisplay, confirmRef, name, id }) {
   return (
     <>
       <div ref={confirmRef}>
-        <div className={classes.top}>
-          <div className={classes.xContainer} onClick={() => setDisplay(false)}>
-            <img className={classes.x} src="/static/backArrow.svg" />
+        <div className={'flex items-center justify-between border-b border-gray-200 px-5 py-4'}>
+          <div className={'flex h-9 w-9 cursor-pointer items-center justify-center rounded-full hover:bg-gray-100'} onClick={() => setDisplay(false)}>
+            <img alt="Back" className={'h-4 w-4'} src="/static/backArrow.svg" />
           </div>
           <strong>Delete this wishlist?</strong>
-          <div className={classes.deleteContainer}></div>
+          <div className={'w-9'}></div>
         </div>
-        <div className={classes.body}>
+        <div className={'px-5 py-8 text-center'}>
           Are you sure you want to delete {name}?
         </div>
-        <div className={classes.buttonContainer}>
+        <div className={'flex justify-between border-t border-gray-200 p-5'}>
           <div
-            className={classes.cancelContainer}
+            className={'cursor-pointer rounded-lg px-4 py-2 hover:bg-gray-100'}
             onClick={() => setDisplay(false)}
           >
-            <strong className={classes.cancel}>Cancel</strong>
+            <strong className={'underline'}>Cancel</strong>
           </div>
-          <button onClick={handleDelete} className={classes.createButton}>
+          <button onClick={handleDelete} className={'rounded-lg bg-rose-500 px-5 py-2 font-bold text-white hover:bg-rose-600'}>
             Yes, delete
           </button>
         </div>
