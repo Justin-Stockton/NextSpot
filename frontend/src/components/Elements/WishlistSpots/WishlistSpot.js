@@ -76,7 +76,7 @@ function WishlistSpot({ spot, id, wishlistId }) {
       />
       <div className={'flex flex-col gap-5 border-b border-gray-200 pb-6 sm:flex-row'}>
         <div className={'group relative h-52 w-full overflow-hidden rounded-xl bg-gray-200 sm:w-2/5'}>
-          <div className={'absolute inset-x-3 top-1/2 z-10 flex -trangray-y-1/2 justify-between'}>
+          <div className={'absolute inset-x-3 top-1/2 z-10 flex -translate-y-1/2 justify-between'}>
             <div className={'invisible flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white/90 shadow group-hover:visible'} onClick={handlePrevious}>
               <img
                 className={'h-4 w-4'}

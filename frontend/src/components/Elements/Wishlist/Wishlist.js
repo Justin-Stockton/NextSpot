@@ -23,7 +23,7 @@ function Wishlist({ list }) {
   return (
     <div className={'min-w-0 cursor-pointer'} onClick={handleClick}>
       {wishSpots && wishSpots.length ? (
-        <div className={'flex aspect-[2.3/1] gap-1 overflow-hidden rounded-xl bg-gray-200'}>
+        <div className={'flex h-40 gap-1 overflow-hidden rounded-xl bg-gray-200 sm:h-48'}>
           <>
             <div className={'h-full w-2/3 object-cover'}>
               <img
@@ -36,14 +36,14 @@ function Wishlist({ list }) {
               <div className={'h-1/2 w-full object-cover'}>
                 <img
                   alt="Wishlist preview"
-                  className={'h-1/2 w-full object-cover'}
+                  className={'h-full w-full object-cover'}
                   src={`${spotObj[spotIDs[0]].spot.img2}`}
                 />
               </div>
               <div className={'h-1/2 w-full object-cover'}>
                 <img
                   alt="Wishlist preview"
-                  className={'h-1/2 w-full object-cover'}
+                  className={'h-full w-full object-cover'}
                   src={`${spotObj[spotIDs[0]].spot.img3}`}
                 />
               </div>
@@ -51,7 +51,7 @@ function Wishlist({ list }) {
           </>
         </div>
       ) : (
-        <div className={'aspect-[2.3/1] w-full rounded-xl bg-gray-200'}></div>
+        <div className={'h-40 w-full rounded-xl bg-gray-200 sm:h-48'}></div>
       )}
       <div className={'py-3 text-xl font-semibold'}>{list.name}</div>
     </div>

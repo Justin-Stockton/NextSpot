@@ -80,7 +80,7 @@ function SpotCard({ spot }) {
         spot={spot}
         setFilled={setFilled}
       />
-      <div className={'group relative aspect-square w-full overflow-hidden rounded-2xl bg-gray-200'}>
+      <div className={'group relative h-72 w-full overflow-hidden rounded-2xl bg-gray-200'}>
         <div className={'absolute right-3 top-3 z-10'}>
           <HeartSVG
             className={'h-7 w-7 cursor-pointer drop-shadow'}
@@ -88,7 +88,7 @@ function SpotCard({ spot }) {
             fill={filled ? "#FF385C" : "rgba(0,0,0,.7)"}
           />
         </div>
-        <div className={'invisible absolute right-3 top-1/2 z-10 flex h-8 w-8 -trangray-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/90 shadow group-hover:visible'} onClick={handleNext}>
+        <div className={'invisible absolute right-3 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/90 shadow group-hover:visible'} onClick={handleNext}>
           <img
             onClick={handleNext}
             className={'h-4 w-4'}
@@ -96,7 +96,7 @@ function SpotCard({ spot }) {
             alt="house"
           />
         </div>
-        <div className={'invisible absolute left-3 top-1/2 z-10 flex h-8 w-8 -trangray-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/90 shadow group-hover:visible'} onClick={handlePrevious}>
+        <div className={'invisible absolute left-3 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/90 shadow group-hover:visible'} onClick={handlePrevious}>
           <img
             className={'h-4 w-4'}
             src="static/leftArrow.svg"
@@ -107,7 +107,7 @@ function SpotCard({ spot }) {
         <img
           onClick={() => history.push(`/spots/${spot.id}`)}
           alt="Spot"
-          className={'h-full w-full cursor-pointer object-cover transition duration-300 group-hover:scale-[1.02]'}
+          className={'h-full w-full cursor-pointer object-cover transition duration-300 group-hover:scale-105'}
           src={imgArray[count]}
         />
       </div>

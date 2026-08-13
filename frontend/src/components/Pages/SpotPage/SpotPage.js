@@ -89,8 +89,8 @@ function SpotPage() {
         </div>
       </div>
       <div className={'mt-8 flex flex-col gap-10 border-y border-gray-200 py-8 lg:flex-row'}>
-        <div className={`${'flex-1 [&>*]:border-b [&>*]:border-gray-200 [&>*]:py-8'}`}>
-          <div className={'pt-0'}>
+        <div className={'flex-1'}>
+          <div className={'border-b border-gray-200 pb-8'}>
             <img
               alt="spot cover"
               className={'mb-4 h-14 w-36'}
@@ -101,7 +101,7 @@ function SpotPage() {
               listing inaccuracies, and other issues like trouble checking in.
             </div>
           </div>
-          <div>
+          <div className={'border-b border-gray-200 py-8'}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -110,8 +110,8 @@ function SpotPage() {
             pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
             culpa qui officia deserunt mollit anim id est laborum.
           </div>
-          <div style={{ borderBottom: "none" }}>
-            <strong style={{ fontSize: "22px" }}>What this spot offers</strong>
+          <div className={'py-8'}>
+            <strong className={'text-xl font-semibold'}>What this spot offers</strong>
             <div className={'grid grid-cols-1 gap-6 sm:grid-cols-2'}>
               <div className={'space-y-5 py-5'}>
                 <div className={'flex items-center'}>
