@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { thunkGetWishlists } from "../../../store/wishlists";
-import classes from "./WishlistPage.module.css";
 import { useClickOutside } from "../../../App";
 import EditWishlistModal from "../../Elements/EditWishlistModal";
 import WishlistSpot from "../../Elements/WishlistSpots";
@@ -35,38 +34,38 @@ function WishlistPage() {
     <>
       {wishlist && spots ? (
         <>
-          <div className={classes.mainContainer}>
+          <div className={'flex min-h-[calc(100vh-96px)] flex-col lg:flex-row'}>
             <div
               style={{ marginTop: "2%" }}
-              className={classes.mainContentContainer}
+              className={'w-full px-4 py-4 sm:px-8 lg:w-1/2'}
             >
-              <div className={classes.mainContentNav}>
+              <div className={'flex items-center justify-between'}>
                 <div onClick={() => history.push("/my-wishlists")}>
                   <img
-                    className={classes.icons}
+                    className={'h-9 w-9 cursor-pointer rounded-full p-2 hover:bg-gray-100'}
                     alt="back"
                     src="/static/backArrow.svg"
                   />
                 </div>
-                <div className={classes.rightButtonContainer}>
+                <div className={'flex gap-3'}>
                   <div onClick={copy}>
                     <img
-                      className={classes.icons}
+                      className={'h-9 w-9 cursor-pointer rounded-full p-2 hover:bg-gray-100'}
                       alt="copy"
                       src="/static/copy.svg"
                     />
                   </div>
                   <div onClick={() => setFormDisplay(true)}>
                     <img
-                      className={classes.icons}
+                      className={'h-9 w-9 cursor-pointer rounded-full p-2 hover:bg-gray-100'}
                       alt="menu"
                       src="/static/threedot.svg"
                     />
                   </div>
                 </div>
               </div>
-              <div className={classes.title}>{wishlist.name}</div>
-              <div className={classes.spotsContainer}>
+              <div className={'my-6 text-4xl font-bold'}>{wishlist.name}</div>
+              <div className={'space-y-6 overflow-y-auto'}>
                 {lSpots.length > 0 ? (
                   lSpots.map((spot, i) => {
                     return (
@@ -84,9 +83,10 @@ function WishlistPage() {
                 )}
               </div>
             </div>
-            <div className={classes.mapContainer}>
+            <div className={'hidden min-h-[calc(100vh-96px)] w-1/2 bg-gray-100 lg:block'}>
               <img
-                className={classes.comingSoon}
+                alt="Map coming soon"
+                className={'h-full w-full object-cover'}
                 src="/static/coming_soon.png"
               />
             </div>

@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import ReviewForm from "../../forms/ReviewForm";
 
 import BookingForm from "../../forms/BookingsForm";
-import classes from "./SpotPage.module.css";
 import ReviewCard from "../../Elements/ReviewCard";
 import Oops from "../Oops";
 
@@ -36,52 +35,52 @@ function SpotPage() {
     rating = (ratings / reviews.length).toFixed(2);
   }
   return (
-    <div className={classes.mainContainer}>
-      <div className={classes.nameHeading}>
+    <div className={'mx-auto max-w-6xl px-4 pb-12 sm:px-8'}>
+      <div className={'py-5 font-semibold'}>
         <h1>{spot.name}</h1>
         <div>
           {rating > 0 ? rating : "New"}{" "}
-          <img alt="star" className={classes.star} src="/static/star.svg" />{" "}
+          <img alt="star" className={'inline h-3 w-3'} src="/static/star.svg" />{" "}
           <strong>·</strong> {reviews.length} reviews <strong>·</strong>{" "}
           {spot.city}, {spot.state}, United States
         </div>
       </div>
-      <div className={classes.photos}>
-        <div className={classes.mainImg}>
+      <div className={'grid h-[24rem] grid-cols-1 gap-2 overflow-hidden rounded-2xl md:grid-cols-2'}>
+        <div className={'h-full w-full overflow-hidden'}>
           <img
-            className={`${classes.img} ${classes.mainImg}`}
+            className={`${'h-full w-full object-cover'} ${'h-full w-full overflow-hidden'}`}
             src={`${spot.img1}`}
             alt="The house"
           />
         </div>
-        <div className={classes.subimgContainer}>
-          <div className={classes.topImgs}>
-            <div className={classes.subImg}>
+        <div className={'hidden h-full grid-rows-2 gap-2 md:grid'}>
+          <div className={'grid min-h-0 grid-cols-2 gap-2'}>
+            <div className={'min-h-0 overflow-hidden'}>
               <img
-                className={`${classes.img} `}
+                className={`${'h-full w-full object-cover'} `}
                 src={`${spot.img2}`}
                 alt="The house"
               />
             </div>
-            <div className={`${classes.subImg} ${classes.topRight}`}>
+            <div className={`${'min-h-0 overflow-hidden'} ${'rounded-tr-2xl'}`}>
               <img
-                className={`${classes.img} ${classes.topRight}`}
+                className={`${'h-full w-full object-cover'} ${'rounded-tr-2xl'}`}
                 src={`${spot.img3}`}
                 alt="The house"
               />
             </div>
           </div>
-          <div className={classes.bottomImgs}>
-            <div className={classes.subImg}>
+          <div className={'grid min-h-0 grid-cols-2 gap-2'}>
+            <div className={'min-h-0 overflow-hidden'}>
               <img
-                className={`${classes.img} `}
+                className={`${'h-full w-full object-cover'} `}
                 src={`${spot.img4}`}
                 alt="The house"
               />
             </div>
-            <div className={`${classes.subImg} ${classes.bottomRight}`}>
+            <div className={`${'min-h-0 overflow-hidden'} ${'rounded-br-2xl'}`}>
               <img
-                className={`${classes.img}  ${classes.bottomRight}`}
+                className={`${'h-full w-full object-cover'}  ${'rounded-br-2xl'}`}
                 src={`${spot.img5}`}
                 alt="The house"
               />
@@ -89,12 +88,12 @@ function SpotPage() {
           </div>
         </div>
       </div>
-      <div className={classes.bottomContainer}>
-        <div className={`${classes.textContainer}`}>
-          <div className={classes.spotCoverContainer}>
+      <div className={'mt-8 flex flex-col gap-10 border-y border-gray-200 py-8 lg:flex-row'}>
+        <div className={`${'flex-1 [&>*]:border-b [&>*]:border-gray-200 [&>*]:py-8'}`}>
+          <div className={'pt-0'}>
             <img
               alt="spot cover"
-              className={classes.spotCover}
+              className={'mb-4 h-14 w-36'}
               src="/static/spotcover.svg"
             />
             <div>
@@ -113,86 +112,86 @@ function SpotPage() {
           </div>
           <div style={{ borderBottom: "none" }}>
             <strong style={{ fontSize: "22px" }}>What this spot offers</strong>
-            <div className={classes.amenitiesContainer}>
-              <div className={classes.amenities}>
-                <div className={classes.subContainer}>
+            <div className={'grid grid-cols-1 gap-6 sm:grid-cols-2'}>
+              <div className={'space-y-5 py-5'}>
+                <div className={'flex items-center'}>
                   <img
                     alt="amenities"
-                    className={classes.amenitiesIcons}
+                    className={'mr-4 h-6 w-6'}
                     src="/static/stay.svg"
                   />
                   <div>Long term stays allowed</div>
                 </div>
-                <div className={classes.subContainer}>
+                <div className={'flex items-center'}>
                   <img
                     alt="amenities"
-                    className={classes.amenitiesIcons}
+                    className={'mr-4 h-6 w-6'}
                     src="/static/waterfront.svg"
                   />
                   <div>Waterfront</div>
                 </div>
-                <div className={classes.subContainer}>
+                <div className={'flex items-center'}>
                   <img
                     alt="amenities"
-                    className={classes.amenitiesIcons}
+                    className={'mr-4 h-6 w-6'}
                     src="/static/kitchen.svg"
                   />
                   <div>Kitchen</div>
                 </div>
-                <div className={classes.subContainer}>
+                <div className={'flex items-center'}>
                   <img
                     alt="amenities"
-                    className={classes.amenitiesIcons}
+                    className={'mr-4 h-6 w-6'}
                     src="/static/wifi.svg"
                   />
                   <div>Wifi</div>
                 </div>
-                <div className={classes.subContainer}>
+                <div className={'flex items-center'}>
                   <img
                     alt="amenities"
-                    className={classes.amenitiesIcons}
+                    className={'mr-4 h-6 w-6'}
                     src="/static/workspace.svg"
                   />
                   <div>Dedicated workspace</div>
                 </div>
               </div>
-              <div className={classes.amenities}>
-                <div className={classes.subContainer}>
+              <div className={'space-y-5 py-5'}>
+                <div className={'flex items-center'}>
                   <img
                     alt="amenities"
-                    className={classes.amenitiesIcons}
+                    className={'mr-4 h-6 w-6'}
                     src="/static/parking.svg"
                   />
                   <div>Free parking on premises</div>
                 </div>
-                <div className={classes.subContainer}>
+                <div className={'flex items-center'}>
                   <img
                     alt="amenities"
-                    className={classes.amenitiesIcons}
+                    className={'mr-4 h-6 w-6'}
                     src="/static/tv.svg"
                   />
                   <div>50" HDTV with Roku</div>
                 </div>
-                <div className={classes.subContainer}>
+                <div className={'flex items-center'}>
                   <img
                     alt="amenities"
-                    className={classes.amenitiesIcons}
+                    className={'mr-4 h-6 w-6'}
                     src="/static/washer.svg"
                   />
                   <div>Free washer – In unit</div>
                 </div>
-                <div className={classes.subContainer}>
+                <div className={'flex items-center'}>
                   <img
                     alt="amenities"
-                    className={classes.amenitiesIcons}
+                    className={'mr-4 h-6 w-6'}
                     src="/static/dryer.svg"
                   />
                   <div>Free dryer – In unit</div>
                 </div>
-                <div className={classes.subContainer}>
+                <div className={'flex items-center'}>
                   <img
                     alt="amenities"
-                    className={classes.amenitiesIcons}
+                    className={'mr-4 h-6 w-6'}
                     src="/static/ac.svg"
                   />
                   <div>Central air conditioning</div>
@@ -201,7 +200,7 @@ function SpotPage() {
             </div>
           </div>
         </div>
-        <div className={classes.formContainer}>
+        <div className={'w-full lg:sticky lg:top-24 lg:w-[25rem] lg:self-start'}>
           <BookingForm
             rating={rating}
             spot={spot}
@@ -209,16 +208,16 @@ function SpotPage() {
           />
         </div>
       </div>
-      <div className={classes.reviewsMainContainer}>
-        <div className={classes.reviewsContainer}>
+      <div className={'py-8'}>
+        <div className={'text-xl font-semibold'}>
           <div>
             {rating > 0 ? rating : "New"}{" "}
-            <img alt="star" className={classes.star} src="/static/star.svg" />{" "}
+            <img alt="star" className={'inline h-3 w-3'} src="/static/star.svg" />{" "}
             <strong>·</strong> {reviews.length}{" "}
             {reviews.length === 1 ? "Review" : "Reviews"}
           </div>
         </div>
-        <div className={classes.reviews}>
+        <div className={'mt-6 flex flex-wrap justify-between gap-6'}>
           {reviews.length > 0 ? (
             <div>
               <ReviewCard
@@ -238,7 +237,7 @@ function SpotPage() {
         </div>
         {display === true ? (
           <>
-            <div className={classes.reviewFormContainer}>
+            <div className={'mt-6'}>
               <ReviewForm
                 innerRef={modalRef}
                 setDisplay={setDisplay}
@@ -247,9 +246,9 @@ function SpotPage() {
             </div>
           </>
         ) : (
-          <div className={classes.reviewFormContainer}>
+          <div className={'mt-6'}>
             <div
-              className={classes.addAReview}
+              className={'inline-flex cursor-pointer rounded-lg bg-rose-500 px-5 py-3 font-bold text-white hover:bg-rose-600'}
               onClick={() => setDisplay(!display)}
             >
               Add a review

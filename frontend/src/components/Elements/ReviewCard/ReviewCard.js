@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import classes from "./ReviewCard.module.css";
 import ReviewModal from "../ReviewModal";
 
 import { useClickOutside } from "../../../App";
@@ -21,18 +20,18 @@ function ReviewCard({ review, reviews, rating }) {
           setDispaly={setDisplay}
         />
       ) : null}
-      <div className={classes.review}>
-        <div className={classes.title}>{review.username}</div>
-        <div className={classes.body}>{review.review}</div>
+      <div className={'mb-10 w-full max-w-md'}>
+        <div className={'pb-2 text-xl font-semibold'}>{review.username}</div>
+        <div className={'max-h-20 overflow-hidden text-lg leading-7'}>{review.review}</div>
         <div
-          className={classes.more}
+          className={'mt-2 flex w-fit cursor-pointer items-center font-bold underline'}
           onClick={() => {
             setDisplay(!display);
           }}
         >
           Show more{" "}
           <img
-            className={classes.rightArrow}
+            className={'ml-1 h-3 w-3'}
             alt="arrow right"
             src="/static/rightArrow.svg"
           ></img>
