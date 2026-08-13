@@ -1,3 +1,4 @@
+import { jsonHeaders } from "../utils/csrf";
 export const CREATE_REVIEW = "reviews/CREATE_REVIEW";
 export const GET_SPOT_REVIEWS = "reviews/GET_SPOT_REVIEWS";
 export const UPDATE_REVIEW = "reviews/UPDATE_SPOT_REVIEW";
@@ -34,9 +35,7 @@ const actionDeleteReview = (reviewData) => {
 export const thunkCreateReview = (review) => async (dispatch) => {
   const response = await fetch("/api/reviews/create", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeaders(),
     body: JSON.stringify(review),
   });
 
@@ -49,9 +48,7 @@ export const thunkCreateReview = (review) => async (dispatch) => {
 export const thunkGetSpotReviews = (spotId) => async (dispatch) => {
   const response = await fetch(`/api/reviews/${spotId}`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeaders(),
   });
 
   if (response.ok) {
@@ -63,9 +60,7 @@ export const thunkGetSpotReviews = (spotId) => async (dispatch) => {
 export const thunkUpdateSpotReview = (updatedReview) => async (dispatch) => {
   const response = await fetch(`/api/reviews/update`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeaders(),
     body: JSON.stringify(updatedReview),
   });
 
@@ -78,9 +73,7 @@ export const thunkUpdateSpotReview = (updatedReview) => async (dispatch) => {
 export const thunkDeleteReview = (reviewData) => async (dispatch) => {
   const response = await fetch("/api/reviews/delete", {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeaders(),
     body: JSON.stringify(reviewData),
   });
   if (response.ok) {

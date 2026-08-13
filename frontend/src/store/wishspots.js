@@ -1,3 +1,4 @@
+import { jsonHeaders } from "../utils/csrf";
 export const CREATE_WISHSPOT = "wishspot/CREATE_WISHSPOT";
 export const DELETE_WISHSPOT = "wishspot/DELETE_WISHSPOT";
 
@@ -13,9 +14,7 @@ const actionDeleteWishspot = (data) => ({
 export const thunkCreateWishspot = (data) => async (dispatch) => {
   const response = await fetch(`/api/wishspots/create`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeaders(),
     body: JSON.stringify(data),
   });
 
@@ -27,9 +26,7 @@ export const thunkCreateWishspot = (data) => async (dispatch) => {
 export const thunkDeleteWishspot = (data) => async (dispatch) => {
   const response = await fetch(`/api/wishspots/delete`, {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeaders(),
     body: JSON.stringify(data),
   });
 

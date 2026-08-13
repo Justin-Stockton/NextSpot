@@ -2,8 +2,9 @@ import os
 from flask import Flask, render_template, request, session, redirect
 from flask_cors import CORS
 from flask_migrate import Migrate
-from flask_wtf.csrf import CSRFProtect, generate_csrf
-from flask_login import LoginManager
+from flask_wtf.csrf import generate_csrf, validate_csrf
+from flask_login import LoginManager, current_user
+from wtforms.validators import ValidationError
 
 from .config import Config
 from .models import db, Users
@@ -45,6 +46,16 @@ Migrate(app, db)
 CORS(app)
 
 
+@app.before_request
+def protect_session_writes():
+    if (request.path.startswith('/api/') and request.method in ('POST', 'PUT', 'PATCH', 'DELETE')
+            and current_user.is_authenticated):
+        try:
+            validate_csrf(request.headers.get('X-CSRFToken'))
+        except ValidationError:
+            return {'errors': ['Missing or invalid CSRF token']}, 400
+
+
 # Since we are deploying with Docker and Flask,
 # we won't be using a buildpack when we deploy to Heroku.
 # Therefore, we need to make sure that in production any
@@ -67,7 +78,7 @@ def inject_csrf_token(response):
         secure=True if os.environ.get('FLASK_ENV') == 'production' else False,
         samesite='Strict' if os.environ.get(
             'FLASK_ENV') == 'production' else None,
-        httponly=True)
+        httponly=False)
     return response
 
 

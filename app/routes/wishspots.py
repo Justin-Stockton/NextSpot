@@ -44,7 +44,7 @@ def update_wishspot():
     collection, place = parents(data)
     if not item or not collection or not place or item.spot.userId != current_user.id or item.wishlists.userId != current_user.id:
         return {'errors': ['Collection membership not found']}, 404
-    item.wishlistId = collection.id
+    item.spotId, item.wishlistId = place.id, collection.id
     db.session.commit()
     return item.toDict()
 

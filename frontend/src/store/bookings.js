@@ -1,3 +1,4 @@
+import { jsonHeaders } from "../utils/csrf";
 export const GET_BOOKINGS = "bookings/GET_BOOKINGS";
 export const CREATE_BOOKING = "bookings/CREATE_BOOKING";
 
@@ -27,9 +28,7 @@ const actionDeleteBooking = (bookingData) => {
 export const thunkCreateBooking = (booking) => async (dispatch) => {
   const response = await fetch("/api/bookings/create", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeaders(),
     body: JSON.stringify(booking),
   });
 
@@ -42,9 +41,7 @@ export const thunkCreateBooking = (booking) => async (dispatch) => {
 export const thunkGetSpotBookings = (spotId) => async (dispatch) => {
   const response = await fetch(`/api/bookings/spot/${spotId}`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeaders(),
   });
   if (response.ok) {
     const bookings = await response.json();
@@ -59,9 +56,7 @@ export const thunkGetSpotBookings = (spotId) => async (dispatch) => {
 export const thunkDeleteBooking = (bookingId) => async (dispatch) => {
   const response = await fetch("/api/booking/delete", {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeaders(),
     body: JSON.stringify(bookingId),
   });
   if (response.ok) {

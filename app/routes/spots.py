@@ -7,8 +7,8 @@ spots = Blueprint('spots', __name__, url_prefix='/api/spots')
 
 def serialize(spot):
     data = spot.toDict()
-    data['reviews'] = {item.id: item.toDict() for item in spot.reviews}
-    data['bookings'] = {item.id: item.toDict() for item in spot.bookings}
+    data['reviews'] = {item.id: item.toDict() for item in spot.reviews if item.userId == spot.userId}
+    data['bookings'] = {item.id: item.toDict() for item in spot.bookings if item.userId == spot.userId}
     return data
 
 
@@ -70,6 +70,8 @@ def delete_spot(spot_id):
     spot = owned_spot(spot_id)
     if not spot:
         return {'errors': ['Place not found']}, 404
+    if any(item.userId != current_user.id for item in (*spot.bookings, *spot.reviews)):
+        return {'errors': ['Place has legacy Stays or Memories owned by another user; migrate those records before deleting']}, 409
     db.session.delete(spot)
     db.session.commit()
     return {'message': 'Place deleted'}

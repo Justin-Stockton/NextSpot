@@ -1,3 +1,4 @@
+import { jsonHeaders } from "../utils/csrf";
 import { CREATE_WISHSPOT } from "./wishspots";
 const GET_WISHLIST = "wishlists/GET_WISHLISTS";
 const CREATE_WISHLIST = "wishlists/CREATE_WISHLIST";
@@ -35,9 +36,7 @@ const actionDeleteList = (listId) => {
 
 export const thunkGetWishlists = (userId) => async (dispatch) => {
   const response = await fetch(`/api/wishlists/${userId}`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeaders(),
   });
 
   if (response.ok) {
@@ -53,9 +52,7 @@ export const thunkGetWishlists = (userId) => async (dispatch) => {
 export const thunkCreateWishlist = (wishlist) => async (dispatch) => {
   const response = await fetch(`/api/wishlists/create`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeaders(),
     body: JSON.stringify(wishlist),
   });
 
@@ -68,9 +65,7 @@ export const thunkCreateWishlist = (wishlist) => async (dispatch) => {
 export const thunkUpdateWishlist = (wishlist) => async (dispatch) => {
   const response = await fetch(`/api/wishlists/update`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeaders(),
     body: JSON.stringify(wishlist),
   });
 
@@ -82,9 +77,7 @@ export const thunkUpdateWishlist = (wishlist) => async (dispatch) => {
 export const thunkDeleteWishlist = (wishlistId) => async (dispatch) => {
   const response = await fetch(`/api/wishlists/delete`, {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeaders(),
     body: JSON.stringify(wishlistId),
   });
 

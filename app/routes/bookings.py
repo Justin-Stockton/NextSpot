@@ -44,7 +44,7 @@ def create_booking():
         return {'errors': ['Place not found']}, 404
     if not parsed:
         return {'errors': ['Valid arrival and departure dates are required; departure cannot precede arrival']}, 400
-    booking = Bookings(userId=current_user.id, spotId=spot.id, spotName=spot.name,
+    booking = Bookings(userId=current_user.id, spotId=spot.id, spotName=spot.name[:50],
                        startDate=parsed[0], endDate=parsed[1])
     db.session.add(booking)
     db.session.commit()

@@ -1,16 +1,18 @@
 import os
 import unittest
+from datetime import date
+from http.cookies import SimpleCookie
 
 os.environ.setdefault('DATABASE_URL', 'sqlite:///:memory:')
 os.environ.setdefault('SECRET_KEY', 'test')
 
 from app import app
-from app.models import db, Users, Spots
+from app.models import db, Users, Spots, Bookings, Reviews, Wishlists, Wishspots
 
 
 class PrivateJournalApiTest(unittest.TestCase):
     def setUp(self):
-        app.config.update(TESTING=True, WTF_CSRF_ENABLED=False, SQLALCHEMY_ECHO=False)
+        app.config.update(TESTING=True, WTF_CSRF_ENABLED=True, SQLALCHEMY_ECHO=False)
         self.client = app.test_client()
         with app.app_context():
             db.drop_all()
@@ -24,95 +26,149 @@ class PrivateJournalApiTest(unittest.TestCase):
                                  streetAdress='', city='', state='', zip=0))
             db.session.commit()
             self.foreign_place = Spots.query.filter_by(userId=b.id).first().id
+        self.login(self.a)
 
     def login(self, user_id):
         with self.client.session_transaction() as session:
             session['_user_id'] = str(user_id)
             session['_fresh'] = True
-
-    def test_auth_and_user_json_never_expose_password_hash(self):
-        self.assertEqual(self.client.get('/api/spots/').status_code, 401)
-        self.login(self.a)
         response = self.client.get('/api/auth/')
-        self.assertEqual(response.status_code, 200)
+        cookie = SimpleCookie()
+        cookie.load(response.headers.get('Set-Cookie'))
+        self.csrf = cookie['csrf_token'].value
+
+    def write(self, method, path, json=None, token=None):
+        return self.client.open(path, method=method, json=json,
+                                headers={'X-CSRFToken': self.csrf if token is None else token})
+
+    def make_place(self, name='Rome'):
+        return self.write('POST', '/api/spots/create', {'name': name, 'location': 'Italy'}).get_json()
+
+    def test_auth_and_csrf_protection(self):
+        anonymous = app.test_client()
+        self.assertEqual(anonymous.get('/api/spots/').status_code, 401)
+        self.assertEqual(anonymous.post('/api/auth/login', json={
+            'email': 'a@example.com', 'password': 'password'}).status_code, 200)
+        signup = app.test_client()
+        signup.get('/api/auth/')
+        self.assertEqual(signup.post('/api/auth/signup', json={
+            'username': 'carol', 'email': 'c@example.com', 'password': 'password'}).status_code, 200)
+        response = self.client.get('/api/auth/')
         self.assertNotIn('hashedPassword', response.get_json())
+        body = {'name': 'Lisbon', 'location': 'Portugal'}
+        self.assertEqual(self.client.post('/api/spots/create', json=body).status_code, 400)
+        self.assertEqual(self.client.post('/api/spots/create', json=body,
+                         headers={'X-CSRFToken': 'invalid'}).status_code, 400)
+        self.assertEqual(self.write('POST', '/api/spots/create', body).status_code, 201)
 
-    def test_place_crud_is_owned_and_ignores_body_user(self):
-        self.login(self.a)
-        created = self.client.post('/api/spots/create', json={
-            'userId': self.b, 'name': 'Lisbon', 'location': 'Portugal'
-        })
-        self.assertEqual(created.status_code, 201)
-        place = created.get_json()
+    def test_place_crud_persists_and_cross_user_mutations_do_not_change_state(self):
+        place = self.make_place('Lisbon')
         self.assertEqual(place['userId'], self.a)
-        self.assertEqual(self.client.get(f'/api/spots/{self.foreign_place}').status_code, 404)
-        self.assertEqual(self.client.put(f"/api/spots/{place['id']}", json={
-            'name': 'Lisboa', 'location': 'Portugal'
-        }).status_code, 200)
-        self.assertEqual(self.client.delete(f"/api/spots/{place['id']}").status_code, 200)
+        updated = self.write('PUT', f"/api/spots/{place['id']}",
+                             {'name': 'Lisboa', 'location': 'Portugal'})
+        self.assertEqual(updated.status_code, 200)
+        self.assertEqual(self.client.get(f"/api/spots/{place['id']}").get_json()['name'], 'Lisboa')
 
-    def test_owned_children_and_collection_membership(self):
-        self.login(self.a)
-        place = self.client.post('/api/spots/create', json={'name': 'Rome', 'location': 'Italy'}).get_json()
-        stay = self.client.post('/api/bookings/create', json={
-            'spotId': place['id'], 'startDate': '2020-01-01', 'endDate': '2020-01-02'
-        })
-        self.assertEqual(stay.status_code, 201)
-        self.assertEqual(self.client.post('/api/bookings/create', json={
-            'spotId': place['id'], 'startDate': '2020-01-02', 'endDate': '2020-01-01'
-        }).status_code, 400)
-        memory = self.client.post('/api/reviews/create', json={
-            'spotId': place['id'], 'review': 'Wonderful', 'rating': 5
-        })
-        self.assertEqual(memory.status_code, 201)
-        collection = self.client.post('/api/wishlists/create', json={'name': 'Favorites'}).get_json()
-        member = self.client.post('/api/wishspots/create', json={
-            'spotId': place['id'], 'wishlistId': collection['id']
-        })
-        self.assertEqual(member.status_code, 201)
-        self.assertEqual(self.client.post('/api/wishspots/create', json={
-            'spotId': self.foreign_place, 'wishlistId': collection['id']
-        }).status_code, 404)
+        before = self.client.get(f'/api/spots/{self.foreign_place}').status_code
+        self.assertEqual(before, 404)
+        self.assertEqual(self.write('PUT', f'/api/spots/{self.foreign_place}',
+                         {'name': 'Stolen', 'location': 'Here'}).status_code, 404)
+        self.assertEqual(self.write('DELETE', f'/api/spots/{self.foreign_place}', {}).status_code, 404)
+        with app.app_context():
+            self.assertEqual(Spots.query.get(self.foreign_place).name, 'Private')
 
-        stay_id = stay.get_json()['id']
-        self.assertEqual(self.client.put('/api/bookings/update', json={
-            'id': stay_id, 'startDate': '2020-02-01', 'endDate': '2020-02-03'
-        }).status_code, 200)
-        self.assertEqual(self.client.delete('/api/bookings/delete', json={'id': stay_id}).status_code, 200)
+        self.assertEqual(self.write('DELETE', f"/api/spots/{place['id']}", {}).status_code, 200)
+        self.assertEqual(self.client.get(f"/api/spots/{place['id']}").status_code, 404)
 
-        memory_id = memory.get_json()['id']
-        self.assertEqual(self.client.put('/api/reviews/update', json={
-            'id': memory_id, 'review': 'Unforgettable', 'rating': 4
-        }).status_code, 200)
-        self.assertEqual(self.client.delete('/api/reviews/delete', json={'id': memory_id}).status_code, 200)
+    def test_mixed_owner_children_are_hidden_and_block_place_deletion(self):
+        place = self.make_place()
+        with app.app_context():
+            db.session.add_all((
+                Bookings(userId=self.b, spotId=place['id'], spotName='Legacy',
+                         startDate=date(2020, 1, 1), endDate=date(2020, 1, 2)),
+                Reviews(userId=self.b, spotId=place['id'], review='Legacy private memory',
+                        rating=5, username='bob'),
+            ))
+            db.session.commit()
+            booking_id = Bookings.query.filter_by(userId=self.b, spotId=place['id']).first().id
+            review_id = Reviews.query.filter_by(userId=self.b, spotId=place['id']).first().id
+        serialized = self.client.get(f"/api/spots/{place['id']}").get_json()
+        self.assertEqual(serialized['bookings'], {})
+        self.assertEqual(serialized['reviews'], {})
+        response = self.write('DELETE', f"/api/spots/{place['id']}", {})
+        self.assertEqual(response.status_code, 409)
+        self.assertIn('migrate', response.get_json()['errors'][0])
+        with app.app_context():
+            self.assertIsNotNone(Spots.query.get(place['id']))
+            self.assertIsNotNone(Bookings.query.get(booking_id))
+            self.assertIsNotNone(Reviews.query.get(review_id))
 
-        self.assertEqual(self.client.put('/api/wishlists/update', json={
-            'id': collection['id'], 'name': 'Italy'
-        }).status_code, 200)
-        self.assertEqual(self.client.delete('/api/wishspots/delete', json={
-            'spotId': place['id'], 'wishlistId': collection['id']
-        }).status_code, 200)
-        self.assertEqual(self.client.delete('/api/wishlists/delete', json={
-            'id': collection['id']
-        }).status_code, 200)
+    def test_stay_crud_truncates_snapshot_and_rejects_all_cross_user_mutations(self):
+        place = self.make_place('x' * 80)
+        stay = self.write('POST', '/api/bookings/create', {
+            'spotId': place['id'], 'startDate': '2020-01-01', 'endDate': '2020-01-02'}).get_json()
+        self.assertEqual(stay['spotName'], 'x' * 50)
+        updated = self.write('PUT', '/api/bookings/update', {
+            'id': stay['id'], 'startDate': '2020-02-01', 'endDate': '2020-02-03'})
+        self.assertIn('01 Feb 2020', updated.get_json()['startDate'])
 
-    def test_cannot_mutate_another_users_children(self):
         self.login(self.b)
-        stay = self.client.post('/api/bookings/create', json={
-            'spotId': self.foreign_place, 'startDate': '2020-01-01', 'endDate': '2020-01-02'
-        }).get_json()
-        memory = self.client.post('/api/reviews/create', json={
-            'spotId': self.foreign_place, 'review': 'Private memory', 'rating': 5
-        }).get_json()
-        collection = self.client.post('/api/wishlists/create', json={'name': 'Private collection'}).get_json()
-
-        self.client.get('/api/auth/logout')
+        self.assertEqual(self.write('PUT', '/api/bookings/update', {
+            'id': stay['id'], 'startDate': '2030-01-01', 'endDate': '2030-01-02'}).status_code, 404)
+        self.assertEqual(self.write('DELETE', '/api/bookings/delete', {'id': stay['id']}).status_code, 404)
         self.login(self.a)
-        self.assertEqual(self.client.put('/api/bookings/update', json={
-            'id': stay['id'], 'startDate': '2021-01-01', 'endDate': '2021-01-02'
-        }).status_code, 404)
-        self.assertEqual(self.client.delete('/api/reviews/delete', json={'id': memory['id']}).status_code, 404)
-        self.assertEqual(self.client.delete('/api/wishlists/delete', json={'id': collection['id']}).status_code, 404)
+        self.assertIn('01 Feb 2020', self.client.get('/api/bookings/user').get_json()['bookings'][0]['startDate'])
+        self.assertEqual(self.write('DELETE', '/api/bookings/delete', {'id': stay['id']}).status_code, 200)
+        self.assertEqual(self.client.get('/api/bookings/user').get_json()['bookings'], [])
+
+    def test_memory_crud_persists_and_rejects_all_cross_user_mutations(self):
+        place = self.make_place()
+        memory = self.write('POST', '/api/reviews/create', {
+            'spotId': place['id'], 'review': 'Wonderful', 'rating': 5}).get_json()
+        updated = self.write('PUT', '/api/reviews/update', {
+            'id': memory['id'], 'review': 'Unforgettable', 'rating': 4})
+        self.assertEqual(updated.get_json()['review'], 'Unforgettable')
+        self.login(self.b)
+        self.assertEqual(self.write('PUT', '/api/reviews/update', {
+            'id': memory['id'], 'review': 'Changed', 'rating': 1}).status_code, 404)
+        self.assertEqual(self.write('DELETE', '/api/reviews/delete', {'id': memory['id']}).status_code, 404)
+        self.login(self.a)
+        persisted = self.client.get(f"/api/reviews/{place['id']}").get_json()['reviews'][0]
+        self.assertEqual((persisted['review'], persisted['rating']), ('Unforgettable', 4))
+        self.assertEqual(self.write('DELETE', '/api/reviews/delete', {'id': memory['id']}).status_code, 200)
+        self.assertEqual(self.client.get(f"/api/reviews/{place['id']}").get_json()['reviews'], [])
+
+    def test_collection_and_membership_crud_persist_and_reject_cross_user_mutations(self):
+        place, second = self.make_place(), self.make_place('Milan')
+        collection = self.write('POST', '/api/wishlists/create', {'name': 'Favorites'}).get_json()
+        other = self.write('POST', '/api/wishlists/create', {'name': 'Other'}).get_json()
+        member = self.write('POST', '/api/wishspots/create', {
+            'spotId': place['id'], 'wishlistId': collection['id']}).get_json()
+        moved = self.write('PUT', '/api/wishspots/update', {
+            'id': member['id'], 'spotId': second['id'], 'wishlistId': other['id']})
+        self.assertEqual((moved.get_json()['spotId'], moved.get_json()['wishlistId']),
+                         (second['id'], other['id']))
+        renamed = self.write('PUT', '/api/wishlists/update', {'id': other['id'], 'name': 'Italy'})
+        self.assertEqual(renamed.get_json()['name'], 'Italy')
+
+        self.login(self.b)
+        for method, path, body in (
+            ('PUT', '/api/wishlists/update', {'id': other['id'], 'name': 'Stolen'}),
+            ('DELETE', '/api/wishlists/delete', {'id': other['id']}),
+            ('PUT', '/api/wishspots/update', {'id': member['id'], 'spotId': self.foreign_place, 'wishlistId': other['id']}),
+            ('DELETE', '/api/wishspots/delete', {'spotId': second['id'], 'wishlistId': other['id']}),
+        ):
+            self.assertEqual(self.write(method, path, body).status_code, 404)
+        self.login(self.a)
+        collections = {item['id']: item for item in self.client.get('/api/wishlists/').get_json()['wishlists']}
+        self.assertEqual(collections[other['id']]['name'], 'Italy')
+        self.assertEqual(next(iter(collections[other['id']]['wishspots'].values()))['spotId'], second['id'])
+        self.assertEqual(self.write('DELETE', '/api/wishspots/delete', {
+            'spotId': second['id'], 'wishlistId': other['id']}).status_code, 200)
+        self.assertEqual(self.client.get(f"/api/wishspots/{other['id']}").get_json()['wishspots'], [])
+        self.assertEqual(self.write('DELETE', '/api/wishlists/delete', {'id': other['id']}).status_code, 200)
+        ids = [item['id'] for item in self.client.get('/api/wishlists/').get_json()['wishlists']]
+        self.assertNotIn(other['id'], ids)
 
 
 if __name__ == '__main__':

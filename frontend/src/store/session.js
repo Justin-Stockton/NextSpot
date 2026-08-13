@@ -1,3 +1,5 @@
+import { jsonHeaders } from "../utils/csrf";
+
 const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
 
@@ -57,9 +59,8 @@ export const login = (email, password) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   const response = await fetch("/api/auth/logout", {
-    headers: {
-      "Content-Type": "application/json",
-    },
+    method: "POST",
+    headers: jsonHeaders(),
   });
 
   if (response.ok) {

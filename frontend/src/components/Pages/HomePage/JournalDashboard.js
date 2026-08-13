@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { jsonHeaders } from "../../../utils/csrf";
 
 const emptyPlace = { name: "", location: "", img1: "" };
 
 async function request(path, options) {
   const response = await fetch(path, {
-    headers: { "Content-Type": "application/json" },
+    headers: jsonHeaders(),
     ...options,
   });
   const data = await response.json();
