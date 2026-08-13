@@ -3,16 +3,10 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import SignUpForm from "./components/auth/SignUpForm";
 import NavBar from "./components/NavBar";
-import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { authenticate } from "./store/session";
-import { thunkGetSpots } from "./store/spots";
 import HomePage from "./components/Pages/HomePage";
-import SpotPage from "./components/Pages/SpotPage";
-import UserPage from "./components/Pages/UserPage";
 import LoginModal from "./components/forms/LoginModal";
 import Oops from "./components/Pages/Oops";
-import Wishlists from "./components/Pages/Wishlists";
-import WishlistPage from "./components/Pages/WishlistPage";
 
 export const useClickOutside = (handler) => {
   let domNode = useRef();
@@ -39,8 +33,7 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const user = await dispatch(authenticate());
-      if (user) await dispatch(thunkGetSpots());
+      await dispatch(authenticate());
       setLoaded(true);
     })();
   }, [dispatch]);
@@ -59,24 +52,9 @@ function App() {
         <Route path="/sign-up" exact={true}>
           <SignUpForm />
         </Route>
-        <ProtectedRoute path="/spots/:spotId" exact={true}>
-          <SpotPage />
-        </ProtectedRoute>
         <Route path="/" exact={true}>
           <HomePage />
         </Route>
-        <ProtectedRoute path="/user/:username" exact={true}>
-          <UserPage />
-        </ProtectedRoute>
-        <ProtectedRoute path="/user/:username/host" exact={true}>
-          It looks like this feature isnt quite done yet
-        </ProtectedRoute>
-        <ProtectedRoute path="/my-wishlists" exact={true}>
-          <Wishlists />
-        </ProtectedRoute>
-        <ProtectedRoute path="/:username/:wishlistId" exact={true}>
-          <WishlistPage />
-        </ProtectedRoute>
         <Route>
           <Oops />
         </Route>
