@@ -15,7 +15,11 @@ app = Flask(__name__)
 
 # Setup login manager
 login = LoginManager(app)
-login.login_view = 'auth.unauthorized'
+
+
+@login.unauthorized_handler
+def unauthorized():
+    return {'errors': ['Unauthorized']}, 401
 
 
 @login.user_loader

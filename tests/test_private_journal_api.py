@@ -74,6 +74,46 @@ class PrivateJournalApiTest(unittest.TestCase):
             'spotId': self.foreign_place, 'wishlistId': collection['id']
         }).status_code, 404)
 
+        stay_id = stay.get_json()['id']
+        self.assertEqual(self.client.put('/api/bookings/update', json={
+            'id': stay_id, 'startDate': '2020-02-01', 'endDate': '2020-02-03'
+        }).status_code, 200)
+        self.assertEqual(self.client.delete('/api/bookings/delete', json={'id': stay_id}).status_code, 200)
+
+        memory_id = memory.get_json()['id']
+        self.assertEqual(self.client.put('/api/reviews/update', json={
+            'id': memory_id, 'review': 'Unforgettable', 'rating': 4
+        }).status_code, 200)
+        self.assertEqual(self.client.delete('/api/reviews/delete', json={'id': memory_id}).status_code, 200)
+
+        self.assertEqual(self.client.put('/api/wishlists/update', json={
+            'id': collection['id'], 'name': 'Italy'
+        }).status_code, 200)
+        self.assertEqual(self.client.delete('/api/wishspots/delete', json={
+            'spotId': place['id'], 'wishlistId': collection['id']
+        }).status_code, 200)
+        self.assertEqual(self.client.delete('/api/wishlists/delete', json={
+            'id': collection['id']
+        }).status_code, 200)
+
+    def test_cannot_mutate_another_users_children(self):
+        self.login(self.b)
+        stay = self.client.post('/api/bookings/create', json={
+            'spotId': self.foreign_place, 'startDate': '2020-01-01', 'endDate': '2020-01-02'
+        }).get_json()
+        memory = self.client.post('/api/reviews/create', json={
+            'spotId': self.foreign_place, 'review': 'Private memory', 'rating': 5
+        }).get_json()
+        collection = self.client.post('/api/wishlists/create', json={'name': 'Private collection'}).get_json()
+
+        self.client.get('/api/auth/logout')
+        self.login(self.a)
+        self.assertEqual(self.client.put('/api/bookings/update', json={
+            'id': stay['id'], 'startDate': '2021-01-01', 'endDate': '2021-01-02'
+        }).status_code, 404)
+        self.assertEqual(self.client.delete('/api/reviews/delete', json={'id': memory['id']}).status_code, 404)
+        self.assertEqual(self.client.delete('/api/wishlists/delete', json={'id': collection['id']}).status_code, 404)
+
 
 if __name__ == '__main__':
     unittest.main()
