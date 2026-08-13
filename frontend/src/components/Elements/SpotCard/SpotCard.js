@@ -8,7 +8,6 @@ import { useClickOutside } from "../../../App";
 function SpotCard({ spot }) {
   const imgArray = [spot.img1, spot.img2, spot.img3, spot.img4, spot.img5];
   const [count, setCount] = useState(0);
-  const [img, setImg] = useState(imgArray[count]);
   const [filled, setFilled] = useState(false);
   const [display, setDisplay] = useState(false);
   const [formDisplay, setFormDisplay] = useState(false);
@@ -40,13 +39,11 @@ function SpotCard({ spot }) {
   }
 
   const handleNext = () => {
-    count < 4 ? setCount(count + 1) : setCount(0);
-    setImg(imgArray[count]);
+    setCount((current) => (current + 1) % imgArray.length);
   };
 
   const handlePrevious = () => {
-    count > 0 ? setCount(count - 1) : setCount(4);
-    setImg(imgArray[count]);
+    setCount((current) => (current - 1 + imgArray.length) % imgArray.length);
   };
 
   const popupRef = useClickOutside(() => {
@@ -88,21 +85,22 @@ function SpotCard({ spot }) {
             fill={filled ? "#FF385C" : "rgba(0,0,0,.7)"}
           />
         </div>
-        <div className={'invisible absolute right-3 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/90 shadow group-hover:visible'} onClick={handleNext}>
-          <img
-            onClick={handleNext}
-            className={'h-4 w-4'}
-            src="static/next.svg"
-            alt="house"
-          />
-        </div>
-        <div className={'invisible absolute left-3 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/90 shadow group-hover:visible'} onClick={handlePrevious}>
-          <img
-            className={'h-4 w-4'}
-            src="static/leftArrow.svg"
-            alt="back arrow"
-          />
-        </div>
+        <button
+          aria-label="Next image"
+          className={'absolute right-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow hover:bg-white'}
+          onClick={handleNext}
+          type="button"
+        >
+          <img className={'h-4 w-4'} src="/media/next.svg" alt="" />
+        </button>
+        <button
+          aria-label="Previous image"
+          className={'absolute left-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow hover:bg-white'}
+          onClick={handlePrevious}
+          type="button"
+        >
+          <img className={'h-4 w-4'} src="/media/leftArrow.svg" alt="" />
+        </button>
 
         <img
           onClick={() => history.push(`/spots/${spot.id}`)}
