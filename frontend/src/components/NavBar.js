@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import LoginPopup from "./Elements/LoginPopup";
 import ProfilePopup from "./Elements/ProfilePopup";
-import classes from "./Navbar.module.css";
 import { useClickOutside } from "../App.js";
 const NavBar = () => {
   const history = useHistory();
@@ -15,9 +14,9 @@ const NavBar = () => {
   });
   return (
     <div>
-      <div className={classes.container}>
+      <div className={'relative mb-6 flex min-h-[72px] items-center justify-between border-b border-gray-200 px-4 sm:px-8 lg:px-[8%]'}>
         <img
-          className={classes.logo}
+          className={'h-16 w-24 cursor-pointer object-contain'}
           src="/static/1.svg"
           alt="Next Spot Logo"
           onClick={() => history.push("/")}
@@ -25,14 +24,14 @@ const NavBar = () => {
         {!user ? (
           <>
             <div
-              className={classes.profile}
+              className={'flex h-11 cursor-pointer items-center rounded-full border border-gray-300 bg-white px-4 font-semibold shadow-sm transition hover:shadow-md'}
               onClick={() => {
                 setDisplay(!display);
               }}
             >
               <img
                 alt="menu"
-                className={classes.hamburger}
+                className={'mr-2 h-4 w-4'}
                 src="/static/hamburger.svg"
               />{" "}
               Login
@@ -46,14 +45,14 @@ const NavBar = () => {
         ) : (
           <>
             <div
-              className={classes.profile}
+              className={'flex h-11 cursor-pointer items-center rounded-full border border-gray-300 bg-white px-4 font-semibold shadow-sm transition hover:shadow-md'}
               onClick={() => {
                 setDisplay(!display);
               }}
             >
               <img
                 alt="menu"
-                className={classes.hamburger}
+                className={'mr-2 h-4 w-4'}
                 src="/static/hamburger.svg"
               />{" "}
               {user.username}

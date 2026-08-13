@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import classes from "./SpotCard.module.css";
 import { ReactComponent as HeartSVG } from "./heart.svg";
 import { useSelector } from "react-redux";
 import Modal from "../Modal/Modal";
@@ -81,25 +80,25 @@ function SpotCard({ spot }) {
         spot={spot}
         setFilled={setFilled}
       />
-      <div className={classes.imgSlideShowContainer}>
-        <div className={classes.heartContainer}>
+      <div className={'group relative aspect-square w-full overflow-hidden rounded-2xl bg-gray-200'}>
+        <div className={'absolute right-3 top-3 z-10'}>
           <HeartSVG
-            className={classes.heart}
+            className={'h-7 w-7 cursor-pointer drop-shadow'}
             onClick={handleClick}
             fill={filled ? "#FF385C" : "rgba(0,0,0,.7)"}
           />
         </div>
-        <div className={classes.nextContainer} onClick={handleNext}>
+        <div className={'invisible absolute right-3 top-1/2 z-10 flex h-8 w-8 -trangray-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/90 shadow group-hover:visible'} onClick={handleNext}>
           <img
             onClick={handleNext}
-            className={classes.next}
+            className={'h-4 w-4'}
             src="static/next.svg"
             alt="house"
           />
         </div>
-        <div className={classes.previousContainer} onClick={handlePrevious}>
+        <div className={'invisible absolute left-3 top-1/2 z-10 flex h-8 w-8 -trangray-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/90 shadow group-hover:visible'} onClick={handlePrevious}>
           <img
-            className={classes.previous}
+            className={'h-4 w-4'}
             src="static/leftArrow.svg"
             alt="back arrow"
           />
@@ -108,12 +107,12 @@ function SpotCard({ spot }) {
         <img
           onClick={() => history.push(`/spots/${spot.id}`)}
           alt="Spot"
-          className={classes.img}
+          className={'h-full w-full cursor-pointer object-cover transition duration-300 group-hover:scale-[1.02]'}
           src={imgArray[count]}
         />
       </div>
       <div
-        className={classes.textContainer}
+        className={'flex cursor-pointer justify-between gap-3 pt-3 text-sm leading-6'}
         style={{ display: "flex", justifyContent: "space-between" }}
       >
         <div onClick={() => history.push(`/spots/${spot.id}`)}>
@@ -131,12 +130,12 @@ function SpotCard({ spot }) {
         <div>
           {rating > 0 ? (
             <strong>
-              <img className={classes.star} src="/static/star.svg" alt="star" />
+              <img className={'mr-1 inline h-3 w-3'} src="/static/star.svg" alt="star" />
               {rating}
             </strong>
           ) : (
             <strong>
-              <img className={classes.star} src="/static/star.svg" alt="star" />
+              <img className={'mr-1 inline h-3 w-3'} src="/static/star.svg" alt="star" />
               New
             </strong>
           )}

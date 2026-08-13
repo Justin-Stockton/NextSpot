@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import classes from "./Wishlist.module.css";
 import { useHistory } from "react-router-dom";
 
 function Wishlist({ list }) {
@@ -22,26 +21,29 @@ function Wishlist({ list }) {
   };
 
   return (
-    <div className={classes.mainContainer} onClick={handleClick}>
+    <div className={'min-w-0 cursor-pointer'} onClick={handleClick}>
       {wishSpots && wishSpots.length ? (
-        <div className={classes.imgContainer}>
+        <div className={'flex aspect-[2.3/1] gap-1 overflow-hidden rounded-xl bg-gray-200'}>
           <>
-            <div className={classes.mainImg}>
+            <div className={'h-full w-2/3 object-cover'}>
               <img
-                className={classes.mainImg}
+                alt="Wishlist cover"
+                className={'h-full w-full object-cover'}
                 src={`${spotObj[spotIDs[0]].spot.img1}`}
               />
             </div>
-            <div className={classes.subImgContainer}>
-              <div className={classes.topImg}>
+            <div className={'flex w-1/3 flex-col gap-1'}>
+              <div className={'h-1/2 w-full object-cover'}>
                 <img
-                  className={classes.topImg}
+                  alt="Wishlist preview"
+                  className={'h-1/2 w-full object-cover'}
                   src={`${spotObj[spotIDs[0]].spot.img2}`}
                 />
               </div>
-              <div className={classes.subImg}>
+              <div className={'h-1/2 w-full object-cover'}>
                 <img
-                  className={classes.subImg}
+                  alt="Wishlist preview"
+                  className={'h-1/2 w-full object-cover'}
                   src={`${spotObj[spotIDs[0]].spot.img3}`}
                 />
               </div>
@@ -49,9 +51,9 @@ function Wishlist({ list }) {
           </>
         </div>
       ) : (
-        <div className={classes.noSpots}></div>
+        <div className={'aspect-[2.3/1] w-full rounded-xl bg-gray-200'}></div>
       )}
-      <div className={classes.name}>{list.name}</div>
+      <div className={'py-3 text-xl font-semibold'}>{list.name}</div>
     </div>
   );
 }

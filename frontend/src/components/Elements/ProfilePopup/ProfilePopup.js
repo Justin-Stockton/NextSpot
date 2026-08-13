@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import classes from "./ProfilePopup.module.css";
 import { logout } from "../../../store/session";
 import { thunkLogout } from "../../../store/userBookings";
 import { thunkLogoutLists } from "../../../store/wishlists";
@@ -21,7 +20,7 @@ function ProfilePopup({ display, setDisplay, innerRef }) {
   return (
     <>
       {display ? (
-        <div className={classes.mainContainer} ref={innerRef}>
+        <div className={'absolute right-4 top-16 z-20 w-60 overflow-hidden rounded-xl border border-gray-200 bg-white py-2 shadow-xl [&>*]:flex [&>*]:h-11 [&>*]:cursor-pointer [&>*]:items-center [&>*]:px-4 [&>*]:hover:bg-gray-50 sm:right-8 lg:right-[8%]'} ref={innerRef}>
           <div
             onClick={() => {
               history.push(`/my-wishlists`);
@@ -51,7 +50,7 @@ function ProfilePopup({ display, setDisplay, innerRef }) {
             target="_blank"
             rel="noreferrer"
             href="https://github.com/Justin-Stockton"
-            className={classes.links}
+            className={'text-gray-800 no-underline'}
           >
             <div onClick={() => setDisplay(false)}>GitHub</div>
           </a>
@@ -62,7 +61,7 @@ function ProfilePopup({ display, setDisplay, innerRef }) {
           >
             <div onClick={() => setDisplay(false)}>Linkedin</div>
           </a>
-          <div className={classes.links} onClick={onLogout}>
+          <div className={'text-gray-800 no-underline'} onClick={onLogout}>
             Log Out
           </div>
         </div>
