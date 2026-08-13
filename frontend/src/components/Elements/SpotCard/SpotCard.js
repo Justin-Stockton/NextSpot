@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ReactComponent as HeartSVG } from "./heart.svg";
 import { useSelector } from "react-redux";
@@ -11,6 +11,8 @@ function SpotCard({ spot }) {
   const [filled, setFilled] = useState(false);
   const [display, setDisplay] = useState(false);
   const [formDisplay, setFormDisplay] = useState(false);
+  const touchStart = useRef(null);
+  const suppressClick = useRef(false);
   const history = useHistory();
   const user = useSelector((state) => state.session.user);
   const wishlistsObj = useSelector((state) => state.wishlists);
@@ -46,6 +48,31 @@ function SpotCard({ spot }) {
     setCount((current) => (current - 1 + imgArray.length) % imgArray.length);
   };
 
+  const handleTouchStart = ({ touches: [touch] }) => {
+    touchStart.current = { x: touch.clientX, y: touch.clientY };
+  };
+
+  const handleTouchEnd = ({ changedTouches: [touch] }) => {
+    if (!touchStart.current) return;
+
+    const x = touchStart.current.x - touch.clientX;
+    const y = touchStart.current.y - touch.clientY;
+    touchStart.current = null;
+
+    if (Math.abs(x) < 40 || Math.abs(x) < Math.abs(y)) return;
+    suppressClick.current = true;
+    setTimeout(() => (suppressClick.current = false), 0);
+    x > 0 ? handleNext() : handlePrevious();
+  };
+
+  const handleSpotClick = () => {
+    if (suppressClick.current) {
+      suppressClick.current = false;
+      return;
+    }
+    history.push(`/spots/${spot.id}`);
+  };
+
   const popupRef = useClickOutside(() => {
     setDisplay(false);
     setFormDisplay(false);
@@ -77,7 +104,14 @@ function SpotCard({ spot }) {
         spot={spot}
         setFilled={setFilled}
       />
-      <div className={'group relative h-72 w-full overflow-hidden rounded-2xl bg-gray-200'}>
+      <div
+        aria-label="Spot image gallery"
+        className={'group relative h-72 w-full overflow-hidden rounded-2xl bg-gray-200'}
+        onTouchEnd={handleTouchEnd}
+        onTouchStart={handleTouchStart}
+        role="group"
+        style={{ touchAction: "pan-y" }}
+      >
         <div className={'absolute right-3 top-3 z-10'}>
           <HeartSVG
             className={'h-7 w-7 cursor-pointer drop-shadow'}
@@ -87,7 +121,7 @@ function SpotCard({ spot }) {
         </div>
         <button
           aria-label="Next image"
-          className={'absolute right-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow hover:bg-white'}
+          className={'invisible absolute right-3 top-1/2 z-10 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow hover:bg-white sm:flex sm:group-hover:visible'}
           onClick={handleNext}
           type="button"
         >
@@ -95,7 +129,7 @@ function SpotCard({ spot }) {
         </button>
         <button
           aria-label="Previous image"
-          className={'absolute left-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow hover:bg-white'}
+          className={'invisible absolute left-3 top-1/2 z-10 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow hover:bg-white sm:flex sm:group-hover:visible'}
           onClick={handlePrevious}
           type="button"
         >
@@ -103,7 +137,7 @@ function SpotCard({ spot }) {
         </button>
 
         <img
-          onClick={() => history.push(`/spots/${spot.id}`)}
+          onClick={handleSpotClick}
           alt="Spot"
           className={'h-full w-full cursor-pointer object-cover transition duration-300 group-hover:scale-105'}
           src={imgArray[count]}

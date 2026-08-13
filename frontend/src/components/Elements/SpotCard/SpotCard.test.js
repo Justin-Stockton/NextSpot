@@ -31,4 +31,21 @@ test("cycles preview images with accessible controls", () => {
 
   fireEvent.click(screen.getByRole("button", { name: "Previous image" }));
   expect(preview.getAttribute("src")).toBe("one.jpg");
+
+  const gallery = screen.getByRole("group", { name: "Spot image gallery" });
+  fireEvent.touchStart(gallery, {
+    touches: [{ clientX: 200, clientY: 20 }],
+  });
+  fireEvent.touchEnd(gallery, {
+    changedTouches: [{ clientX: 100, clientY: 25 }],
+  });
+  expect(preview.getAttribute("src")).toBe("two.jpg");
+
+  fireEvent.touchStart(gallery, {
+    touches: [{ clientX: 100, clientY: 20 }],
+  });
+  fireEvent.touchEnd(gallery, {
+    changedTouches: [{ clientX: 200, clientY: 25 }],
+  });
+  expect(preview.getAttribute("src")).toBe("one.jpg");
 });
