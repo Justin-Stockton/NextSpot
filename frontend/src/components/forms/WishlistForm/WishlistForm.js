@@ -10,8 +10,8 @@
 //   return (
 //     <>
 //       {formDisplay ? (
-//         <div className={classes.background}>
-//           <div ref={innerRef} className={classes.reviewsContainer}>
+//         <div>
+//           <div ref={innerRef}>
 //             WishlistForm
 //           </div>
 //         </div>

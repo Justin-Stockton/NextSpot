@@ -5,6 +5,6 @@
 @tailwind utilities;
 
 @layer base {
-  body { @apply m-0 bg-white font-sans text-slate-800 antialiased; }
+  body { @apply m-0 bg-white font-sans text-gray-800 antialiased; }
   button, a, input, select, textarea { @apply focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2; }
 }
