@@ -45,47 +45,21 @@ function SpotPage() {
           {spot.city}, {spot.state}, United States
         </div>
       </div>
-      <div className={'grid h-[24rem] grid-cols-1 gap-2 overflow-hidden rounded-2xl md:grid-cols-2'}>
-        <div className={'h-full w-full overflow-hidden'}>
-          <img
-            className={`${'h-full w-full object-cover'} ${'h-full w-full overflow-hidden'}`}
-            src={`${spot.img1}`}
-            alt="The house"
-          />
-        </div>
-        <div className={'hidden h-full grid-rows-2 gap-2 md:grid'}>
-          <div className={'grid min-h-0 grid-cols-2 gap-2'}>
-            <div className={'min-h-0 overflow-hidden'}>
-              <img
-                className={`${'h-full w-full object-cover'} `}
-                src={`${spot.img2}`}
-                alt="The house"
-              />
-            </div>
-            <div className={`${'min-h-0 overflow-hidden'} ${'rounded-tr-2xl'}`}>
-              <img
-                className={`${'h-full w-full object-cover'} ${'rounded-tr-2xl'}`}
-                src={`${spot.img3}`}
-                alt="The house"
-              />
-            </div>
-          </div>
-          <div className={'grid min-h-0 grid-cols-2 gap-2'}>
-            <div className={'min-h-0 overflow-hidden'}>
-              <img
-                className={`${'h-full w-full object-cover'} `}
-                src={`${spot.img4}`}
-                alt="The house"
-              />
-            </div>
-            <div className={`${'min-h-0 overflow-hidden'} ${'rounded-br-2xl'}`}>
-              <img
-                className={`${'h-full w-full object-cover'}  ${'rounded-br-2xl'}`}
-                src={`${spot.img5}`}
-                alt="The house"
-              />
-            </div>
-          </div>
+      <div className={'grid h-72 grid-cols-1 gap-2 overflow-hidden rounded-2xl sm:h-96 md:grid-cols-2 lg:h-[32rem]'}>
+        <img
+          className={'h-full min-h-0 w-full object-cover'}
+          src={spot.img1}
+          alt={`${spot.name} exterior`}
+        />
+        <div className={'hidden min-h-0 grid-cols-2 grid-rows-2 gap-2 md:grid'}>
+          {[spot.img2, spot.img3, spot.img4, spot.img5].map((image, index) => (
+            <img
+              className={'h-full min-h-0 w-full object-cover'}
+              src={image}
+              alt={`${spot.name} view ${index + 2}`}
+              key={image}
+            />
+          ))}
         </div>
       </div>
       <div className={'mt-8 flex flex-col gap-10 border-y border-gray-200 py-8 lg:flex-row'}>
