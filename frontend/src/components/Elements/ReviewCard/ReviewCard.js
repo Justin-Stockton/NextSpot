@@ -33,7 +33,7 @@ function ReviewCard({ review, reviews, rating }) {
           <img
             className={'ml-1 h-3 w-3'}
             alt="arrow right"
-            src="/static/rightArrow.svg"
+            src="/media/rightArrow.svg"
           ></img>
         </div>
       </div>

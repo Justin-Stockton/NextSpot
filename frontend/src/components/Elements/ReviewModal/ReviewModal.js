@@ -17,7 +17,7 @@ function ReviewModal({ reviews, setDispaly, rating, innerRef }) {
                 <img
                   onClick={() => setDispaly(false)}
                   className={'h-6 w-6 cursor-pointer rounded-full p-1 hover:bg-gray-100'}
-                  src="/static/x.svg"
+                  src="/media/x.svg"
                   alt="delete"
                 />
               </div>
@@ -25,7 +25,7 @@ function ReviewModal({ reviews, setDispaly, rating, innerRef }) {
                 <img
                   alt="star"
                   className={'mx-1 inline h-4 w-4'}
-                  src="/static/star.svg"
+                  src="/media/star.svg"
                 />
                 <span style={{ fontSize: "18px" }}>
                   {rating} · Reviews {reviews.length}
@@ -43,7 +43,7 @@ function ReviewModal({ reviews, setDispaly, rating, innerRef }) {
                       <img
                         className={'mx-1 inline h-4 w-4'}
                         alt="star"
-                        src="/static/star.svg"
+                        src="/media/star.svg"
                       />
                       {user.id === review.userId ? (
                         <div
@@ -59,7 +59,7 @@ function ReviewModal({ reviews, setDispaly, rating, innerRef }) {
                         >
                           <img
                             className={'h-6 w-6 cursor-pointer rounded-full p-1 hover:bg-gray-100'}
-                            src="/static/trashcan.svg"
+                            src="/media/trashcan.svg"
                             alt="delete"
                           />
                         </div>
@@ -89,7 +89,7 @@ function ReviewModal({ reviews, setDispaly, rating, innerRef }) {
                   <img
                     onClick={() => setDispaly(false)}
                     className={'h-6 w-6 cursor-pointer rounded-full p-1 hover:bg-gray-100'}
-                    src="/static/x.svg"
+                    src="/media/x.svg"
                     alt="delete"
                   />
                 </div>
@@ -97,7 +97,7 @@ function ReviewModal({ reviews, setDispaly, rating, innerRef }) {
                   <img
                     alt="star"
                     className={'mx-1 inline h-4 w-4'}
-                    src="/static/star.svg"
+                    src="/media/star.svg"
                   />
                   <span style={{ fontSize: "18px" }}>
                     {rating} · Reviews {reviews.length}
@@ -114,7 +114,7 @@ function ReviewModal({ reviews, setDispaly, rating, innerRef }) {
                         <img
                           className={'mx-1 inline h-4 w-4'}
                           alt="star"
-                          src="/static/star.svg"
+                          src="/media/star.svg"
                         />
                       </span>
                     </div>

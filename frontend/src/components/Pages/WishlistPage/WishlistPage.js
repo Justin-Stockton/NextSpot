@@ -44,7 +44,7 @@ function WishlistPage() {
                   <img
                     className={'h-9 w-9 cursor-pointer rounded-full p-2 hover:bg-gray-100'}
                     alt="back"
-                    src="/static/backArrow.svg"
+                    src="/media/backArrow.svg"
                   />
                 </div>
                 <div className={'flex gap-3'}>
@@ -52,14 +52,14 @@ function WishlistPage() {
                     <img
                       className={'h-9 w-9 cursor-pointer rounded-full p-2 hover:bg-gray-100'}
                       alt="copy"
-                      src="/static/copy.svg"
+                      src="/media/copy.svg"
                     />
                   </div>
                   <div onClick={() => setFormDisplay(true)}>
                     <img
                       className={'h-9 w-9 cursor-pointer rounded-full p-2 hover:bg-gray-100'}
                       alt="menu"
-                      src="/static/threedot.svg"
+                      src="/media/threedot.svg"
                     />
                   </div>
                 </div>
@@ -87,7 +87,7 @@ function WishlistPage() {
               <img
                 alt="Map coming soon"
                 className={'h-full w-full object-cover'}
-                src="/static/coming_soon.png"
+                src="/media/coming_soon.png"
               />
             </div>
           </div>

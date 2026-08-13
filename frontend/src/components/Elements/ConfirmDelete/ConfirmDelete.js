@@ -17,7 +17,7 @@ function ConfirmDelete({ setDisplay, confirmRef, name, id }) {
       <div ref={confirmRef}>
         <div className={'flex items-center justify-between border-b border-gray-200 px-5 py-4'}>
           <div className={'flex h-9 w-9 cursor-pointer items-center justify-center rounded-full hover:bg-gray-100'} onClick={() => setDisplay(false)}>
-            <img alt="Back" className={'h-4 w-4'} src="/static/backArrow.svg" />
+            <img alt="Back" className={'h-4 w-4'} src="/media/backArrow.svg" />
           </div>
           <strong>Delete this wishlist?</strong>
           <div className={'w-9'}></div>

@@ -17,7 +17,7 @@ const NavBar = () => {
       <div className={'relative mb-6 flex min-h-[72px] items-center justify-between border-b border-gray-200 px-4 sm:px-8 lg:px-[8%]'}>
         <img
           className={'h-16 w-24 cursor-pointer object-contain'}
-          src="/static/1.svg"
+          src="/media/1.svg"
           alt="Next Spot Logo"
           onClick={() => history.push("/")}
         />
@@ -32,7 +32,7 @@ const NavBar = () => {
               <img
                 alt="menu"
                 className={'mr-2 h-4 w-4'}
-                src="/static/hamburger.svg"
+                src="/media/hamburger.svg"
               />{" "}
               Login
             </div>
@@ -53,7 +53,7 @@ const NavBar = () => {
               <img
                 alt="menu"
                 className={'mr-2 h-4 w-4'}
-                src="/static/hamburger.svg"
+                src="/media/hamburger.svg"
               />{" "}
               {user.username}
             </div>

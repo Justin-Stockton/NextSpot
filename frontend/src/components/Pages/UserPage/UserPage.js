@@ -55,7 +55,7 @@ function UserPage() {
                 <img
                   className={'h-12 w-12'}
                   alt="Hello wave"
-                  src="/static/wave.svg"
+                  src="/media/wave.svg"
                 />
                 <span className={'mt-3 text-xl font-semibold'}>
                   No trips booked...yet!

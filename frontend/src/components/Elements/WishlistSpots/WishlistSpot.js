@@ -80,7 +80,7 @@ function WishlistSpot({ spot, id, wishlistId }) {
             <div className={'invisible flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white/90 shadow group-hover:visible'} onClick={handlePrevious}>
               <img
                 className={'h-4 w-4'}
-                src="/static/leftArrow.svg"
+                src="/media/leftArrow.svg"
                 alt="back"
               />
             </div>
@@ -88,7 +88,7 @@ function WishlistSpot({ spot, id, wishlistId }) {
               <img
                 onClick={handleNext}
                 className={'h-4 w-4'}
-                src="/static/next.svg"
+                src="/media/next.svg"
                 alt="next"
               />
             </div>
@@ -116,7 +116,7 @@ function WishlistSpot({ spot, id, wishlistId }) {
                     <img
                       className={'mr-1 inline h-3 w-3'}
                       alt="star"
-                      src="/static/star.svg"
+                      src="/media/star.svg"
                     />
                     {rating}
                   </strong>{" "}
@@ -128,7 +128,7 @@ function WishlistSpot({ spot, id, wishlistId }) {
                 <img
                   alt="star"
                   className={'mr-1 inline h-3 w-3'}
-                  src="/static/star.svg"
+                  src="/media/star.svg"
                 />
                 New
               </strong>

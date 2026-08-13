@@ -66,7 +66,7 @@ function BookingForm({ spot, reviewsTotal, rating }) {
           ) : (
             "New"
           )}{" "}
-          <img alt="star" className={'inline h-3 w-3'} src="/static/star.svg" />{" "}
+          <img alt="star" className={'inline h-3 w-3'} src="/media/star.svg" />{" "}
           <strong>·</strong> {reviewsTotal} reviews
         </div>
       </div>

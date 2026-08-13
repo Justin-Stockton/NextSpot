@@ -59,7 +59,7 @@ function EditBookingForm({ booking }) {
       {formDisplay ? (
         <div className={'w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-lg'}>
           <img
-            src="/static/x.svg"
+            src="/media/x.svg"
             className={'h-6 w-6 cursor-pointer rounded-full p-1 hover:bg-gray-100'}
             alt="x"
             onClick={() => setFormDisplay(false)}

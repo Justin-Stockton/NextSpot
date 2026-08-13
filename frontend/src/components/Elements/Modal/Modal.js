@@ -39,7 +39,7 @@ function Modal({
                 onClick={() => setDisplay(false)}
                 className={'flex h-9 w-9 cursor-pointer items-center justify-center rounded-full hover:bg-gray-100'}
               >
-                <img className={'h-4 w-4'} alt="x" src="/static/x.svg" />
+                <img className={'h-4 w-4'} alt="x" src="/media/x.svg" />
               </div>
               <strong>Your Wishlists</strong>
               <div className={'h-4 w-4'}></div>
@@ -55,7 +55,7 @@ function Modal({
                 <img
                   className={'h-5 w-5'}
                   alt="plus"
-                  src="/static/plus.svg"
+                  src="/media/plus.svg"
                 />
               </div>
               <strong className={'font-semibold'}>Create new wishlist</strong>
@@ -82,7 +82,7 @@ function Modal({
                 onClick={() => setFormDisplay(false)}
                 className={'flex h-9 w-9 cursor-pointer items-center justify-center rounded-full hover:bg-gray-100'}
               >
-                <img className={'h-4 w-4'} alt="x" src="/static/x.svg" />
+                <img className={'h-4 w-4'} alt="x" src="/media/x.svg" />
               </div>
               <strong>Name this wishlist</strong>
               <div className={'h-4 w-4'}></div>

@@ -48,7 +48,7 @@ function EditWishlistModal({
                     onClick={() => setFormDisplay(false)}
                     className={'flex h-9 w-9 cursor-pointer items-center justify-center rounded-full hover:bg-gray-100'}
                   >
-                    <img alt="Close" className={'h-4 w-4'} src="/static/x.svg" />
+                    <img alt="Close" className={'h-4 w-4'} src="/media/x.svg" />
                   </div>
                   <strong>Settings</strong>
                   <div

@@ -40,7 +40,7 @@ function SpotPage() {
         <h1>{spot.name}</h1>
         <div>
           {rating > 0 ? rating : "New"}{" "}
-          <img alt="star" className={'inline h-3 w-3'} src="/static/star.svg" />{" "}
+          <img alt="star" className={'inline h-3 w-3'} src="/media/star.svg" />{" "}
           <strong>·</strong> {reviews.length} reviews <strong>·</strong>{" "}
           {spot.city}, {spot.state}, United States
         </div>
@@ -94,7 +94,7 @@ function SpotPage() {
             <img
               alt="spot cover"
               className={'mb-4 h-14 w-36'}
-              src="/static/spotcover.svg"
+              src="/media/spotcover.svg"
             />
             <div>
               Every booking includes free protection from Host cancellations,
@@ -118,7 +118,7 @@ function SpotPage() {
                   <img
                     alt="amenities"
                     className={'mr-4 h-6 w-6'}
-                    src="/static/stay.svg"
+                    src="/media/stay.svg"
                   />
                   <div>Long term stays allowed</div>
                 </div>
@@ -126,7 +126,7 @@ function SpotPage() {
                   <img
                     alt="amenities"
                     className={'mr-4 h-6 w-6'}
-                    src="/static/waterfront.svg"
+                    src="/media/waterfront.svg"
                   />
                   <div>Waterfront</div>
                 </div>
@@ -134,7 +134,7 @@ function SpotPage() {
                   <img
                     alt="amenities"
                     className={'mr-4 h-6 w-6'}
-                    src="/static/kitchen.svg"
+                    src="/media/kitchen.svg"
                   />
                   <div>Kitchen</div>
                 </div>
@@ -142,7 +142,7 @@ function SpotPage() {
                   <img
                     alt="amenities"
                     className={'mr-4 h-6 w-6'}
-                    src="/static/wifi.svg"
+                    src="/media/wifi.svg"
                   />
                   <div>Wifi</div>
                 </div>
@@ -150,7 +150,7 @@ function SpotPage() {
                   <img
                     alt="amenities"
                     className={'mr-4 h-6 w-6'}
-                    src="/static/workspace.svg"
+                    src="/media/workspace.svg"
                   />
                   <div>Dedicated workspace</div>
                 </div>
@@ -160,7 +160,7 @@ function SpotPage() {
                   <img
                     alt="amenities"
                     className={'mr-4 h-6 w-6'}
-                    src="/static/parking.svg"
+                    src="/media/parking.svg"
                   />
                   <div>Free parking on premises</div>
                 </div>
@@ -168,7 +168,7 @@ function SpotPage() {
                   <img
                     alt="amenities"
                     className={'mr-4 h-6 w-6'}
-                    src="/static/tv.svg"
+                    src="/media/tv.svg"
                   />
                   <div>50" HDTV with Roku</div>
                 </div>
@@ -176,7 +176,7 @@ function SpotPage() {
                   <img
                     alt="amenities"
                     className={'mr-4 h-6 w-6'}
-                    src="/static/washer.svg"
+                    src="/media/washer.svg"
                   />
                   <div>Free washer – In unit</div>
                 </div>
@@ -184,7 +184,7 @@ function SpotPage() {
                   <img
                     alt="amenities"
                     className={'mr-4 h-6 w-6'}
-                    src="/static/dryer.svg"
+                    src="/media/dryer.svg"
                   />
                   <div>Free dryer – In unit</div>
                 </div>
@@ -192,7 +192,7 @@ function SpotPage() {
                   <img
                     alt="amenities"
                     className={'mr-4 h-6 w-6'}
-                    src="/static/ac.svg"
+                    src="/media/ac.svg"
                   />
                   <div>Central air conditioning</div>
                 </div>
@@ -212,7 +212,7 @@ function SpotPage() {
         <div className={'text-xl font-semibold'}>
           <div>
             {rating > 0 ? rating : "New"}{" "}
-            <img alt="star" className={'inline h-3 w-3'} src="/static/star.svg" />{" "}
+            <img alt="star" className={'inline h-3 w-3'} src="/media/star.svg" />{" "}
             <strong>·</strong> {reviews.length}{" "}
             {reviews.length === 1 ? "Review" : "Reviews"}
           </div>
