@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkUpdateSpotReview } from "../../../store/reviews";
-import classes from "./EditReviewForm.module.css";
 
 function EditReviewForm({ spotId, currentReview }) {
   let user = useSelector((state) => state.session.user);
@@ -37,18 +36,18 @@ function EditReviewForm({ spotId, currentReview }) {
   return (
     <>
       {toggleForm ? (
-        <div className={classes.reviewFormContainer}>
-          <form className={classes.form}>
+        <div className={'mt-6 w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6 shadow-lg'}>
+          <form className={'flex flex-col gap-3'}>
             <div style={{ display: "flex", justifyContent: "center" }}>
               {errors.map((error, i) => (
-                <div className={classes.errors} key={i}>
+                <div className={'mb-4 rounded-lg bg-rose-50 p-3 text-sm font-semibold text-rose-700'} key={i}>
                   {error}
                 </div>
               ))}
             </div>
             <strong>Edit your thoughts</strong>
             <select
-              className={classes.select}
+              className={'rounded-md border border-gray-300 bg-white p-2'}
               onChange={(e) => setRating(e.target.value)}
             >
               <option value={currentReview.rating}>
@@ -72,13 +71,13 @@ function EditReviewForm({ spotId, currentReview }) {
               * Required
             </div>
             <textarea
-              className={classes.ta}
+              className={'h-28 resize-none rounded-lg border border-gray-300 p-3 focus:border-rose-500'}
               value={review}
               onChange={(e) => setReview(e.target.value)}
             />
-            <div className={classes.buttonContainer}>
+            <div className={'flex justify-between gap-3'}>
               <div
-                className={classes.button}
+                className={'inline-flex cursor-pointer items-center justify-center rounded-lg bg-rose-500 px-5 py-3 font-bold text-white hover:bg-rose-600 focus:ring-2 focus:ring-rose-500'}
                 onClick={() => {
                   handleSubmit();
                 }}
@@ -86,7 +85,7 @@ function EditReviewForm({ spotId, currentReview }) {
                 Edit
               </div>
               <div
-                className={classes.button}
+                className={'inline-flex cursor-pointer items-center justify-center rounded-lg bg-rose-500 px-5 py-3 font-bold text-white hover:bg-rose-600 focus:ring-2 focus:ring-rose-500'}
                 onClick={() => setToggleForm(false)}
               >
                 Cancel
@@ -96,7 +95,7 @@ function EditReviewForm({ spotId, currentReview }) {
         </div>
       ) : (
         <>
-          <div className={classes.edit} onClick={() => setToggleForm(true)}>
+          <div className={'inline-flex cursor-pointer rounded-lg bg-rose-500 px-5 py-2 font-bold text-white hover:bg-rose-600'} onClick={() => setToggleForm(true)}>
             Edit
           </div>
         </>

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { thunkCreateReview } from "../../../store/reviews";
-import classes from "./ReviewForm.module.css";
 
 function ReviewForm({ spotId, setDisplay, innerRef }) {
   let user = useSelector((state) => state.session.user);
@@ -45,20 +44,20 @@ function ReviewForm({ spotId, setDisplay, innerRef }) {
   };
 
   return (
-    <div ref={innerRef} className={classes.reviewFormContainer}>
-      <form onSubmit={handleSubmit} className={classes.form}>
+    <div ref={innerRef} className={'mt-6 w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6 shadow-lg'}>
+      <form onSubmit={handleSubmit} className={'flex flex-col gap-3'}>
         <div style={{ display: "flex", justifyContent: "center" }}>
           {errors.map((error, i) => (
-            <div className={classes.errors} key={i}>
+            <div className={'mb-4 rounded-lg bg-rose-50 p-3 text-sm font-semibold text-rose-700'} key={i}>
               {error}
             </div>
           ))}
         </div>
-        <div className={classes.ratingContainer}>
+        <div className={'flex items-center justify-between gap-4'}>
           <strong>Let others know how your stay was</strong>
           <div>
             <select
-              className={classes.select}
+              className={'rounded-md border border-gray-300 bg-white p-2'}
               onChange={(e) => setRating(e.target.value)}
             >
               <option value={5}>5</option>
@@ -83,12 +82,12 @@ function ReviewForm({ spotId, setDisplay, innerRef }) {
           </div>
         </div>
         <textarea
-          className={classes.ta}
+          className={'h-28 resize-none rounded-lg border border-gray-300 p-3 focus:border-rose-500'}
           placeholder="Write your review"
           value={review}
           onChange={(e) => setReview(e.target.value)}
         />
-        <button className={classes.button}>Submit</button>
+        <button className={'inline-flex cursor-pointer items-center justify-center rounded-lg bg-rose-500 px-5 py-3 font-bold text-white hover:bg-rose-600 focus:ring-2 focus:ring-rose-500'}>Submit</button>
       </form>
     </div>
   );

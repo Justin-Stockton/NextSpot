@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { thunkCreateBooking } from "../../../store/bookings";
 import { thunkGetUserBookings } from "../../../store/userBookings";
 
-import classes from "./BookingsForm.module.css";
 
 function BookingForm({ spot, reviewsTotal, rating }) {
   const history = useHistory();
@@ -56,29 +55,29 @@ function BookingForm({ spot, reviewsTotal, rating }) {
   };
 
   return (
-    <div className={classes.mainContainer}>
-      <div className={classes.formTop}>
-        <div className={classes.price}>
+    <div className={'w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-lg'}>
+      <div className={'flex justify-between gap-4'}>
+        <div className={'text-xl'}>
           <strong>${spot.price}</strong> night
         </div>
-        <div className={classes.reviews}>
+        <div className={'text-sm font-semibold text-gray-500'}>
           {rating > 0 ? (
             <strong style={{ fontSize: "14px" }}>{rating}</strong>
           ) : (
             "New"
           )}{" "}
-          <img alt="star" className={classes.star} src="/static/star.svg" />{" "}
+          <img alt="star" className={'inline h-3 w-3'} src="/static/star.svg" />{" "}
           <strong>·</strong> {reviewsTotal} reviews
         </div>
       </div>
       <div>
         <form>
-          <div className={classes.calendars}>
+          <div className={'mt-6 flex overflow-hidden rounded-t-xl border border-gray-400'}>
             <div
-              className={classes.calendar}
+              className={'flex flex-1 items-center justify-center p-3'}
               style={{ borderRight: "1px solid #7b7b7b" }}
             >
-              <label className={classes.check}>
+              <label className={'text-xs font-extrabold'}>
                 CHECK-IN
                 <input
                   type="date"
@@ -87,12 +86,12 @@ function BookingForm({ spot, reviewsTotal, rating }) {
                   onChange={(e) => setStartDate(e.target.value)}
                   min={tomorrow}
                   required
-                  className={classes.input}
+                  className={'mt-1 w-full border-0 bg-transparent text-sm'}
                 />
               </label>
             </div>
-            <div className={classes.calendar}>
-              <label className={classes.check}>
+            <div className={'flex flex-1 items-center justify-center p-3'}>
+              <label className={'text-xs font-extrabold'}>
                 CHECKOUT
                 <input
                   type="date"
@@ -100,12 +99,12 @@ function BookingForm({ spot, reviewsTotal, rating }) {
                   onChange={(e) => setEndDate(e.target.value)}
                   min={initialMin}
                   required
-                  className={classes.input}
+                  className={'mt-1 w-full border-0 bg-transparent text-sm'}
                 />
               </label>
             </div>
           </div>
-          <div className={classes.guests}>
+          <div className={'flex h-14 items-center justify-center rounded-b-xl border border-t-0 border-gray-400 text-sm'}>
             {stayLength <= 0 ? (
               <div>Checkout date must come after checkin date</div>
             ) : (
@@ -113,29 +112,29 @@ function BookingForm({ spot, reviewsTotal, rating }) {
             )}
           </div>
           {stayLength > 0 ? (
-            <div className={classes.bookingsButton} onClick={submit}>
+            <div className={'mt-5 flex min-h-[48px] cursor-pointer items-center justify-center rounded-lg bg-rose-500 font-bold text-white hover:bg-rose-600'} onClick={submit}>
               Reserve
             </div>
           ) : null}
           {stayLength > 0 ? (
             <>
-              <div className={classes.disclaimer}>You won't be charged yet</div>
+              <div className={'py-4 text-center text-sm'}>You won't be charged yet</div>
               <div>
-                <div className={classes.priceInfo}>
+                <div className={'flex justify-between gap-4 pb-4'}>
                   ${spot.price} x {stayLength} nights
                   <div>
                     ${(spot.price * stayLength).toLocaleString("en-US")}
                   </div>
                 </div>
               </div>
-              <div className={classes.priceInfo}>
+              <div className={'flex justify-between gap-4 pb-4'}>
                 <div>Service fee</div>
                 <div>${200}</div>
               </div>
             </>
           ) : null}
           {stayLength > 0 ? (
-            <div className={`${classes.priceInfo} ${classes.total}`}>
+            <div className={`${'flex justify-between gap-4 pb-4'} ${'border-t border-gray-200 pt-4'}`}>
               <div>
                 <strong>Total before taxes</strong>
               </div>

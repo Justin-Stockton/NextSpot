@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import { signUp } from "../../store/session";
 
-import classes from "./SignUpForm.module.css";
 
 const SignUpForm = () => {
   const [errors, setErrors] = useState([]);
@@ -74,71 +73,71 @@ const SignUpForm = () => {
   }
 
   return (
-    <div className={classes.modalBackground}>
-      <div className={classes.modalForeground}>
-        <div className={classes.formTop}>
-          <div className={classes.placeholder}></div>
+    <div className={'flex w-full justify-center px-4 py-12'}>
+      <div className={'w-full max-w-md rounded-2xl border border-gray-200 bg-white px-6 shadow-xl'}>
+        <div className={'flex justify-between border-b border-gray-200 py-5'}>
+          <div className={'h-px w-px'}></div>
           <div>
             Sign up or{" "}
             <span
-              className={classes.signup}
+              className={'cursor-pointer font-bold text-rose-600 underline'}
               onClick={() => history.push("/login")}
             >
               Login
             </span>
           </div>
-          <div className={classes.placeholder}></div>
+          <div className={'h-px w-px'}></div>
         </div>
-        <div className={classes.header}>Welcome to NextSpot</div>
-        <form className={classes.form} onSubmit={onSignUp}>
+        <div className={'py-6 text-2xl font-bold'}>Welcome to NextSpot</div>
+        <form className={'flex flex-col'} onSubmit={onSignUp}>
           <div>
             {errors.map((error, ind) => (
               <div key={ind}>{error}</div>
             ))}
           </div>
-          <div className={classes.inputContainer}>
+          <div className={'relative flex flex-col'}>
             <input
-              className={`${classes.input} ${classes.email}`}
+              className={`${'peer min-h-[58px] w-full border border-gray-300 px-4 pt-5 focus:z-10 focus:border-rose-500'} ${'rounded-t-xl'}`}
               type="text"
               name="email"
               onChange={updateEmail}
               value={email}
             />
-            <label className={email && classes.filled}>Email</label>
+            <label className={email && 'absolute left-4 top-2 text-xs text-gray-500'}>Email</label>
           </div>
-          <div className={classes.inputContainer}>
+          <div className={'relative flex flex-col'}>
             <input
-              className={`${classes.input} ${classes.username}`}
+              className={`${'peer min-h-[58px] w-full border border-gray-300 px-4 pt-5 focus:z-10 focus:border-rose-500'} ${'border-t-0'}`}
               type="text"
               name="username"
               onChange={updateUsername}
               value={username}
             />
-            <label className={username && classes.filled}>Username</label>
+            <label className={username && 'absolute left-4 top-2 text-xs text-gray-500'}>Username</label>
           </div>
-          <div className={classes.inputContainer}>
+          <div className={'relative flex flex-col'}>
             <input
-              className={classes.input}
+              className={'peer min-h-[58px] w-full border border-gray-300 px-4 pt-5 focus:z-10 focus:border-rose-500'}
               type="password"
               name="password"
               onChange={updatePassword}
               value={password}
             />
-            <label className={password && classes.filled}>Password</label>
+            <label className={password && 'absolute left-4 top-2 text-xs text-gray-500'}>Password</label>
           </div>
-          <div className={classes.inputContainer}>
+          <div className={'relative flex flex-col'}>
             <input
-              className={`${classes.input} ${classes.password}`}
+              className={`${'peer min-h-[58px] w-full border border-gray-300 px-4 pt-5 focus:z-10 focus:border-rose-500'} ${'mb-5 rounded-b-xl border-t-0'}`}
               type="password"
               name="repeat_password"
               onChange={updateRepeatPassword}
               value={repeatPassword}
             />
-            <label className={repeatPassword && classes.filled}>
+            <label className={repeatPassword && 'absolute left-4 top-2 text-xs text-gray-500'}>
               Confirm password
             </label>
           </div>
-          <button className={classes.button} type="submit">
+          <button className={'inline-flex cursor-pointer items-center justify-center rounded-lg bg-rose-500 px-5 py-3 font-bold text-white hover:bg-rose-600 focus:ring-2 focus:ring-rose-500 mb-6 w-full'} type="submit">
             Sign Up
           </button>
         </form>

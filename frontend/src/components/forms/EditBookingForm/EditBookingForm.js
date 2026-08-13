@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { thunkUpdateBooking } from "../../../store/userBookings";
 import { thunkDeleteUserBookings } from "../../../store/userBookings";
 
-import classes from "./EditBookingForm.module.css";
 
 function EditBookingForm({ booking }) {
   const dispatch = useDispatch();
@@ -58,21 +57,21 @@ function EditBookingForm({ booking }) {
   return (
     <div>
       {formDisplay ? (
-        <div className={classes.mainContainer}>
+        <div className={'w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-lg'}>
           <img
             src="/static/x.svg"
-            className={classes.x}
+            className={'h-6 w-6 cursor-pointer rounded-full p-1 hover:bg-gray-100'}
             alt="x"
             onClick={() => setFormDisplay(false)}
           />
           <div>
             <form>
-              <div className={classes.calendars}>
+              <div className={'mt-6 flex overflow-hidden rounded-t-xl border border-gray-400'}>
                 <div
-                  className={classes.calendar}
+                  className={'flex flex-1 items-center justify-center p-3'}
                   style={{ borderRight: "1px solid #7b7b7b" }}
                 >
-                  <label className={classes.check}>
+                  <label className={'text-xs font-extrabold'}>
                     CHECK-IN
                     <input
                       type="date"
@@ -81,12 +80,12 @@ function EditBookingForm({ booking }) {
                       onKeyDown={(e) => e.preventDefault()}
                       min={tomorrow}
                       required
-                      className={classes.input}
+                      className={'mt-1 w-full border-0 bg-transparent text-sm'}
                     />
                   </label>
                 </div>
-                <div className={classes.calendar}>
-                  <label className={classes.check}>
+                <div className={'flex flex-1 items-center justify-center p-3'}>
+                  <label className={'text-xs font-extrabold'}>
                     CHECKOUT
                     <input
                       type="date"
@@ -95,12 +94,12 @@ function EditBookingForm({ booking }) {
                       onKeyDown={(e) => e.preventDefault()}
                       min={startDate}
                       required
-                      className={classes.input}
+                      className={'mt-1 w-full border-0 bg-transparent text-sm'}
                     />
                   </label>
                 </div>
               </div>
-              <div className={classes.guests}>
+              <div className={'flex h-14 items-center justify-center rounded-b-xl border border-t-0 border-gray-400 text-sm'}>
                 {stayLength <= 0 ? (
                   <div>Checkout date must come after checkin date</div>
                 ) : (
@@ -108,31 +107,31 @@ function EditBookingForm({ booking }) {
                 )}
               </div>
               {stayLength > 0 ? (
-                <div className={classes.bookingsButton} onClick={submit}>
+                <div className={'mt-5 flex min-h-[48px] cursor-pointer items-center justify-center rounded-lg bg-rose-500 font-bold text-white hover:bg-rose-600'} onClick={submit}>
                   Edit your stay
                 </div>
               ) : null}
               {stayLength > 0 ? (
                 <>
-                  <div className={classes.disclaimer}>
+                  <div className={'py-4 text-center text-sm'}>
                     You won't be charged yet
                   </div>
                   <div>
-                    <div className={classes.priceInfo}>
+                    <div className={'flex justify-between gap-4 pb-4'}>
                       ${spot.price} x {stayLength} nights
                       <div>
                         ${(spot.price * stayLength).toLocaleString("en-US")}
                       </div>
                     </div>
                   </div>
-                  <div className={classes.priceInfo}>
+                  <div className={'flex justify-between gap-4 pb-4'}>
                     <div>Service fee</div>
                     <div>${200}</div>
                   </div>
                 </>
               ) : null}
               {stayLength > 0 ? (
-                <div className={`${classes.priceInfo} ${classes.total}`}>
+                <div className={`${'flex justify-between gap-4 pb-4'} ${'border-t border-gray-200 pt-4'}`}>
                   <div>
                     <strong>Total before taxes</strong>
                   </div>
@@ -147,17 +146,17 @@ function EditBookingForm({ booking }) {
           </div>
         </div>
       ) : (
-        <div className={classes.buttonContainer}>
+        <div className={'mt-4 flex justify-between gap-3'}>
           <div>
             <div
-              className={classes.button}
+              className={'inline-flex cursor-pointer items-center justify-center rounded-lg bg-rose-500 px-4 py-2 font-bold text-white hover:bg-rose-600'}
               onClick={() => setFormDisplay(true)}
             >
               Edit
             </div>
           </div>
           <div
-            className={classes.button}
+            className={'inline-flex cursor-pointer items-center justify-center rounded-lg bg-rose-500 px-4 py-2 font-bold text-white hover:bg-rose-600'}
             onClick={() => deleteBooking(booking.id)}
           >
             Cancel Booking
