@@ -1,57 +1,60 @@
-from urllib import request
-from flask import Blueprint,request
+from flask import Blueprint, request
+from flask_login import current_user, login_required
 from ..models import Wishlists, db
 
-wishlists = Blueprint('wishlists', __name__, url_prefix = '/api/wishlists')
-
-def validation_errors_to_error_messages(validation_errors):
-    """
-    Simple function that turns the WTForms validation errors into a simple list
-    """
-    errorMessages = []
-    for field in validation_errors:
-        for error in validation_errors[field]:
-            errorMessages.append(f'{field} : {error}')
-    return errorMessages
+wishlists = Blueprint('wishlists', __name__, url_prefix='/api/wishlists')
 
 
-@wishlists.route('/<userId>')
-def get_user_wishLists(userId):
-    spotWishlists = Wishlists.query.filter_by(userId = userId).all()
-    list_dict = [i.toDict() for i in spotWishlists]
-
-    for i in range(len(spotWishlists)):
-        spotDict = {i.id: i.toDict() for i in spotWishlists[i].wishspots }
-        list_dict[i]['wishspots'] = spotDict
-
-    return {'wishlists': list_dict}
+def owned(wishlist_id):
+    return Wishlists.query.filter_by(id=wishlist_id, userId=current_user.id).first()
 
 
-@wishlists.route('/create', methods = ['POST'])
+def serialize(item):
+    data = item.toDict()
+    data['wishspots'] = {member.id: member.toDict() for member in item.wishspots}
+    return data
+
+
+@wishlists.route('/<int:user_id>')
+@wishlists.route('/')
+@login_required
+def get_user_wishlists(user_id=None):
+    return {'wishlists': [serialize(item) for item in Wishlists.query.filter_by(userId=current_user.id).all()]}
+
+
+@wishlists.route('/create', methods=['POST'])
+@login_required
 def create_wishlist():
-    data = request.json
-    new_wishlist = Wishlists(
-        userId = data['userId'],
-        name = data['name'],
-    )
-    db.session.add(new_wishlist)
+    data = request.get_json(silent=True) or {}
+    if not isinstance(data.get('name'), str) or not data['name'].strip():
+        return {'errors': ['Collection name is required']}, 400
+    item = Wishlists(userId=current_user.id, name=data['name'].strip())
+    db.session.add(item)
     db.session.commit()
-    return new_wishlist.toDict()
+    return serialize(item), 201
 
 
-@wishlists.route('/update', methods = ['PUT'])
+@wishlists.route('/update', methods=['PUT'])
+@login_required
 def update_wishlist():
-
-    data = request.json
-    wishlist = Wishlists.query.get(data['id'])
-    wishlist.name = data['name']
+    data = request.get_json(silent=True) or {}
+    item = owned(data.get('id'))
+    if not item:
+        return {'errors': ['Collection not found']}, 404
+    if not isinstance(data.get('name'), str) or not data['name'].strip():
+        return {'errors': ['Collection name is required']}, 400
+    item.name = data['name'].strip()
     db.session.commit()
-    return wishlist.toDict()
+    return serialize(item)
 
 
 @wishlists.route('/delete', methods=['DELETE'])
-def delete_booking():
-    data = request.json
-    Wishlists.query.filter_by(id=data).delete()
+@login_required
+def delete_wishlist():
+    data = request.get_json(silent=True)
+    item = owned(data.get('id') if isinstance(data, dict) else data)
+    if not item:
+        return {'errors': ['Collection not found']}, 404
+    db.session.delete(item)
     db.session.commit()
-    return 'Wishlist successfully deleted!'
+    return {'message': 'Collection deleted'}

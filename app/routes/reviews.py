@@ -1,66 +1,63 @@
-from flask import Blueprint, jsonify, session, request
-from ..models import Reviews, db
-from ..forms import ReviewsForm
-
+from flask import Blueprint, request
+from flask_login import current_user, login_required
+from ..models import Reviews, Spots, db
 
 reviews = Blueprint('reviews', __name__, url_prefix='/api/reviews')
 
-def validation_errors_to_error_messages(validation_errors):
-    """
-    Simple function that turns the WTForms validation errors into a simple list
-    """
-    errorMessages = []
-    for field in validation_errors:
-        for error in validation_errors[field]:
-            errorMessages.append(f'{field} : {error}')
-    return errorMessages
+
+def owned_review(review_id):
+    return Reviews.query.filter_by(id=review_id, userId=current_user.id).first()
 
 
-@reviews.route('/<spotId>')
-def get_spot_reviews(spotId):
-    spotreviews = Reviews.query.filter_by(spotId=spotId).all()
-    data = [i.toDict() for i in spotreviews]
+def valid(data):
+    return isinstance(data.get('review'), str) and bool(data['review'].strip()) and isinstance(data.get('rating'), int) and 1 <= data['rating'] <= 5
 
-    for i in range(len(spotreviews)):
-        reviewsDict = {i.id: i.toDict() for i in spotreviews[i].boards}
-        data[i]['boards'] = reviewsDict
 
-        return {'reviews': data}
+@reviews.route('/<int:spot_id>')
+@login_required
+def get_spot_reviews(spot_id):
+    if not Spots.query.filter_by(id=spot_id, userId=current_user.id).first():
+        return {'errors': ['Place not found']}, 404
+    return {'reviews': [item.toDict() for item in Reviews.query.filter_by(spotId=spot_id, userId=current_user.id).all()]}
 
 
 @reviews.route('/create', methods=['POST'])
-def create_reviews():
-    form = ReviewsForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-    data = request.json
-    new_review = Reviews(
-        userId=data['userId'],
-        spotId=data['spotId'],
-        review=data['review'],
-        rating=data['rating'],
-        username=data['username']
-    )
-
-    db.session.add(new_review)
+@login_required
+def create_review():
+    data = request.get_json(silent=True) or {}
+    spot = Spots.query.filter_by(id=data.get('spotId'), userId=current_user.id).first()
+    if not spot:
+        return {'errors': ['Place not found']}, 404
+    if not valid(data):
+        return {'errors': ['A note and integer rating from 1 to 5 are required']}, 400
+    review = Reviews(userId=current_user.id, spotId=spot.id, review=data['review'].strip(),
+                     rating=data['rating'], username=current_user.username)
+    db.session.add(review)
     db.session.commit()
-    return new_review.toDict()
-
+    return review.toDict(), 201
 
 
 @reviews.route('/update', methods=['PUT'])
+@login_required
 def update_review():
-
-    data = request.json
-    review = Reviews.query.get(data['id'])
-    review.review=data['review']
-    review.rating=data['rating']
+    data = request.get_json(silent=True) or {}
+    review = owned_review(data.get('id'))
+    if not review:
+        return {'errors': ['Memory not found']}, 404
+    if not valid(data):
+        return {'errors': ['A note and integer rating from 1 to 5 are required']}, 400
+    review.review, review.rating = data['review'].strip(), data['rating']
     db.session.commit()
     return review.toDict()
 
 
 @reviews.route('/delete', methods=['DELETE'])
+@login_required
 def delete_review():
-    data = request.json
-    Reviews.query.filter_by(id=data['reviewId']).delete()
+    data = request.get_json(silent=True) or {}
+    review = owned_review(data.get('reviewId', data.get('id')))
+    if not review:
+        return {'errors': ['Memory not found']}, 404
+    db.session.delete(review)
     db.session.commit()
-    return 'Review successfully deleted!'
+    return {'message': 'Memory deleted'}

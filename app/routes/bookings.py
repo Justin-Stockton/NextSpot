@@ -1,74 +1,79 @@
-from flask import Blueprint, jsonify, session, request
-from ..models import Bookings, db
-from ..forms import BookingsForm
+from datetime import date
+from flask import Blueprint, request
+from flask_login import current_user, login_required
+from ..models import Bookings, Spots, db
 
 bookings = Blueprint('bookings', __name__, url_prefix='/api/bookings')
 
-def validation_errors_to_error_messages(validation_errors):
-    """
-    Simple function that turns the WTForms validation errors into a simple list
-    """
-    errorMessages = []
-    for field in validation_errors:
-        for error in validation_errors[field]:
-            errorMessages.append(f'{field} : {error}')
-    return errorMessages
+
+def owned_booking(booking_id):
+    return Bookings.query.filter_by(id=booking_id, userId=current_user.id).first()
 
 
-@bookings.route('/spot/<spotId>')
-def get_spot_bookings(spotId):
-    spotBookings = Bookings.query.filter_by(spotId=spotId).all()
-    data = [i.toDict() for i in spotBookings]
-
-    for i in range(len(spotBookings)):
-        bookingsDict = {i.id: i.toDict() for i in spotBookings[i].boards}
-        data[i]['boards'] = bookingsDict
-
-        return {'bookings': data}
+def dates(data):
+    try:
+        start = date.fromisoformat(data['startDate'])
+        end = date.fromisoformat(data['endDate'])
+    except (KeyError, TypeError, ValueError):
+        return None
+    return (start, end) if end >= start else None
 
 
-@bookings.route('/user/<userId>')
-def get_user_bookings(userId):
+@bookings.route('/spot/<int:spot_id>')
+@login_required
+def get_spot_bookings(spot_id):
+    if not Spots.query.filter_by(id=spot_id, userId=current_user.id).first():
+        return {'errors': ['Place not found']}, 404
+    return {'bookings': [item.toDict() for item in Bookings.query.filter_by(spotId=spot_id, userId=current_user.id).all()]}
 
-    userBookings = Bookings.query.filter_by(userId=userId).all()
-    data = [i.toDict() for i in userBookings]
 
-    return {'bookings': data}
+@bookings.route('/user/<int:user_id>')
+@bookings.route('/user')
+@login_required
+def get_user_bookings(user_id=None):
+    return {'bookings': [item.toDict() for item in Bookings.query.filter_by(userId=current_user.id).all()]}
 
 
 @bookings.route('/create', methods=['POST'])
-def create_bookings():
-    data=request.json
-    form = BookingsForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-
-    new_booking = Bookings(
-        userId=data['userId'],
-        spotId=data['spotId'],
-        spotName=data['spotName'],
-        startDate=data['startDate'],
-        endDate=data['endDate'],
-    )
-    db.session.add(new_booking)
+@login_required
+def create_booking():
+    data = request.get_json(silent=True) or {}
+    spot = Spots.query.filter_by(id=data.get('spotId'), userId=current_user.id).first()
+    parsed = dates(data)
+    if not spot:
+        return {'errors': ['Place not found']}, 404
+    if not parsed:
+        return {'errors': ['Valid arrival and departure dates are required; departure cannot precede arrival']}, 400
+    booking = Bookings(userId=current_user.id, spotId=spot.id, spotName=spot.name,
+                       startDate=parsed[0], endDate=parsed[1])
+    db.session.add(booking)
     db.session.commit()
-    return new_booking.toDict()
-
+    return booking.toDict(), 201
 
 
 @bookings.route('/update', methods=['PUT'])
+@login_required
 def update_booking():
-
-    data = request.json
-    booking = Bookings.query.get(data['id'])
-    booking.startDate=data['startDate']
-    booking.endDate=data['endDate']
+    data = request.get_json(silent=True) or {}
+    booking = owned_booking(data.get('id'))
+    parsed = dates(data)
+    if not booking:
+        return {'errors': ['Stay not found']}, 404
+    if not parsed:
+        return {'errors': ['Valid arrival and departure dates are required; departure cannot precede arrival']}, 400
+    booking.startDate, booking.endDate = parsed
     db.session.commit()
     return booking.toDict()
 
 
 @bookings.route('/delete', methods=['DELETE'])
+@login_required
 def delete_booking():
-    data = request.json
-    Bookings.query.filter_by(id=data).delete()
+    data = request.get_json(silent=True)
+    booking_id = data.get('id') if isinstance(data, dict) else data
+    booking = owned_booking(booking_id)
+    if not booking:
+        return {'errors': ['Stay not found']}, 404
+    db.session.delete(booking)
     db.session.commit()
-    return 'Booking successfully deleted!'
+    return {'message': 'Stay deleted'}

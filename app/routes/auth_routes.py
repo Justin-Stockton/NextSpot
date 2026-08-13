@@ -23,7 +23,7 @@ def authenticate():
     """
     if current_user.is_authenticated:
         return current_user.toDict()
-    return {'errors': ['Unauthorized']}
+    return {'errors': ['Unauthorized']}, 401
 
 
 @auth_route.route('/login', methods=['POST'])
@@ -34,7 +34,7 @@ def login():
     form = LoginForm()
     # Get the csrf_token from the request cookie and put it into the
     # form manually to validate_on_submit can be used
-    form['csrf_token'].data = request.cookies['csrf_token']
+    form['csrf_token'].data = request.cookies.get('csrf_token')
     if form.validate_on_submit():
         # Add the user to the session, we are logged in!
         user = Users.query.filter(Users.email == form.data['email']).first()
@@ -58,7 +58,7 @@ def sign_up():
     Creates a new user and logs them in
     """
     form = SignUpForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
+    form['csrf_token'].data = request.cookies.get('csrf_token')
     if form.validate_on_submit():
         user = Users(
             username=form.data['username'],

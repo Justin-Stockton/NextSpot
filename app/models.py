@@ -37,7 +37,6 @@ class Users(db.Model, UserMixin):
             id=self.id,
             username=self.username,
             email=self.email,
-            hashedPassword=self.hashedPassword,
             createdAt=self.createdAt,
             updatedAt=self.updatedAt
         )
@@ -64,8 +63,8 @@ class Spots(db.Model):
     updatedAt = db.Column(db.DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
 
     user = db.relationship('Users', back_populates='spots')
-    bookings = db.relationship('Bookings', back_populates='spot')
-    reviews = db.relationship('Reviews', back_populates='spot')
+    bookings = db.relationship('Bookings', back_populates='spot', cascade="all, delete-orphan")
+    reviews = db.relationship('Reviews', back_populates='spot', cascade="all, delete-orphan")
     wishspots = db.relationship('Wishspots', back_populates='spot', cascade="all, delete-orphan")
 
 

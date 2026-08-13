@@ -1,54 +1,64 @@
-from urllib import request
-from flask import Blueprint, jsonify, session, request
-from ..models import Wishspots, db
+from flask import Blueprint, request
+from flask_login import current_user, login_required
+from ..models import Wishspots, Wishlists, Spots, db
 
 wishspots = Blueprint('wishspots', __name__, url_prefix='/api/wishspots')
 
-def validation_errors_to_error_messages(validation_errors):
-    """
-    Simple function that turns the WTForms validation errors into a simple list
-    """
-    errorMessages = []
-    for field in validation_errors:
-        for error in validation_errors[field]:
-            errorMessages.append(f'{field} : {error}')
-    return errorMessages
 
-@wishspots.route('/<wishlistId>')
-def get_spot_wishspots(wishlistId):
-    wishspots = wishspots.query.filter_by(wishlistId=wishlistId).all()
-    lists = [i.toDict() for i in wishspots]
+def parents(data):
+    collection = Wishlists.query.filter_by(id=data.get('wishlistId'), userId=current_user.id).first()
+    place = Spots.query.filter_by(id=data.get('spotId'), userId=current_user.id).first()
+    return collection, place
 
-    for i in range(len(wishspots)):
-        wishspotsDict = {i.id: i.toDict() for i in wishspots[i].wishspots}
-        lists[i]['wishspots'] = wishspotsDict
-        return {'wishspots': lists}
+
+@wishspots.route('/<int:wishlist_id>')
+@login_required
+def get_wishspots(wishlist_id):
+    collection = Wishlists.query.filter_by(id=wishlist_id, userId=current_user.id).first()
+    if not collection:
+        return {'errors': ['Collection not found']}, 404
+    return {'wishspots': [item.toDict() for item in collection.wishspots]}
 
 
 @wishspots.route('/create', methods=['POST'])
+@login_required
 def create_wishspot():
-    data=request.json
-    new_wishspot = Wishspots(
-        spotId=data['spotId'],
-        wishlistId=data['wishlistId'],
-    )
-    db.session.add(new_wishspot)
+    data = request.get_json(silent=True) or {}
+    collection, place = parents(data)
+    if not collection or not place:
+        return {'errors': ['Owned Collection and Place are required']}, 404
+    existing = Wishspots.query.filter_by(spotId=place.id, wishlistId=collection.id).first()
+    if existing:
+        return existing.toDict()
+    item = Wishspots(spotId=place.id, wishlistId=collection.id)
+    db.session.add(item)
     db.session.commit()
-    return new_wishspot.toDict()
+    return item.toDict(), 201
 
 
 @wishspots.route('/update', methods=['PUT'])
+@login_required
 def update_wishspot():
-
-    data = request.json
-    wishspot = Wishspots.query.get(data['id'])
-    wishspot.wishlistId=data['wishlistId']
+    data = request.get_json(silent=True) or {}
+    item = Wishspots.query.get(data.get('id'))
+    collection, place = parents(data)
+    if not item or not collection or not place or item.spot.userId != current_user.id or item.wishlists.userId != current_user.id:
+        return {'errors': ['Collection membership not found']}, 404
+    item.wishlistId = collection.id
     db.session.commit()
-    return wishspot.toDict()
+    return item.toDict()
+
 
 @wishspots.route('/delete', methods=['DELETE'])
-def delete_booking():
-    data = request.json
-    Wishspots.query.filter_by(spotId=data['spotId']).filter_by(wishlistId=data['wishlistId']).delete()
+@login_required
+def delete_wishspot():
+    data = request.get_json(silent=True) or {}
+    collection, place = parents(data)
+    if not collection or not place:
+        return {'errors': ['Collection membership not found']}, 404
+    item = Wishspots.query.filter_by(spotId=place.id, wishlistId=collection.id).first()
+    if not item:
+        return {'errors': ['Collection membership not found']}, 404
+    db.session.delete(item)
     db.session.commit()
-    return 'Wishspot successfully removed!'
+    return {'message': 'Place removed from Collection'}

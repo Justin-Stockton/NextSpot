@@ -1,23 +1,75 @@
-from flask import Blueprint, jsonify, session, request
-from ..models import Spots, db, Bookings
-
-# This fetch will only work well in small scale apps If i were to do this in a larger
-# app I would break this apart into smaller fetches to prevent the initial load from taking to long
-# with a small amount of data like I am currently using this still is a fast loading fetch.
+from flask import Blueprint, request
+from flask_login import current_user, login_required
+from ..models import Spots, db
 
 spots = Blueprint('spots', __name__, url_prefix='/api/spots')
+
+
+def serialize(spot):
+    data = spot.toDict()
+    data['reviews'] = {item.id: item.toDict() for item in spot.reviews}
+    data['bookings'] = {item.id: item.toDict() for item in spot.bookings}
+    return data
+
+
+def owned_spot(spot_id):
+    return Spots.query.filter_by(id=spot_id, userId=current_user.id).first()
+
+
 @spots.route('/')
+@login_required
 def get_spots():
-    spots = Spots.query.all()
-    data = [i.toDict() for i in spots]
+    owned = Spots.query.filter_by(userId=current_user.id).all()
+    return {'spots': [serialize(spot) for spot in owned]}
 
-    for i in range(len(spots)):
-        reviewsDict = {i.id: i.toDict() for i in spots[i].reviews}
-        data[i]['reviews'] = reviewsDict
 
-    booking_data = [i.toDict() for i in spots]
-    for i in range(len(spots)):
-        bookingsDict = {i.id: i.toDict() for i in spots[i].bookings}
-        data[i]['bookings'] = bookingsDict
+@spots.route('/<int:spot_id>')
+@login_required
+def get_spot(spot_id):
+    spot = owned_spot(spot_id)
+    return (serialize(spot), 200) if spot else ({'errors': ['Place not found']}, 404)
 
-    return {'spots' : data, 'bookings':booking_data}
+
+@spots.route('/create', methods=['POST'])
+@login_required
+def create_spot():
+    data = request.get_json(silent=True) or {}
+    if not data.get('name') or not data.get('location'):
+        return {'errors': ['Name and location are required']}, 400
+    spot = Spots(
+        userId=current_user.id, name=data['name'], location=data['location'],
+        price=data.get('price') or 0, streetAdress=data.get('streetAdress') or '',
+        city=data.get('city') or '', state=data.get('state') or '', zip=data.get('zip') or 0,
+        **{f'img{i}': data.get(f'img{i}') or None for i in range(1, 7)}
+    )
+    db.session.add(spot)
+    db.session.commit()
+    return serialize(spot), 201
+
+
+@spots.route('/<int:spot_id>', methods=['PUT'])
+@login_required
+def update_spot(spot_id):
+    spot = owned_spot(spot_id)
+    if not spot:
+        return {'errors': ['Place not found']}, 404
+    data = request.get_json(silent=True) or {}
+    for field in ('name', 'location', 'price', 'streetAdress', 'city', 'state', 'zip',
+                  'img1', 'img2', 'img3', 'img4', 'img5', 'img6'):
+        if field in data:
+            setattr(spot, field, data[field] if data[field] not in (None, '') or field in ('name', 'location') else (0 if field in ('price', 'zip') else ''))
+    if not spot.name or not spot.location:
+        return {'errors': ['Name and location are required']}, 400
+    db.session.commit()
+    return serialize(spot)
+
+
+@spots.route('/<int:spot_id>', methods=['DELETE'])
+@login_required
+def delete_spot(spot_id):
+    spot = owned_spot(spot_id)
+    if not spot:
+        return {'errors': ['Place not found']}, 404
+    db.session.delete(spot)
+    db.session.commit()
+    return {'message': 'Place deleted'}
