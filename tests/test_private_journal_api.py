@@ -69,6 +69,13 @@ class PrivateJournalApiTest(unittest.TestCase):
         response = demo.post('/api/auth/demo', headers={'X-CSRFToken': demo_token})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get_json()['email'], 'demo@aa.io')
+        places = demo.get('/api/spots/').get_json()['spots']
+        self.assertGreaterEqual(len(places), 3)
+        self.assertTrue(any(place['bookings'] for place in places))
+        self.assertTrue(any(place['reviews'] for place in places))
+        self.assertTrue(demo.get('/api/wishlists/').get_json()['wishlists'])
+        demo.post('/api/auth/demo', headers={'X-CSRFToken': demo_token})
+        self.assertEqual(len(demo.get('/api/spots/').get_json()['spots']), len(places))
 
         signup = app.test_client()
         signup_body = {'username': 'carol', 'email': 'c@example.com', 'password': 'password'}

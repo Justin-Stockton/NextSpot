@@ -1,6 +1,7 @@
 from flask import Blueprint
 from ..models import Users, db
 from ..forms import LoginForm, SignUpForm
+from ..seeds.demo import seed_demo_journal
 from flask_login import current_user, login_user, logout_user, login_required
 
 auth_route = Blueprint('auth', __name__, url_prefix='/api/auth')
@@ -48,6 +49,7 @@ def demo():
         user = Users(username='Demo', email='demo@aa.io', password='password')
         db.session.add(user)
         db.session.commit()
+    seed_demo_journal(user)
     login_user(user)
     return user.toDict()
 
