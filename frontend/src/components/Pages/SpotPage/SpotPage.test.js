@@ -40,6 +40,20 @@ test("renders the Place gallery and complete journal sections", async () => {
   expect(screen.getByRole("heading", { name: "Collections" })).toBeTruthy();
 });
 
+test("swipes through Place photos on touch screens", async () => {
+  renderPage();
+  const gallery = await screen.findByLabelText("Place photo gallery");
+  const photo = within(gallery).getByRole("button", { name: "Kyoto view 1" });
+
+  fireEvent.touchStart(photo, { touches: [{ clientX: 250, clientY: 100 }] });
+  fireEvent.touchEnd(photo, { changedTouches: [{ clientX: 50, clientY: 105 }] });
+  expect(within(gallery).getByAltText("Kyoto view 2")).toBeTruthy();
+
+  fireEvent.touchStart(photo, { touches: [{ clientX: 50, clientY: 100 }] });
+  fireEvent.touchEnd(photo, { changedTouches: [{ clientX: 250, clientY: 105 }] });
+  expect(within(gallery).getByAltText("Kyoto view 1")).toBeTruthy();
+});
+
 test("edits and deletes an existing Stay through the Place page", async () => {
   place.bookings[10] = { id: 10, spotId: 1, startDate: "2025-01-01", endDate: "2025-01-04" };
   window.confirm = jest.fn(() => true);

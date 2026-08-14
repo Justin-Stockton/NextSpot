@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { formatDate, journalRequest, memoriesFor, placeStatus, staysFor, todayISO } from "../../../utils/journal";
 
@@ -64,6 +64,7 @@ function SpotPage() {
   const [place, setPlace] = useState(null);
   const [collections, setCollections] = useState([]);
   const [activeImage, setActiveImage] = useState(0);
+  const touchStart = useRef(null);
   const [stayForm, setStayForm] = useState(false);
   const [memoryForm, setMemoryForm] = useState(false);
   const [editingPlace, setEditingPlace] = useState(false);
@@ -95,13 +96,23 @@ function SpotPage() {
     try { await journalRequest(`/api/spots/${place.id}`, { method: "DELETE", body: "{}" }); history.push("/places"); }
     catch (err) { setError(err.message); }
   };
+  const swipeImage = event => {
+    if (!touchStart.current) return;
+    const touch = event.changedTouches[0];
+    const x = touch.clientX - touchStart.current.x;
+    const y = touch.clientY - touchStart.current.y;
+    touchStart.current = null;
+    if (Math.abs(x) < 40 || Math.abs(x) <= Math.abs(y)) return;
+    event.preventDefault();
+    setActiveImage(index => (index + (x < 0 ? 1 : images.length - 1)) % images.length);
+  };
 
   return <main className="mx-auto max-w-7xl px-4 pb-20 sm:px-8">
     <div className="py-5"><Link className="font-semibold text-gray-600 hover:text-rose-600" to="/places">← All Places</Link></div>
     {error && <p className="mb-5 rounded-xl bg-red-50 p-4 text-red-700" role="alert">{error}</p>}
     <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"><div><div className="flex flex-wrap items-center gap-2"><span className="rounded-full bg-rose-50 px-3 py-1 text-sm font-bold text-rose-700">{placeStatus(place)}</span>{rating && <span className="font-semibold">★ {rating}</span>}</div><h1 className="mt-3 text-3xl font-extrabold sm:text-4xl">{place.name}</h1><p className="mt-1 text-lg text-gray-600">{place.location}</p></div><div className="flex gap-3"><button className={secondary} onClick={() => setEditingPlace(true)}>Edit Place</button><button className="font-semibold text-red-600" onClick={deletePlace}>Delete</button></div></header>
 
-    {images.length ? <section className="grid h-[24rem] grid-cols-1 gap-2 overflow-hidden rounded-2xl sm:h-[32rem] md:grid-cols-2" aria-label="Place photo gallery"><button className="h-full min-h-0 overflow-hidden" onClick={() => setActiveImage((activeImage + 1) % images.length)} type="button"><img className="h-full w-full object-cover" src={images[activeImage]} alt={`${place.name} view ${activeImage + 1}`} /></button><div className="hidden min-h-0 grid-cols-2 grid-rows-2 gap-2 md:grid">{images.slice(1, 5).map((image, index) => <button className="min-h-0 overflow-hidden" type="button" onClick={() => setActiveImage(index + 1)} key={image}><img className="h-full w-full object-cover" src={image} alt={`${place.name} thumbnail ${index + 2}`} /></button>)}</div></section> : <div className="flex h-64 items-center justify-center rounded-2xl bg-gradient-to-br from-rose-100 to-amber-100 text-6xl" aria-label="No photos yet">✈️</div>}
+    {images.length ? <section className="grid h-[24rem] grid-cols-1 gap-2 overflow-hidden rounded-2xl sm:h-[32rem] md:grid-cols-2" aria-label="Place photo gallery"><button className="h-full min-h-0 overflow-hidden" onClick={() => setActiveImage((activeImage + 1) % images.length)} onTouchStart={event => { const touch = event.touches[0]; touchStart.current = { x: touch.clientX, y: touch.clientY }; }} onTouchEnd={swipeImage} style={{ touchAction: "pan-y" }} type="button"><img className="h-full w-full object-cover" src={images[activeImage]} alt={`${place.name} view ${activeImage + 1}`} /></button><div className="hidden min-h-0 grid-cols-2 grid-rows-2 gap-2 md:grid">{images.slice(1, 5).map((image, index) => <button className="min-h-0 overflow-hidden" type="button" onClick={() => setActiveImage(index + 1)} key={image}><img className="h-full w-full object-cover" src={image} alt={`${place.name} thumbnail ${index + 2}`} /></button>)}</div></section> : <div className="flex h-64 items-center justify-center rounded-2xl bg-gradient-to-br from-rose-100 to-amber-100 text-6xl" aria-label="No photos yet">✈️</div>}
     {images.length > 1 && <div className="mt-3 flex justify-center gap-2 md:hidden">{images.map((_, index) => <button aria-label={`Show photo ${index + 1}`} className={`h-2.5 w-2.5 rounded-full ${index === activeImage ? "bg-rose-600" : "bg-gray-300"}`} key={index} onClick={() => setActiveImage(index)} />)}</div>}
     {editingPlace && <EditPlaceForm key={place.id} place={place} onCancel={() => setEditingPlace(false)} onSave={form => mutate(`/api/spots/${place.id}`, "PUT", form, () => setEditingPlace(false))} />}
 
