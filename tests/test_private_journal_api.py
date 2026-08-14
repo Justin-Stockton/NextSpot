@@ -70,10 +70,12 @@ class PrivateJournalApiTest(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get_json()['email'], 'demo@aa.io')
         places = demo.get('/api/spots/').get_json()['spots']
-        self.assertGreaterEqual(len(places), 3)
+        self.assertGreaterEqual(len(places), 4)
         self.assertTrue(any(place['bookings'] for place in places))
+        self.assertTrue(any(not place['bookings'] for place in places))
         self.assertTrue(any(place['reviews'] for place in places))
-        self.assertTrue(demo.get('/api/wishlists/').get_json()['wishlists'])
+        self.assertTrue(all(place[f'img{number}'] for place in places for number in range(1, 7)))
+        self.assertGreaterEqual(len(demo.get('/api/wishlists/').get_json()['wishlists']), 2)
         demo.post('/api/auth/demo', headers={'X-CSRFToken': demo_token})
         self.assertEqual(len(demo.get('/api/spots/').get_json()['spots']), len(places))
 
@@ -95,6 +97,33 @@ class PrivateJournalApiTest(unittest.TestCase):
         self.assertEqual(self.client.post('/api/spots/create', json=body,
                          headers={'X-CSRFToken': 'invalid'}).status_code, 400)
         self.assertEqual(self.write('POST', '/api/spots/create', body).status_code, 201)
+
+    def test_demo_upgrade_restores_complete_journal_without_duplicates(self):
+        demo = app.test_client()
+        token_response = demo.get('/api/auth/')
+        cookie = SimpleCookie()
+        cookie.load(token_response.headers.get('Set-Cookie'))
+        token = cookie['csrf_token'].value
+        with app.app_context():
+            user = Users(username='Demo', email='demo@aa.io', password='password')
+            db.session.add(user)
+            db.session.flush()
+            db.session.add(Spots(userId=user.id, name='Kyoto in Spring', location='Kyoto, Japan',
+                                 price=0, streetAdress='', city='Kyoto', state='Kyoto', zip=0))
+            db.session.commit()
+
+        for _ in range(2):
+            self.assertEqual(demo.post('/api/auth/demo', headers={'X-CSRFToken': token}).status_code, 200)
+
+        places = demo.get('/api/spots/').get_json()['spots']
+        collections = demo.get('/api/wishlists/').get_json()['wishlists']
+        self.assertEqual(len({place['name'] for place in places}), 4)
+        self.assertEqual(sum(len(place['bookings']) for place in places), 3)
+        self.assertEqual(sum(len(place['reviews']) for place in places), 2)
+        self.assertTrue(all(place[f'img{number}'] for place in places for number in range(1, 7)))
+        self.assertEqual(sorted(item['name'] for item in collections),
+                         ['Dream destinations', 'Favorite trips'])
+        self.assertEqual(sum(len(item['wishspots']) for item in collections), 3)
 
     def test_place_crud_persists_and_cross_user_mutations_do_not_change_state(self):
         place = self.make_place('Lisbon')
