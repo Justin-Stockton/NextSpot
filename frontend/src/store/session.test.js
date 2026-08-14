@@ -1,4 +1,4 @@
-import { login, signUp } from "./session";
+import { demoLogin, login, signUp } from "./session";
 
 beforeEach(() => {
   document.cookie = "csrf_token=test-token";
@@ -9,6 +9,7 @@ afterEach(() => jest.restoreAllMocks());
 
 test.each([
   ["login", login("a@example.com", "password"), "/api/auth/login"],
+  ["demo login", demoLogin(), "/api/auth/demo"],
   ["signup", signUp("alice", "a@example.com", "password"), "/api/auth/signup"],
 ])("%s sends the shared JSON and CSRF headers", async (_name, thunk, path) => {
   await thunk(jest.fn());

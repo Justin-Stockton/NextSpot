@@ -55,6 +55,20 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
+export const demoLogin = () => async (dispatch) => {
+  const response = await fetch("/api/auth/demo", {
+    method: "POST",
+    headers: jsonHeaders(),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(setUser(data));
+    return null;
+  }
+  return ["Demo is unavailable. Please try again."];
+};
+
 export const logout = () => async (dispatch) => {
   const response = await fetch("/api/auth/logout", {
     method: "POST",

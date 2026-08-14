@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { login } from "../../../store/session";
+import { demoLogin } from "../../../store/session";
 
 const menuItem = "flex h-11 cursor-pointer items-center px-4 hover:bg-gray-50";
 
@@ -11,7 +11,7 @@ function LoginPopup({ display, setDisplay, innerRef }) {
 
   const handleDemoLogin = async () => {
     setDisplay(false);
-    await dispatch(login("demo@aa.io", "password"));
+    await dispatch(demoLogin());
   };
 
   return (

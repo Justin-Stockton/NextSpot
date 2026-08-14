@@ -58,6 +58,18 @@ class PrivateJournalApiTest(unittest.TestCase):
         self.assertEqual(anonymous.post('/api/auth/login', json=login_body,
                          headers={'X-CSRFToken': token}).status_code, 200)
 
+        demo = app.test_client()
+        demo_response = demo.get('/api/auth/')
+        demo_cookie = SimpleCookie()
+        demo_cookie.load(demo_response.headers.get('Set-Cookie'))
+        demo_token = demo_cookie['csrf_token'].value
+        with app.app_context():
+            db.session.add(Users(username='Demo', email='demo@aa.io', password='not-the-ui-password'))
+            db.session.commit()
+        response = demo.post('/api/auth/demo', headers={'X-CSRFToken': demo_token})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get_json()['email'], 'demo@aa.io')
+
         signup = app.test_client()
         signup_body = {'username': 'carol', 'email': 'c@example.com', 'password': 'password'}
         signup_response = signup.get('/api/auth/')

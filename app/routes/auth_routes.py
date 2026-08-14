@@ -40,6 +40,18 @@ def login():
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
+@auth_route.route('/demo', methods=['POST'])
+def demo():
+    """Logs into the shared demo journal without relying on mutable credentials."""
+    user = Users.query.filter_by(email='demo@aa.io').first()
+    if user is None:
+        user = Users(username='Demo', email='demo@aa.io', password='password')
+        db.session.add(user)
+        db.session.commit()
+    login_user(user)
+    return user.toDict()
+
+
 @auth_route.route('/logout', methods=['POST'])
 def logout():
     """
