@@ -70,22 +70,24 @@ function LoginModal() {
           <div className={'relative flex flex-col'}>
             <input
               className={`${'peer min-h-[58px] w-full border border-gray-300 px-4 pt-5 focus:z-10 focus:border-rose-500'} ${'rounded-t-xl'}`}
-              type="text"
+              id="login-email"
+              type="email"
               name="email"
               onChange={updateEmail}
               value={email}
             />
-            <label className="absolute left-4 top-2 text-xs text-gray-500">Email</label>
+            <label className="absolute left-4 top-2 text-xs text-gray-500" htmlFor="login-email">Email</label>
           </div>
           <div className={'relative flex flex-col'}>
             <input
               className={`${'peer min-h-[58px] w-full border border-gray-300 px-4 pt-5 focus:z-10 focus:border-rose-500'} ${'mb-5 rounded-b-xl border-t-0'}`}
+              id="login-password"
               type="password"
               name="password"
               onChange={updatePassword}
               value={password}
             />
-            <label className="absolute left-4 top-2 text-xs text-gray-500">Password</label>
+            <label className="absolute left-4 top-2 text-xs text-gray-500" htmlFor="login-password">Password</label>
           </div>
           <div>
             <button className={'inline-flex cursor-pointer items-center justify-center rounded-lg bg-rose-500 px-5 py-3 font-bold text-white hover:bg-rose-600 focus:ring-2 focus:ring-rose-500 mb-6 w-full'} type="submit">

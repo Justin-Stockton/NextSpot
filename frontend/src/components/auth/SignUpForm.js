@@ -98,42 +98,46 @@ const SignUpForm = () => {
           <div className={'relative flex flex-col'}>
             <input
               className={`${'peer min-h-[58px] w-full border border-gray-300 px-4 pt-5 focus:z-10 focus:border-rose-500'} ${'rounded-t-xl'}`}
-              type="text"
+              id="signup-email"
+              type="email"
               name="email"
               onChange={updateEmail}
               value={email}
             />
-            <label className="absolute left-4 top-2 text-xs text-gray-500">Email</label>
+            <label className="absolute left-4 top-2 text-xs text-gray-500" htmlFor="signup-email">Email</label>
           </div>
           <div className={'relative flex flex-col'}>
             <input
               className={`${'peer min-h-[58px] w-full border border-gray-300 px-4 pt-5 focus:z-10 focus:border-rose-500'} ${'border-t-0'}`}
+              id="signup-username"
               type="text"
               name="username"
               onChange={updateUsername}
               value={username}
             />
-            <label className="absolute left-4 top-2 text-xs text-gray-500">Username</label>
+            <label className="absolute left-4 top-2 text-xs text-gray-500" htmlFor="signup-username">Username</label>
           </div>
           <div className={'relative flex flex-col'}>
             <input
               className={'peer min-h-[58px] w-full border border-gray-300 px-4 pt-5 focus:z-10 focus:border-rose-500'}
+              id="signup-password"
               type="password"
               name="password"
               onChange={updatePassword}
               value={password}
             />
-            <label className="absolute left-4 top-2 text-xs text-gray-500">Password</label>
+            <label className="absolute left-4 top-2 text-xs text-gray-500" htmlFor="signup-password">Password</label>
           </div>
           <div className={'relative flex flex-col'}>
             <input
               className={`${'peer min-h-[58px] w-full border border-gray-300 px-4 pt-5 focus:z-10 focus:border-rose-500'} ${'mb-5 rounded-b-xl border-t-0'}`}
+              id="signup-confirm-password"
               type="password"
               name="repeat_password"
               onChange={updateRepeatPassword}
               value={repeatPassword}
             />
-            <label className="absolute left-4 top-2 text-xs text-gray-500">
+            <label className="absolute left-4 top-2 text-xs text-gray-500" htmlFor="signup-confirm-password">
               Confirm password
             </label>
           </div>
