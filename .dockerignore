@@ -1,6 +1,7 @@
-react-app/node_modules
+frontend/node_modules
 .venv
-Pipfile
+.git
+.pi
 Pipfile.lock
 .env
 .DS_Store

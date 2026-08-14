@@ -1,16 +1,9 @@
 # Start with the python:3.9 image
 FROM python:3.9
 
-# Set the following enviroment variables
-#
-# REACT_APP_BASE_URL -> Your deployment URL
-# FLASK_APP -> entry point to your flask app
-# FLASK_ENV -> Tell flask to use the production server
-# SQLALCHEMY_ECHO -> Just set it to true
-ENV REACT_APP_BASE_URL=https://nextspot-app.herokuapp.com/
+# Configure Flask for the production container.
 ENV FLASK_APP=app
 ENV FLASK_ENV=production
-ENV SQLALCHEMY_ECHO=True
 
 # Set the directory for upcoming commands to /var/www
 WORKDIR /var/www
