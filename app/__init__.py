@@ -1,6 +1,5 @@
 import os
 from flask import Flask, render_template, request, session, redirect
-from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import generate_csrf, validate_csrf
 from flask_login import LoginManager, current_user
@@ -41,10 +40,6 @@ app.register_blueprint(wishlists)
 app.register_blueprint(wishspots)
 db.init_app(app)
 Migrate(app, db)
-
-# Application Security
-CORS(app)
-
 
 @app.before_request
 def protect_session_writes():
