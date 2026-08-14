@@ -46,13 +46,29 @@ class PrivateJournalApiTest(unittest.TestCase):
 
     def test_auth_and_csrf_protection(self):
         anonymous = app.test_client()
+        login_body = {'email': 'a@example.com', 'password': 'password'}
         self.assertEqual(anonymous.get('/api/spots/').status_code, 401)
-        self.assertEqual(anonymous.post('/api/auth/login', json={
-            'email': 'a@example.com', 'password': 'password'}).status_code, 200)
+        token_response = anonymous.get('/api/auth/')
+        token_cookie = SimpleCookie()
+        token_cookie.load(token_response.headers.get('Set-Cookie'))
+        token = token_cookie['csrf_token'].value
+        self.assertEqual(anonymous.post('/api/auth/login', json=login_body).status_code, 400)
+        self.assertEqual(anonymous.post('/api/auth/login', json=login_body,
+                         headers={'X-CSRFToken': 'invalid'}).status_code, 400)
+        self.assertEqual(anonymous.post('/api/auth/login', json=login_body,
+                         headers={'X-CSRFToken': token}).status_code, 200)
+
         signup = app.test_client()
-        signup.get('/api/auth/')
-        self.assertEqual(signup.post('/api/auth/signup', json={
-            'username': 'carol', 'email': 'c@example.com', 'password': 'password'}).status_code, 200)
+        signup_body = {'username': 'carol', 'email': 'c@example.com', 'password': 'password'}
+        signup_response = signup.get('/api/auth/')
+        signup_cookie = SimpleCookie()
+        signup_cookie.load(signup_response.headers.get('Set-Cookie'))
+        signup_token = signup_cookie['csrf_token'].value
+        self.assertEqual(signup.post('/api/auth/signup', json=signup_body).status_code, 400)
+        self.assertEqual(signup.post('/api/auth/signup', json=signup_body,
+                         headers={'X-CSRFToken': 'invalid'}).status_code, 400)
+        self.assertEqual(signup.post('/api/auth/signup', json=signup_body,
+                         headers={'X-CSRFToken': signup_token}).status_code, 200)
         response = self.client.get('/api/auth/')
         self.assertNotIn('hashedPassword', response.get_json())
         body = {'name': 'Lisbon', 'location': 'Portugal'}
@@ -108,16 +124,19 @@ class PrivateJournalApiTest(unittest.TestCase):
         stay = self.write('POST', '/api/bookings/create', {
             'spotId': place['id'], 'startDate': '2020-01-01', 'endDate': '2020-01-02'}).get_json()
         self.assertEqual(stay['spotName'], 'x' * 50)
+        self.assertEqual((stay['startDate'], stay['endDate']), ('2020-01-01', '2020-01-02'))
         updated = self.write('PUT', '/api/bookings/update', {
-            'id': stay['id'], 'startDate': '2020-02-01', 'endDate': '2020-02-03'})
-        self.assertIn('01 Feb 2020', updated.get_json()['startDate'])
+            'id': stay['id'], 'startDate': stay['startDate'], 'endDate': stay['endDate']})
+        self.assertEqual((updated.get_json()['startDate'], updated.get_json()['endDate']),
+                         ('2020-01-01', '2020-01-02'))
 
         self.login(self.b)
         self.assertEqual(self.write('PUT', '/api/bookings/update', {
             'id': stay['id'], 'startDate': '2030-01-01', 'endDate': '2030-01-02'}).status_code, 404)
         self.assertEqual(self.write('DELETE', '/api/bookings/delete', {'id': stay['id']}).status_code, 404)
         self.login(self.a)
-        self.assertIn('01 Feb 2020', self.client.get('/api/bookings/user').get_json()['bookings'][0]['startDate'])
+        persisted = self.client.get('/api/bookings/user').get_json()['bookings'][0]
+        self.assertEqual((persisted['startDate'], persisted['endDate']), ('2020-01-01', '2020-01-02'))
         self.assertEqual(self.write('DELETE', '/api/bookings/delete', {'id': stay['id']}).status_code, 200)
         self.assertEqual(self.client.get('/api/bookings/user').get_json()['bookings'], [])
 
@@ -137,6 +156,25 @@ class PrivateJournalApiTest(unittest.TestCase):
         self.assertEqual((persisted['review'], persisted['rating']), ('Unforgettable', 4))
         self.assertEqual(self.write('DELETE', '/api/reviews/delete', {'id': memory['id']}).status_code, 200)
         self.assertEqual(self.client.get(f"/api/reviews/{place['id']}").get_json()['reviews'], [])
+
+    def test_membership_update_rejects_duplicate_destination_pair(self):
+        first, second = self.make_place(), self.make_place('Milan')
+        collection = self.write('POST', '/api/wishlists/create', {'name': 'Favorites'}).get_json()
+        source = self.write('POST', '/api/wishspots/create', {
+            'spotId': first['id'], 'wishlistId': collection['id']}).get_json()
+        destination = self.write('POST', '/api/wishspots/create', {
+            'spotId': second['id'], 'wishlistId': collection['id']}).get_json()
+
+        response = self.write('PUT', '/api/wishspots/update', {
+            'id': source['id'], 'spotId': second['id'], 'wishlistId': collection['id']})
+
+        self.assertEqual(response.status_code, 409)
+        self.assertEqual(response.get_json()['errors'], ['Place is already in Collection'])
+        with app.app_context():
+            pairs = {(item.spotId, item.wishlistId) for item in Wishspots.query.all()}
+            self.assertEqual(pairs, {
+                (first['id'], collection['id']), (second['id'], collection['id'])})
+            self.assertIsNotNone(Wishspots.query.get(destination['id']))
 
     def test_collection_and_membership_crud_persist_and_reject_cross_user_mutations(self):
         place, second = self.make_place(), self.make_place('Milan')

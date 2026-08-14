@@ -112,8 +112,8 @@ class Bookings(db.Model):
             userId=self.userId,
             spotId=self.spotId,
             spotName=self.spotName,
-            startDate=self.startDate,
-            endDate=self.endDate,
+            startDate=self.startDate.isoformat(),
+            endDate=self.endDate.isoformat(),
             createdAt=self.createdAt,
             updatedAt=self.updatedAt,
         )

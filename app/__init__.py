@@ -48,8 +48,7 @@ CORS(app)
 
 @app.before_request
 def protect_session_writes():
-    if (request.path.startswith('/api/') and request.method in ('POST', 'PUT', 'PATCH', 'DELETE')
-            and current_user.is_authenticated):
+    if request.path.startswith('/api/') and request.method in ('POST', 'PUT', 'PATCH', 'DELETE'):
         try:
             validate_csrf(request.headers.get('X-CSRFToken'))
         except ValidationError:
