@@ -103,7 +103,7 @@ const SignUpForm = () => {
               onChange={updateEmail}
               value={email}
             />
-            <label className={email && 'absolute left-4 top-2 text-xs text-gray-500'}>Email</label>
+            <label className="absolute left-4 top-2 text-xs text-gray-500">Email</label>
           </div>
           <div className={'relative flex flex-col'}>
             <input
@@ -113,7 +113,7 @@ const SignUpForm = () => {
               onChange={updateUsername}
               value={username}
             />
-            <label className={username && 'absolute left-4 top-2 text-xs text-gray-500'}>Username</label>
+            <label className="absolute left-4 top-2 text-xs text-gray-500">Username</label>
           </div>
           <div className={'relative flex flex-col'}>
             <input
@@ -123,7 +123,7 @@ const SignUpForm = () => {
               onChange={updatePassword}
               value={password}
             />
-            <label className={password && 'absolute left-4 top-2 text-xs text-gray-500'}>Password</label>
+            <label className="absolute left-4 top-2 text-xs text-gray-500">Password</label>
           </div>
           <div className={'relative flex flex-col'}>
             <input
@@ -133,7 +133,7 @@ const SignUpForm = () => {
               onChange={updateRepeatPassword}
               value={repeatPassword}
             />
-            <label className={repeatPassword && 'absolute left-4 top-2 text-xs text-gray-500'}>
+            <label className="absolute left-4 top-2 text-xs text-gray-500">
               Confirm password
             </label>
           </div>

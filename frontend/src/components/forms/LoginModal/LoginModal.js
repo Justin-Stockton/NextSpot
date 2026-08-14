@@ -75,7 +75,7 @@ function LoginModal() {
               onChange={updateEmail}
               value={email}
             />
-            <label className={email && 'absolute left-4 top-2 text-xs text-gray-500'}>Email</label>
+            <label className="absolute left-4 top-2 text-xs text-gray-500">Email</label>
           </div>
           <div className={'relative flex flex-col'}>
             <input
@@ -85,7 +85,7 @@ function LoginModal() {
               onChange={updatePassword}
               value={password}
             />
-            <label className={password && 'absolute left-4 top-2 text-xs text-gray-500'}>Password</label>
+            <label className="absolute left-4 top-2 text-xs text-gray-500">Password</label>
           </div>
           <div>
             <button className={'inline-flex cursor-pointer items-center justify-center rounded-lg bg-rose-500 px-5 py-3 font-bold text-white hover:bg-rose-600 focus:ring-2 focus:ring-rose-500 mb-6 w-full'} type="submit">
