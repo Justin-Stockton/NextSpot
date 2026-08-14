@@ -13,7 +13,8 @@ function LoginPopup({ display, setDisplay, innerRef }) {
   return <div className="absolute right-4 top-16 z-20 w-60 overflow-hidden rounded-xl border border-gray-200 bg-white py-2 shadow-xl sm:right-8" ref={innerRef}>
     <Link className={menuItem} to="/login" onClick={() => setDisplay(false)}>Log in</Link>
     <Link className={menuItem} to="/sign-up" onClick={() => setDisplay(false)}>Sign up</Link>
-    <button className={menuItem} onClick={handleDemoLogin}>Explore the demo</button>
+    <button className={menuItem} onClick={handleDemoLogin}>Explore the public demo</button>
+    <p className="border-b border-gray-100 px-4 pb-3 text-xs leading-5 text-gray-500">Shared with everyone. Changes reset on deployment.</p>
     <a className={menuItem} target="_blank" rel="noreferrer" href="https://github.com/Justin-Stockton" onClick={() => setDisplay(false)}>GitHub</a>
     <a className={menuItem} target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/justin-stockton-101a38a4/" onClick={() => setDisplay(false)}>LinkedIn</a>
   </div>;

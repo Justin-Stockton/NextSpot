@@ -1,6 +1,6 @@
 # NextSpot language and privacy contract
 
-NextSpot is a public-registration, private-by-default travel journal. Signed-in users can only read and change their own travel data; there is no public journal, sharing, or social feed.
+NextSpot is a public-registration, private-by-default travel journal. Signed-in users can only read and change their own travel data; there is no public journal, sharing, or social feed. The explicitly labeled Demo account is the exception: it is a shared, mutable public sandbox that resets on each deployment.
 
 ## Ubiquitous language
 

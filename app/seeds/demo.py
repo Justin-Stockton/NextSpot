@@ -37,6 +37,16 @@ PLACES = (
 )
 
 
+def reset_demo_journal(user):
+    """Remove visitor changes and restore the shared Demo journal."""
+    for collection in list(user.wishlists):
+        db.session.delete(collection)
+    for place in list(user.spots):
+        db.session.delete(place)
+    db.session.commit()
+    seed_demo_journal(user)
+
+
 def seed_demo_journal(user):
     """Idempotently restore the shared Demo journal."""
     samples = {place.name: place for place in user.spots}

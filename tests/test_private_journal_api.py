@@ -90,6 +90,16 @@ class PrivateJournalApiTest(unittest.TestCase):
                          headers={'X-CSRFToken': 'invalid'}).status_code, 400)
         self.assertEqual(signup.post('/api/auth/signup', json=signup_body,
                          headers={'X-CSRFToken': signup_token}).status_code, 200)
+        reserved = {'username': 'Not Demo', 'email': 'DEMO@AA.IO', 'password': 'password'}
+        response = signup.post('/api/auth/signup', json=reserved,
+                               headers={'X-CSRFToken': signup_token})
+        self.assertEqual(response.status_code, 401)
+        self.assertIn('reserved', response.get_json()['errors'][0].lower())
+        reserved = {'username': 'DEMO', 'email': 'visitor@example.com', 'password': 'password'}
+        response = signup.post('/api/auth/signup', json=reserved,
+                               headers={'X-CSRFToken': signup_token})
+        self.assertEqual(response.status_code, 401)
+        self.assertIn('reserved', response.get_json()['errors'][0].lower())
         response = self.client.get('/api/auth/')
         self.assertNotIn('hashedPassword', response.get_json())
         body = {'name': 'Lisbon', 'location': 'Portugal'}
@@ -97,6 +107,23 @@ class PrivateJournalApiTest(unittest.TestCase):
         self.assertEqual(self.client.post('/api/spots/create', json=body,
                          headers={'X-CSRFToken': 'invalid'}).status_code, 400)
         self.assertEqual(self.write('POST', '/api/spots/create', body).status_code, 201)
+
+    def test_demo_seed_command_resets_the_shared_journal(self):
+        with app.app_context():
+            user = Users(username='Demo', email='demo@aa.io', password='password')
+            db.session.add(user)
+            db.session.flush()
+            db.session.add(Spots(userId=user.id, name='Visitor edit', location='Anywhere',
+                                 price=0, streetAdress='', city='', state='', zip=0))
+            db.session.commit()
+
+        result = app.test_cli_runner().invoke(args=['seed', 'demo'])
+
+        self.assertEqual(result.exit_code, 0, result.output)
+        with app.app_context():
+            user = Users.query.filter_by(email='demo@aa.io').first()
+            self.assertEqual({place.name for place in user.spots},
+                             {'Kyoto in Spring', 'Lisbon Weekend', 'Banff Adventure', 'New Zealand Dream'})
 
     def test_demo_upgrade_restores_complete_journal_without_duplicates(self):
         demo = app.test_client()
