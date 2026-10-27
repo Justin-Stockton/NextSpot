@@ -1,54 +1,64 @@
-from urllib import request
-from flask import Blueprint, jsonify, session, request
-from ..models import Wishspots, db
+from flask import Blueprint, abort, request
+from flask_login import current_user, login_required
 
-wishspots = Blueprint('wishspots', __name__, url_prefix='/api/wishspots')
+from ..models import Wishlists, Wishspots, db
 
-def validation_errors_to_error_messages(validation_errors):
-    """
-    Simple function that turns the WTForms validation errors into a simple list
-    """
-    errorMessages = []
-    for field in validation_errors:
-        for error in validation_errors[field]:
-            errorMessages.append(f'{field} : {error}')
-    return errorMessages
-
-@wishspots.route('/<wishlistId>')
-def get_spot_wishspots(wishlistId):
-    wishspots = wishspots.query.filter_by(wishlistId=wishlistId).all()
-    lists = [i.toDict() for i in wishspots]
-
-    for i in range(len(wishspots)):
-        wishspotsDict = {i.id: i.toDict() for i in wishspots[i].wishspots}
-        lists[i]['wishspots'] = wishspotsDict
-        return {'wishspots': lists}
+wishspots = Blueprint("wishspots", __name__, url_prefix="/api/wishspots")
 
 
-@wishspots.route('/create', methods=['POST'])
+def owned_wishlist(wishlist_id):
+    wishlist = db.session.get(Wishlists, wishlist_id)
+    if wishlist is None:
+        abort(404)
+    if wishlist.userId != current_user.id:
+        abort(403)
+    return wishlist
+
+
+@wishspots.get("/<int:wishlist_id>")
+@login_required
+def get_spot_wishspots(wishlist_id):
+    owned_wishlist(wishlist_id)
+    return {
+        "wishspots": [item.toDict() for item in Wishspots.query.filter_by(wishlistId=wishlist_id).all()]
+    }
+
+
+@wishspots.post("/create")
+@login_required
 def create_wishspot():
-    data=request.json
-    new_wishspot = Wishspots(
-        spotId=data['spotId'],
-        wishlistId=data['wishlistId'],
-    )
+    data = request.get_json()
+    owned_wishlist(data["wishlistId"])
+    new_wishspot = Wishspots(spotId=data["spotId"], wishlistId=data["wishlistId"])
     db.session.add(new_wishspot)
     db.session.commit()
     return new_wishspot.toDict()
 
 
-@wishspots.route('/update', methods=['PUT'])
+@wishspots.put("/update")
+@login_required
 def update_wishspot():
-
-    data = request.json
-    wishspot = Wishspots.query.get(data['id'])
-    wishspot.wishlistId=data['wishlistId']
+    data = request.get_json()
+    wishspot = db.session.get(Wishspots, data["id"])
+    if wishspot is None:
+        abort(404)
+    owned_wishlist(wishspot.wishlistId)
+    owned_wishlist(data["wishlistId"])
+    wishspot.wishlistId = data["wishlistId"]
     db.session.commit()
     return wishspot.toDict()
 
-@wishspots.route('/delete', methods=['DELETE'])
-def delete_booking():
-    data = request.json
-    Wishspots.query.filter_by(spotId=data['spotId']).filter_by(wishlistId=data['wishlistId']).delete()
+
+@wishspots.delete("/delete")
+@login_required
+def delete_wishspot():
+    data = request.get_json()
+    owned_wishlist(data["wishlistId"])
+    item = Wishspots.query.filter_by(
+        spotId=data["spotId"], wishlistId=data["wishlistId"]
+    ).first()
+    if item is None:
+        abort(404)
+    db.session.delete(item)
     db.session.commit()
-    return 'Wishspot successfully removed!'
+    return {"message": "Wishspot successfully removed"}

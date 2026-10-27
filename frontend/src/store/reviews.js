@@ -1,3 +1,4 @@
+import { csrfFetch } from "./csrf";
 export const CREATE_REVIEW = "reviews/CREATE_REVIEW";
 export const GET_SPOT_REVIEWS = "reviews/GET_SPOT_REVIEWS";
 export const UPDATE_REVIEW = "reviews/UPDATE_SPOT_REVIEW";
@@ -32,7 +33,7 @@ const actionDeleteReview = (reviewData) => {
 };
 
 export const thunkCreateReview = (review) => async (dispatch) => {
-  const response = await fetch("/api/reviews/create", {
+  const response = await csrfFetch("/api/reviews/create", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -47,7 +48,7 @@ export const thunkCreateReview = (review) => async (dispatch) => {
 };
 
 export const thunkGetSpotReviews = (spotId) => async (dispatch) => {
-  const response = await fetch(`/api/reviews/${spotId}`, {
+  const response = await csrfFetch(`/api/reviews/${spotId}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -61,7 +62,7 @@ export const thunkGetSpotReviews = (spotId) => async (dispatch) => {
 };
 
 export const thunkUpdateSpotReview = (updatedReview) => async (dispatch) => {
-  const response = await fetch(`/api/reviews/update`, {
+  const response = await csrfFetch(`/api/reviews/update`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -76,7 +77,7 @@ export const thunkUpdateSpotReview = (updatedReview) => async (dispatch) => {
 };
 
 export const thunkDeleteReview = (reviewData) => async (dispatch) => {
-  const response = await fetch("/api/reviews/delete", {
+  const response = await csrfFetch("/api/reviews/delete", {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

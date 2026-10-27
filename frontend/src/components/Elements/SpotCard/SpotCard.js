@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import classes from "./SpotCard.module.css";
-import { ReactComponent as HeartSVG } from "./heart.svg";
+import HeartSVG from "./heart.svg?react";
 import { useSelector } from "react-redux";
 import Modal from "../Modal/Modal";
 import { useClickOutside } from "../../../App";

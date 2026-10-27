@@ -1,74 +1,65 @@
-from flask import Blueprint, jsonify, session, request
+from datetime import date
+
+from flask import Blueprint, abort, request
+from flask_login import current_user, login_required
+
 from ..models import Bookings, db
-from ..forms import BookingsForm
 
-bookings = Blueprint('bookings', __name__, url_prefix='/api/bookings')
-
-def validation_errors_to_error_messages(validation_errors):
-    """
-    Simple function that turns the WTForms validation errors into a simple list
-    """
-    errorMessages = []
-    for field in validation_errors:
-        for error in validation_errors[field]:
-            errorMessages.append(f'{field} : {error}')
-    return errorMessages
+bookings = Blueprint("bookings", __name__, url_prefix="/api/bookings")
 
 
-@bookings.route('/spot/<spotId>')
-def get_spot_bookings(spotId):
-    spotBookings = Bookings.query.filter_by(spotId=spotId).all()
-    data = [i.toDict() for i in spotBookings]
-
-    for i in range(len(spotBookings)):
-        bookingsDict = {i.id: i.toDict() for i in spotBookings[i].boards}
-        data[i]['boards'] = bookingsDict
-
-        return {'bookings': data}
+@bookings.get("/spot/<int:spot_id>")
+def get_spot_bookings(spot_id):
+    return {"bookings": [booking.toDict() for booking in Bookings.query.filter_by(spotId=spot_id).all()]}
 
 
-@bookings.route('/user/<userId>')
-def get_user_bookings(userId):
+@bookings.get("/user/<int:user_id>")
+@login_required
+def get_user_bookings(user_id):
+    if user_id != current_user.id:
+        abort(403)
+    return {"bookings": [booking.toDict() for booking in Bookings.query.filter_by(userId=user_id).all()]}
 
-    userBookings = Bookings.query.filter_by(userId=userId).all()
-    data = [i.toDict() for i in userBookings]
 
-    return {'bookings': data}
-
-
-@bookings.route('/create', methods=['POST'])
+@bookings.post("/create")
+@login_required
 def create_bookings():
-    data=request.json
-    form = BookingsForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-
+    data = request.get_json()
     new_booking = Bookings(
-        userId=data['userId'],
-        spotId=data['spotId'],
-        spotName=data['spotName'],
-        startDate=data['startDate'],
-        endDate=data['endDate'],
+        userId=current_user.id,
+        spotId=data["spotId"],
+        spotName=data["spotName"],
+        startDate=date.fromisoformat(data["startDate"]),
+        endDate=date.fromisoformat(data["endDate"]),
     )
     db.session.add(new_booking)
     db.session.commit()
     return new_booking.toDict()
 
 
-
-@bookings.route('/update', methods=['PUT'])
+@bookings.put("/update")
+@login_required
 def update_booking():
-
-    data = request.json
-    booking = Bookings.query.get(data['id'])
-    booking.startDate=data['startDate']
-    booking.endDate=data['endDate']
+    data = request.get_json()
+    booking = db.session.get(Bookings, data["id"])
+    if booking is None:
+        abort(404)
+    if booking.userId != current_user.id:
+        abort(403)
+    booking.startDate = date.fromisoformat(data["startDate"])
+    booking.endDate = date.fromisoformat(data["endDate"])
     db.session.commit()
     return booking.toDict()
 
 
-@bookings.route('/delete', methods=['DELETE'])
+@bookings.delete("/delete")
+@login_required
 def delete_booking():
-    data = request.json
-    Bookings.query.filter_by(id=data).delete()
+    booking = db.session.get(Bookings, request.get_json())
+    if booking is None:
+        abort(404)
+    if booking.userId != current_user.id:
+        abort(403)
+    db.session.delete(booking)
     db.session.commit()
-    return 'Booking successfully deleted!'
+    return {"message": "Booking successfully deleted"}

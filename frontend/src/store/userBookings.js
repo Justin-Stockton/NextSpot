@@ -1,3 +1,4 @@
+import { csrfFetch } from "./csrf";
 export const GET_USER_BOOKINGS = "userBookings/GET_USER_BOOKINGS";
 export const DELETE_USER_BOOKING = "userBookings/DELETE_USER_BOOKING";
 export const UPDATE_BOOKING = "userBookings/UPDATE_BOOKING";
@@ -31,7 +32,7 @@ const actionDeleteUserBookings = (bookingId) => {
 };
 
 export const thunkGetUserBookings = (userId) => async (dispatch) => {
-  const response = await fetch(`/api/bookings/user/${userId}`, {
+  const response = await csrfFetch(`/api/bookings/user/${userId}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -45,7 +46,7 @@ export const thunkGetUserBookings = (userId) => async (dispatch) => {
 };
 
 export const thunkUpdateBooking = (booking) => async (dispatch) => {
-  const response = await fetch("/api/bookings/update", {
+  const response = await csrfFetch("/api/bookings/update", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -64,7 +65,7 @@ export const thunkLogout = () => async (dispatch) => {
 };
 
 export const thunkDeleteUserBookings = (bookingId) => async (dispatch) => {
-  const response = await fetch(`/api/bookings/delete`, {
+  const response = await csrfFetch(`/api/bookings/delete`, {
     method: "delete",
     headers: {
       "Content-Type": "application/json",

@@ -37,7 +37,6 @@ class Users(db.Model, UserMixin):
             id=self.id,
             username=self.username,
             email=self.email,
-            hashedPassword=self.hashedPassword,
             createdAt=self.createdAt,
             updatedAt=self.updatedAt
         )

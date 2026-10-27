@@ -1,66 +1,55 @@
-from flask import Blueprint, jsonify, session, request
+from flask import Blueprint, abort, request
+from flask_login import current_user, login_required
+
 from ..models import Reviews, db
-from ..forms import ReviewsForm
+
+reviews = Blueprint("reviews", __name__, url_prefix="/api/reviews")
 
 
-reviews = Blueprint('reviews', __name__, url_prefix='/api/reviews')
-
-def validation_errors_to_error_messages(validation_errors):
-    """
-    Simple function that turns the WTForms validation errors into a simple list
-    """
-    errorMessages = []
-    for field in validation_errors:
-        for error in validation_errors[field]:
-            errorMessages.append(f'{field} : {error}')
-    return errorMessages
+@reviews.get("/<int:spot_id>")
+def get_spot_reviews(spot_id):
+    return {"reviews": [review.toDict() for review in Reviews.query.filter_by(spotId=spot_id).all()]}
 
 
-@reviews.route('/<spotId>')
-def get_spot_reviews(spotId):
-    spotreviews = Reviews.query.filter_by(spotId=spotId).all()
-    data = [i.toDict() for i in spotreviews]
-
-    for i in range(len(spotreviews)):
-        reviewsDict = {i.id: i.toDict() for i in spotreviews[i].boards}
-        data[i]['boards'] = reviewsDict
-
-        return {'reviews': data}
-
-
-@reviews.route('/create', methods=['POST'])
+@reviews.post("/create")
+@login_required
 def create_reviews():
-    form = ReviewsForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-    data = request.json
+    data = request.get_json()
     new_review = Reviews(
-        userId=data['userId'],
-        spotId=data['spotId'],
-        review=data['review'],
-        rating=data['rating'],
-        username=data['username']
+        userId=current_user.id,
+        spotId=data["spotId"],
+        review=data["review"],
+        rating=data["rating"],
+        username=current_user.username,
     )
-
     db.session.add(new_review)
     db.session.commit()
     return new_review.toDict()
 
 
-
-@reviews.route('/update', methods=['PUT'])
+@reviews.put("/update")
+@login_required
 def update_review():
-
-    data = request.json
-    review = Reviews.query.get(data['id'])
-    review.review=data['review']
-    review.rating=data['rating']
+    data = request.get_json()
+    review = db.session.get(Reviews, data["id"])
+    if review is None:
+        abort(404)
+    if review.userId != current_user.id:
+        abort(403)
+    review.review = data["review"]
+    review.rating = data["rating"]
     db.session.commit()
     return review.toDict()
 
 
-@reviews.route('/delete', methods=['DELETE'])
+@reviews.delete("/delete")
+@login_required
 def delete_review():
-    data = request.json
-    Reviews.query.filter_by(id=data['reviewId']).delete()
+    review = db.session.get(Reviews, request.get_json()["reviewId"])
+    if review is None:
+        abort(404)
+    if review.userId != current_user.id:
+        abort(403)
+    db.session.delete(review)
     db.session.commit()
-    return 'Review successfully deleted!'
+    return {"message": "Review successfully deleted"}

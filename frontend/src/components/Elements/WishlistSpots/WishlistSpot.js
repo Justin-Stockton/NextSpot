@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import classes from "./WishlistSpot.module.css";
-import { ReactComponent as HeartSVG } from "./heart.svg";
+import HeartSVG from "./heart.svg?react";
 import { thunkDeleteWishspot } from "../../../store/wishspots";
 import Modal from "../Modal";
 import { useClickOutside } from "../../../App";
